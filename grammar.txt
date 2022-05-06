@@ -1,0 +1,86 @@
+##
+## PLP - Devoir 2
+## Grammaire EBNF de notre language
+## Nicolas Crausaz & Maxime Scharwath
+##
+
+Exemple de code:
+
+nom du language: Hachier #ier (\a\chier)
+
+## Fonctions
+#f functionName
+   // ...
+#
+
+
+## Variables
+#v varName = 1
+
+## Int, bool & tuples
+10, True | False
+
+
+## Occurrences de variable (portée)
+
+
+## Applications de fonctions
+
+functionName(arg1 arg2 ...)
+
+
+## Expressions let-in avec plusieurs définitions
+
+#l
+   //..
+   //..
+#>
+   // ..
+
+## Expressions case-of sans gardes avec motifs universel, variable, littéraux
+
+#c variable 
+   #> 1 = action
+   #> 2 = action
+   #> 3 = action
+#
+
+## Opérations unaires, binaire
+
++, -, *, != , etc
+
+
+# Grammaire EBNF de notre language
+
+BOOL -> (True | False)
+
+INT -> {0:9},
+
+alpha -> {'A': 'Z'}
+
+IDENTIFIER -> alpha, { alpha | INT }
+
+VARIABLE_DECL -> IDENTIFIER '=' VALUE
+
+-- FUN_IDENTIFIER -> String {VAR_IDENTIFIER | FUN_IDENTIFIER} ....
+
+VALUE -> Bool | Int
+
+UNARY_SYMBOL -> (++ | -- | **)
+AR_OPERATOR -> (+ | - | * | / )
+EQ_OPERATOR -> (== | !=)
+COMP_OPERATOR -> (< | > | <= | >=)
+
+//return numeric:
+EXPR_NUM -> INT |
+            EXPR_NUM AR_OPERATOR EXPR_NUM
+
+//return bool:
+EXPR_BOOL -> BOOL |
+             EXPR_BOOL EQ_OPERATOR EXPR_BOOL |
+             EXPR_NUM EQ_OPERATOR EXPR_NUM |
+             EXPR_NUM COMP_OPERATOR EXPR_NUM
+
+
+
+
