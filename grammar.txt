@@ -6,10 +6,10 @@
 
 Exemple de code:
 
-nom du language: Hachier #ier (\a\chier)
+nom du language: Hashier #ier (\a\chier)
 
 ## Fonctions
-#f functionName
+#f functionName arg1 arg2
    // ...
 #
 
@@ -39,10 +39,11 @@ functionName(arg1 arg2 ...)
 
 ## Expressions case-of sans gardes avec motifs universel, variable, littéraux
 
-#c variable 
-   #> 1 = action
-   #> 2 = action
-   #> 3 = action
+#case variable 
+   #<1> action #
+   #<2> action #
+   #<3> action #
+   #<>  action #
 #
 
 ## Opérations unaires, binaire
@@ -53,23 +54,23 @@ functionName(arg1 arg2 ...)
 # Grammaire EBNF de notre language
 
 BOOL -> (True | False)
+INT -> {0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9}
 
-INT -> {0:9},
+VALUE -> (BOOL | INT)
 
-alpha -> {'A': 'Z'}
+ALPHA -> {'A' | 'B' | ... 'Z'}
 
-IDENTIFIER -> alpha, { alpha | INT }
+IDENTIFIER -> ALPHA, { ALPHA | INT }
 
-VARIABLE_DECL -> IDENTIFIER '=' VALUE
+VARIABLE_DECL -> #v, IDENTIFIER, = ,VALUE
 
--- FUN_IDENTIFIER -> String {VAR_IDENTIFIER | FUN_IDENTIFIER} ....
-
-VALUE -> Bool | Int
+FUNCTION_DECL -> #f, IDENTIFIER, {IDENTIFIER}, #
 
 UNARY_SYMBOL -> (++ | -- | **)
 AR_OPERATOR -> (+ | - | * | / )
 EQ_OPERATOR -> (== | !=)
 COMP_OPERATOR -> (< | > | <= | >=)
+BINARY_OPERATOR -> (AR_OPERATOR | EQ_OPERATOR | COMP_OPERATOR)
 
 //return numeric:
 EXPR_NUM -> INT |
@@ -81,6 +82,27 @@ EXPR_BOOL -> BOOL |
              EXPR_NUM EQ_OPERATOR EXPR_NUM |
              EXPR_NUM COMP_OPERATOR EXPR_NUM
 
+EXPR -> (EXPR_NUM | EXPR_BOOL)
+
+LET_IN_EXPR -> #l, EXPR, #>, EXPR
 
 
 
+#exemple de code
+
+#v var1 = 1
+#v var2 = 2
+
+#f main
+   #l
+      #v var3 = var2
+   #>
+      #case var1
+         #<1> var1 + var3 #
+         #<2> 1 + 2 #
+         #<>  var3 #
+      #
+   #
+#
+
+main()
