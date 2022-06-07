@@ -4,105 +4,50 @@
 ## Nicolas Crausaz & Maxime Scharwath
 ##
 
-Exemple de code:
+# Expressions définies dans le language
+expr -> value
+      | identifier
+      | varOccur
+      | funApp
+      | letIn
+      | caseOf
+      | unaryExpr
+      | binaryExpr
 
-nom du language: Hashier #ier (\a\chier)
+# Types primitifs
+char -> ( [a-z] | [A-Z] )
+bool -> ( True | False )
+num -> [0-9]
+int -> { num }
+tuple -> "(" value "," value ")"
+value -> ( bool | int | tuple )
 
-## Fonctions
-#f functionName arg1 arg2
-   // ...
-#
-
-
-## Variables
-#v varName = 1
-
-## Int, bool & tuples
-10, True | False
-
-
-## Occurrences de variable (portée)
-
-
-## Applications de fonctions
-
-functionName(arg1 arg2 ...)
-
-
-## Expressions let-in avec plusieurs définitions
-
-#l
-   //..
-   //..
-#>
-   // ..
-
-## Expressions case-of sans gardes avec motifs universel, variable, littéraux
-
-#case variable 
-   #<1> action #
-   #<2> action #
-   #<3> action #
-   #<>  action #
-#
-
-## Opérations unaires, binaire
-
-+, -, *, != , etc
+# Identifiants et déclarations
+alphaNumName -> char { char | int }
+identifier -> ( varIdent | funIdent )
+varIdent -> "#v" alphaNumName "=" value
+funIdent -> "#f" alphaNumName [{ identifier }] "#>" expr "#"
 
 
-# Grammaire EBNF de notre language
-
-BOOL -> (True | False)
-INT -> {0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9}
-
-VALUE -> (BOOL | INT)
-
-ALPHA -> {'A' | 'B' | ... 'Z'}
-
-IDENTIFIER -> ALPHA, { ALPHA | INT }
-
-VARIABLE_DECL -> #v, IDENTIFIER, = ,VALUE
-
-FUNCTION_DECL -> #f, IDENTIFIER, {IDENTIFIER}, #
-
-UNARY_SYMBOL -> (++ | -- | **)
-AR_OPERATOR -> (+ | - | * | / )
-EQ_OPERATOR -> (== | !=)
-COMP_OPERATOR -> (< | > | <= | >=)
-BINARY_OPERATOR -> (AR_OPERATOR | EQ_OPERATOR | COMP_OPERATOR)
-
-//return numeric:
-EXPR_NUM -> INT |
-            EXPR_NUM AR_OPERATOR EXPR_NUM
-
-//return bool:
-EXPR_BOOL -> BOOL |
-             EXPR_BOOL EQ_OPERATOR EXPR_BOOL |
-             EXPR_NUM EQ_OPERATOR EXPR_NUM |
-             EXPR_NUM COMP_OPERATOR EXPR_NUM
-
-EXPR -> (EXPR_NUM | EXPR_BOOL)
-
-LET_IN_EXPR -> #l, EXPR, #>, EXPR
+# Occurences et Applications
+varOccur -> alphaNumName
+funApp -> alphaNumName "(" [{ expr }] ")"
 
 
+# Let-in
+letIn -> "#l" { identifier } "#>" expr
 
-#exemple de code
+# Case of
+caseOf -> "#case" expr { caseBranch } "#"
+caseBranch -> "#<" ( varOccur | value ) ">" expr "#"
 
-#v var1 = 1
-#v var2 = 2
 
-#f main
-   #l
-      #v var3 = var2
-   #>
-      #case var1
-         #<1> var1 + var3 #
-         #<2> 1 + 2 #
-         #<>  var3 #
-      #
-   #
-#
+# Opérateurs
 
-main()
+unary -> ( "++" | "--" | "!" )
+arithmetic -> ( "+" | "-" | "*" | "/" | "%" )
+comparison -> ( "==" | "!=" | "<" | ">" | "<=" | ">=" )
+binary -> ( arithmetic | comparison )
+
+unaryExpr -> unary expr
+binaryExpr -> expr binary expr
