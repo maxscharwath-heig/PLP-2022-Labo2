@@ -39,12 +39,12 @@ letIn -> "#l" { identifier } "#>" expr
 
 # Case of
 caseOf -> "#case" expr { caseBranch } "#"
-caseBranch -> "#<" ( varOccur | value ) ">" expr "#"
+caseBranch -> "#o" ( varOccur | value ) "#>" expr "#"
 
 
 # Opérateurs
 
-unary -> ( "++" | "--" | "!" )
+unary -> ( "-" | "!" )
 arithmetic -> ( "+" | "-" | "*" | "/" | "%" )
 comparison -> ( "==" | "!=" | "<" | ">" | "<=" | ">=" )
 binary -> ( arithmetic | comparison )

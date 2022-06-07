@@ -34,10 +34,10 @@ functionName(arg1 arg2 ...)
 ## Expressions case-of sans gardes avec motifs universel, variable, littéraux
 
 #case variable 
-   #<1> action #
-   #<2> action #
-   #<3> action #
-   #<>  action #
+   #o 1 #> action #
+   #o 2 #> action #
+   #o 3 #> action #
+   #o 4 #> action #
 #
 
 ## Opérations unaires, binaire
