@@ -37,7 +37,7 @@ functionName(arg1 arg2 ...)
    #o 1 #> action #
    #o 2 #> action #
    #o 3 #> action #
-   #o 4 #> action #
+   #> action #
 #
 
 ## Opérations unaires, binaire
