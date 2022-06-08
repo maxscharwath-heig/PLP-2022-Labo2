@@ -18,8 +18,6 @@ $alphaNum = [A-Za-z0-9]
 tokens :-
    $white+                                   ;
    $digit+                                   { \s -> TInt (read s)     }
-   ("==" | "!=" | ">=" | "<=" | "&&" | "||") { \s -> TBinOp (take 2 s) }
-   [\=\+\*\%\!\-]                            { \s -> TUnOp (head s)    }
    true                                      { \s -> TBool True        }
    false                                     { \s -> TBool False       }
    "#l"                                      { \s -> TLet              }
@@ -28,10 +26,8 @@ tokens :-
    "#>"                                      { \s -> TIn               }
    "#case"                                   { \s -> TCase             }
    "#o"                                      { \s -> TOf               }
-   "("                                       { \s -> TLParen           }
-   ")"                                       { \s -> TRParen           }
-   ","                                       { \s -> TComma            }
-   "#"                                       { \s -> TEnd              }
+   ("==" | "!=" | ">=" | "<=" | "&&" | "||") { \s -> TDSym (take 2 s) }
+   [\+\*\%\!\-\(\)\,\=\#]                    { \s -> TSym (head s)    }
    $alphaNum+                                { \s -> TIdentifier s     }
 
 {
@@ -40,17 +36,20 @@ type Name = String
 data Token = TInt Int
             | TBool Bool
             | TIdentifier Name
+            | TSym Char
+            | TDSym String
             | TVarDec
             | TFunDec
-            | TLParen
-            | TRParen
+            -- | TLParen
+            -- | TRParen
             | TLet
             | TIn
             | TCase
             | TOf
-            | TComma
+            -- | TComma
             | TEnd
-            | TUnOp Char
+            -- | TEq
+            -- | TUnOp Char
             | TBinOp String deriving (Show, Eq)
 
 lexer = alexScanTokens
