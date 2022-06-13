@@ -27,7 +27,7 @@ tokens :-
    "#case"                                   { \s -> TCase             }
    "#o"                                      { \s -> TOf               }
    ("==" | "!=" | ">=" | "<=" | "&&" | "||") { \s -> TDSym (take 2 s) }
-   [\+\*\%\!\-\(\)\,\=\#]                    { \s -> TSym (head s)    }
+   [\+\*\%\!\-\(\)\,\=\#\<\>]                { \s -> TSym (head s)    }
    $alphaNum+                                { \s -> TIdentifier s     }
 
 {
@@ -40,16 +40,16 @@ data Token = TInt Int
             | TDSym String
             | TVarDec
             | TFunDec
-            -- | TLParen
-            -- | TRParen
+            | TLParen
+            | TRParen
             | TLet
             | TIn
             | TCase
             | TOf
-            -- | TComma
+            | TComma
             | TEnd
-            -- | TEq
-            -- | TUnOp Char
+            | TEq
+            | TUnOp Char
             | TBinOp String deriving (Show, Eq)
 
 lexer = alexScanTokens

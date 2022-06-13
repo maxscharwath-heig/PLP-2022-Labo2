@@ -456,7 +456,7 @@ alex_gscan stop__ p c bs inp__ (sc,state__) =
 alex_tab_size :: Int
 alex_tab_size = 8
 alex_base :: Array Int Int
-alex_base = listArray (0 :: Int, 28)
+alex_base = listArray (0 :: Int, 27)
   [ -8
   , -95
   , 0
@@ -480,12 +480,11 @@ alex_base = listArray (0 :: Int, 28)
   , 767
   , 842
   , 0
-  , -50
   , 0
   , 0
   , 0
   , 0
-  , -103
+  , -104
   ]
 
 alex_table :: Array Int Int
@@ -496,13 +495,13 @@ alex_table = listArray (0 :: Int, 1097)
   , 14
   , 14
   , 14
+  , 26
+  , 5
+  , 5
+  , 5
   , 27
-  , 5
-  , 5
-  , 5
-  , 28
-  , 5
   , 1
+  , 0
   , 0
   , 0
   , 14
@@ -519,15 +518,15 @@ alex_table = listArray (0 :: Int, 1097)
   , 0
   , 7
   , 0
-  , 24
+  , 23
   , 3
   , 0
-  , 24
-  , 24
-  , 24
-  , 24
-  , 24
-  , 24
+  , 23
+  , 23
+  , 23
+  , 23
+  , 23
+  , 23
   , 14
   , 0
   , 15
@@ -542,9 +541,9 @@ alex_table = listArray (0 :: Int, 1097)
   , 15
   , 0
   , 0
-  , 23
   , 6
-  , 23
+  , 6
+  , 6
   , 0
   , 0
   , 10
@@ -573,7 +572,7 @@ alex_table = listArray (0 :: Int, 1097)
   , 10
   , 10
   , 10
-  , 26
+  , 25
   , 0
   , 0
   , 0
@@ -613,7 +612,7 @@ alex_table = listArray (0 :: Int, 1097)
   , 13
   , 0
   , 0
-  , 25
+  , 24
   , 0
   , 0
   , 0
@@ -1603,8 +1602,8 @@ alex_check = listArray (0 :: Int, 1097)
   , 124
   , 61
   , 97
-  , 61
   , 115
+  , -1
   , -1
   , -1
   , 9
@@ -2693,9 +2692,8 @@ alex_check = listArray (0 :: Int, 1097)
   ]
 
 alex_deflt :: Array Int Int
-alex_deflt = listArray (0 :: Int, 28)
+alex_deflt = listArray (0 :: Int, 27)
   [ -1
-  , -1
   , -1
   , -1
   , -1
@@ -2725,7 +2723,7 @@ alex_deflt = listArray (0 :: Int, 28)
   , -1
   ]
 
-alex_accept = listArray (0 :: Int, 28)
+alex_accept = listArray (0 :: Int, 27)
   [ AlexAccNone
   , AlexAccNone
   , AlexAcc 20
@@ -2749,7 +2747,6 @@ alex_accept = listArray (0 :: Int, 28)
   , AlexAcc 6
   , AlexAcc 5
   , AlexAcc 4
-  , AlexAccNone
   , AlexAcc 3
   , AlexAcc 2
   , AlexAcc 1
@@ -2791,16 +2788,16 @@ data Token = TInt Int
             | TDSym String
             | TVarDec
             | TFunDec
-            -- | TLParen
-            -- | TRParen
+            | TLParen
+            | TRParen
             | TLet
             | TIn
             | TCase
             | TOf
-            -- | TComma
+            | TComma
             | TEnd
-            -- | TEq
-            -- | TUnOp Char
+            | TEq
+            | TUnOp Char
             | TBinOp String deriving (Show, Eq)
 
 lexer = alexScanTokens

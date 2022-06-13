@@ -11,6 +11,8 @@ module Parser where
 import Lexer
 }
 
+-- TODO: Let in avec plusieurs déclarations
+
 %name parser
 %tokentype { Token }
 %error { parseError }
@@ -37,7 +39,7 @@ import Lexer
    -- case        { TCase      }
    -- of          { TOf        }
    -- ','         { TSym ','   }
-   -- end         { TEnd       }
+   end         { TEnd       }
    "=="        { TDSym "==" }
    "!="        { TDSym "!=" }
    "<="        { TDSym "<=" }
@@ -54,31 +56,29 @@ import Lexer
 
 %%
 
-Exprs: { [] }
- | Expr Exprs {$1:$2}
+-- Exprs: { [] }
+--  | Expr Exprs {$1:$2}
 
 Expr : 
-      let varDec '=' Expr in Expr { Let $2 $4 $6 }
-      | Expr '+' Expr             { Bin '+' $1 $3 }
-      | Expr '-' Expr             { Bin '-' $1 $3 }
-      | Expr '*' Expr             { Bin '*' $1 $3 }
-      | Expr '/' Expr             { Bin '/' $1 $3 }
-      | Expr '%' Expr             { Bin '%' $1 $3 }
-      | Expr '<' Expr             { Bin '<' $1 $3 }
-      | Expr '>' Expr             { Bin '>' $1 $3 }
-      | Expr "==" Expr            { Bin "==" $1 $3 }
-      | Expr "!=" Expr            { Bin "!=" $1 $3 }
-      | Expr "<=" Expr            { Bin "<=" $1 $3 }
-      | Expr ">=" Expr            { Bin ">=" $1 $3 }
-      | Expr "&&" Expr            { Bin "&&" $1 $3 }
-      | Expr "||" Expr            { Bin "||" $1 $3 }
-      | '!' Expr                  { '!' $2 }
+      let identifier in Expr      { Let $2 $4 }
+      | Expr '+' Expr             { ArithmeticOp '+' $1 $3 }
+      | Expr '-' Expr             { ArithmeticOp '-' $1 $3 }
+      | Expr '*' Expr             { ArithmeticOp '*' $1 $3 }
+      | Expr '/' Expr             { ArithmeticOp '/' $1 $3 }
+      | Expr '%' Expr             { ArithmeticOp '%' $1 $3 }
+      | Expr '<' Expr             { ArithmeticOp '<' $1 $3 }
+      | Expr '>' Expr             { ArithmeticOp '>' $1 $3 }
+      | Expr "==" Expr            { ComparisonOp "==" $1 $3 }
+      | Expr "!=" Expr            { ComparisonOp "!=" $1 $3 }
+      | Expr "<=" Expr            { ComparisonOp "<=" $1 $3 }
+      | Expr ">=" Expr            { ComparisonOp ">=" $1 $3 }
+      | Expr "&&" Expr            { RelationalOp "&&" $1 $3 }
+      | Expr "||" Expr            { RelationalOp "||" $1 $3 }
+      | '!' Expr                  { Negate $2 }
+      | '(' '-' Expr ')'          { Negate $3 }
       | identifier                { Var $1 }
-      | varDec                    { Var $1 }
-      | funDec Exprs              { FunDec $1 $2 }
-      -- | '(' '-' Expr ')'          { '-' $3 }
+      -- | funDec identifier Exprs   { FunDec $1 $2 }
       | '(' Expr ')'              { $2 }
-      | let Expr in Expr          { $2 $4 }
       | int                       { Int $1 }
       | bool                      { Bool $1 }
       --| case Expr of Expr end
@@ -92,10 +92,13 @@ data Expr = VarDec String
    | FunDec Name [Expr]
    | Int Int
    | Bool Bool
-   | Bin String Expr Expr
-   | Unary Char Expr
-   | Case Expr Expr
+   | ArithmeticOp Char Expr Expr
+   | ComparisonOp String Expr Expr
+   | RelationalOp String Expr Expr
+   | Var Name
+   | Negate Expr
+   -- | Case Expr Expr
    | In Expr
-   | Let Expr Expr
+   | Let Name Expr
    deriving (Show, Eq)
 }
