@@ -5,48 +5,54 @@ d’une expression. De plus, votre fonction devra effectuer toutes les vérifica
 pour la vérification des types sont laissées à votre bon jugement.
 -}
 
-module Semantics where
+module Semantics (typeof) where 
  
 import Parser
 
 
+type Name = String
+type Env = [(Name, Type)]
+
+data Type = TInt | TBool
+    deriving (Show, Eq)
+
+
 -- | Variable
 
-lookupVar x [] = error $ "[#ier Semantics] Error: variable " ++ x ++ " not found"
-lookupVar x (n, t) : env
+lookup' :: Name -> Env -> Type
+lookup' x [] = error $ "[#ier Semantics] Error: variable " ++ x ++ " not found"
+lookup' x ((n, t) : env)
     | x == n = t
-    | otherwise = lookupVar x env
+    | otherwise = lookup' x env
 
-typeof (EVar x) env = lookupVar x env
 
+typeof (Var x) env = lookup' x env
+typeof (Int n) env = TInt
+typeof (Bool b) env = TBool
 
 -- | Literal
 
-typeof (EInt n) env = TInt
-
-typeof (EBool b) env = TBool
-
 -- | Arithmetical expressions
 
-typeof (EArith _ e1 e2) env =
-    case (typeof x env, typeof y env) of
+typeof (ArithmeticOp _ e1 e2) env =
+    case (typeof e1 env, typeof e2 env) of
         (TInt, TInt) -> TInt
         _ -> error "[#ier Semantics] Error: arithmetic operation."
 
 
 -- | Relational expressions
 
-typeof (ERel op e1 e2) env =
-    case (typeof x env, typeof y env) of
-        (TInt, TInt) | op `elem` [Ge, Le, Gt, Lt] -> TBool
-        (t1, t2) | t1 == t2 && op `elem` [Eq, Ne] -> TBool
-        _ -> error "[#ier Semantics] Error: relational operation."
+-- typeof (RelationalOp op e1 e2) env =
+--     case (typeof e1 env, typeof e2 env) of
+--         (TInt, TInt) | op `elem` [Ge, Le, Gt, Lt] -> TBool
+--         (t1, t2) | t1 == t2 && op `elem` [Eq, Negate] -> TBool
+--         _ -> error "[#ier Semantics] Error: relational operation."
 
 -- | Let expressions
 
-typeof (ELet x y z) env = typeof z env'
-    where env'
-        t = typeof y env
-        env' = (x, t) : env
+-- typeof (ELet x y z) env = typeof z env'
+--     where env'
+--         t = typeof y env
+--         env' = (x, t) : env
 
 -- | Function application

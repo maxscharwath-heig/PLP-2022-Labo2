@@ -22,3 +22,15 @@ les erreurs que vous seriez amenés à générer dans les différents composants
 -}
 
 module Main where
+
+-- repl funcs = 
+--     do
+--         putStr "#ier>"
+--         line <- getLine
+--         let tokens = lexer line
+--         putStrLn $ show tokens
+--         let ast = parser tokens
+--         putStrLn $ show ast
+--         let (toPrint, funcsIncreased) = readProg ast ([],funcs)
+--         putStrLn toPrint
+--         repl funcsIncreased

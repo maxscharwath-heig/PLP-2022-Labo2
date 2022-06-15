@@ -7,5 +7,17 @@ des erreurs d’exécution dues à des erreurs de programmation de l’utilisate
 lesquelles et d’adopter un comportement approprié lorsque cela est amené à se produire.
 -}
 
-module Eval where
+module Eval (eval) where
 
+import Semantics
+import Parser (Expr(..))
+
+-- Prend un Expr en retourne le résultat de l'évaluation
+
+eval (Int x) _ = x
+-- eval (Bool x) _ = x
+eval (ArithmeticOp c x y) env 
+   | c == '+' = (eval x env) + (eval y env)
+   | c == '-' = (eval x env) - (eval y env)
+   | c == '*' = (eval x env) * (eval y env)
+   | c == '/' = div (eval x env) (eval y env)
