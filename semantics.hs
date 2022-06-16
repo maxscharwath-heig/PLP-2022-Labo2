@@ -13,46 +13,50 @@ import Parser
 type Name = String
 type Env = [(Name, Type)]
 
-data Type = TInt | TBool
-    deriving (Show, Eq)
+data Type = TVar | TInt | TBool
+  deriving (Show, Eq)
 
 
 -- | Variable
 
-lookup' :: Name -> Env -> Type
+lookup' :: Name -> Env -> Expr
 lookup' x [] = error $ "[#ier Semantics] Error: variable " ++ x ++ " not found"
 lookup' x ((n, t) : env)
     | x == n = t
     | otherwise = lookup' x env
 
 
-typeof (Var x) env = lookup' x env
-typeof (Int n) env = TInt
-typeof (Bool b) env = TBool
+typeof (EVar x) env = lookup' x env
+typeof (EInt n) env = TInt
+typeof (EBool b) env = TBool
 
 -- | Literal
 
 -- | Arithmetical expressions
 
-typeof (ArithmeticOp _ e1 e2) env =
+typeof (EArithmeticOp _ e1 e2) env =
     case (typeof e1 env, typeof e2 env) of
-        (TInt, TInt) -> TInt
+        (EInt, EInt) -> TInt
         _ -> error "[#ier Semantics] Error: arithmetic operation."
 
 
 -- | Relational expressions
 
--- typeof (RelationalOp op e1 e2) env =
---     case (typeof e1 env, typeof e2 env) of
---         (TInt, TInt) | op `elem` [Ge, Le, Gt, Lt] -> TBool
---         (t1, t2) | t1 == t2 && op `elem` [Eq, Negate] -> TBool
---         _ -> error "[#ier Semantics] Error: relational operation."
+typeof (ERelationalOp op e1 e2) env =
+     case (typeof e1 env, typeof e2 env) of
+        (EInt, EInt) | op `elem` ["<", ">", "<=", ">="] -> TBool
+        (t1, t2) | t1 == t2 && op `elem` ["==", "!="] -> TBool
+        _ -> error "[#ier Semantics] Error: relational operation."
 
 -- | Let expressions
 
--- typeof (ELet x y z) env = typeof z env'
---     where env'
---         t = typeof y env
---         env' = (x, t) : env
+typeof (ELet x y z) env = typeof z env'
+    where
+        t = typeof y env
+        env' = (x, t) : env
+
 
 -- | Function application
+
+
+

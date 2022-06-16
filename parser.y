@@ -60,27 +60,27 @@ import Lexer
 --  | Expr Exprs {$1:$2}
 
 Expr : 
-      let identifier in Expr      { Let $2 $4 }
-      | Expr '+' Expr             { ArithmeticOp '+' $1 $3 }
-      | Expr '-' Expr             { ArithmeticOp '-' $1 $3 }
-      | Expr '*' Expr             { ArithmeticOp '*' $1 $3 }
-      | Expr '/' Expr             { ArithmeticOp '/' $1 $3 }
-      | Expr '%' Expr             { ArithmeticOp '%' $1 $3 }
-      | Expr '<' Expr             { ArithmeticOp '<' $1 $3 }
-      | Expr '>' Expr             { ArithmeticOp '>' $1 $3 }
-      | Expr "==" Expr            { ComparisonOp "==" $1 $3 }
-      | Expr "!=" Expr            { ComparisonOp "!=" $1 $3 }
-      | Expr "<=" Expr            { ComparisonOp "<=" $1 $3 }
-      | Expr ">=" Expr            { ComparisonOp ">=" $1 $3 }
-      | Expr "&&" Expr            { RelationalOp "&&" $1 $3 }
-      | Expr "||" Expr            { RelationalOp "||" $1 $3 }
-      | '!' Expr                  { Negate $2 }
-      | '(' '-' Expr ')'          { Negate $3 }
-      | identifier                { Var $1 }
+      let identifier in Expr      { ELet $2 $4 }
+      | Expr '+' Expr             { EArithmeticOp '+' $1 $3 }
+      | Expr '-' Expr             { EArithmeticOp '-' $1 $3 }
+      | Expr '*' Expr             { EArithmeticOp '*' $1 $3 }
+      | Expr '/' Expr             { EArithmeticOp '/' $1 $3 }
+      | Expr '%' Expr             { EArithmeticOp '%' $1 $3 }
+      | Expr '<' Expr             { EArithmeticOp '<' $1 $3 }
+      | Expr '>' Expr             { EArithmeticOp '>' $1 $3 }
+      | Expr "==" Expr            { EComparisonOp "==" $1 $3 }
+      | Expr "!=" Expr            { EComparisonOp "!=" $1 $3 }
+      | Expr "<=" Expr            { EComparisonOp "<=" $1 $3 }
+      | Expr ">=" Expr            { EComparisonOp ">=" $1 $3 }
+      | Expr "&&" Expr            { ERelationalOp "&&" $1 $3 }
+      | Expr "||" Expr            { ERelationalOp "||" $1 $3 }
+      | '!' Expr                  { ENegate $2 }
+      | '(' '-' Expr ')'          { ENegate $3 }
+      | identifier                { EVar $1 }
       -- | funDec identifier Exprs   { FunDec $1 $2 }
       | '(' Expr ')'              { $2 }
-      | int                       { Int $1 }
-      | bool                      { Bool $1 }
+      | int                       { EInt $1 }
+      | bool                      { EBool $1 }
       --| case Expr of Expr end
       -- | Expr  Expr
 
@@ -88,17 +88,17 @@ Expr :
 parseError :: [Token] -> a
 parseError _ = error "Parse error"
 
-data Expr = VarDec String 
-   | FunDec Name [Expr]
-   | Int Int
-   | Bool Bool
-   | ArithmeticOp Char Expr Expr
-   | ComparisonOp String Expr Expr
-   | RelationalOp String Expr Expr
-   | Var Name
-   | Negate Expr
+data Expr = EVarDec String 
+   | EFunDec Name [Expr]
+   | EInt Int
+   | EBool Bool
+   | EArithmeticOp Char Expr Expr
+   | EComparisonOp String Expr Expr
+   | ERelationalOp String Expr Expr
+   | EVar Name
+   | ENegate Expr
    -- | Case Expr Expr
-   | In Expr
-   | Let Name Expr
+   | EIn Expr
+   | ELet Name Expr Expr
    deriving (Show, Eq)
 }
