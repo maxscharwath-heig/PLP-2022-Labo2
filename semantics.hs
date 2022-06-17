@@ -19,16 +19,17 @@ data Type = TVar | TInt | TBool | TFun Type Type | TErr
 
 -- | Variable
 
--- lookup' :: Name -> Env -> Expr
--- lookup' x [] = error $ "[#ier Semantics] Error: variable " ++ x ++ " not found"
--- lookup' x ((n, t) : env)
---     | x == n = t
---     | otherwise = lookup' x env
+lookup' :: Name -> Env -> Type
+lookup' x [] = error $ "[#ier Semantics] Error: variable " ++ x ++ " not found"
+lookup' x ((n, t) : env)
+    | x == n = t
+    | otherwise = lookup' x env
 
 
--- typeof (EVar x) env = lookup' x env
--- typeof (EInt n) env = TInt
--- typeof (EBool b) env = TBool
+typeof :: Expr -> Env -> Type
+typeof (EVar x) env = lookup' x env
+typeof (EInt n) env = TInt
+typeof (EBool b) env = TBool
 
 -- | Literal
 
@@ -36,7 +37,7 @@ data Type = TVar | TInt | TBool | TFun Type Type | TErr
 
 typeof (EArithmeticOp _ e1 e2) env =
     case (typeof e1 env, typeof e2 env) of
-        (EInt, EInt) -> TInt
+        (TInt, TInt) -> TInt
         _ -> error "[#ier Semantics] Error: arithmetic operation."
 
 
@@ -44,19 +45,21 @@ typeof (EArithmeticOp _ e1 e2) env =
 
 typeof (ERelationalOp op e1 e2) env =
      case (typeof e1 env, typeof e2 env) of
-        (EInt, EInt) | op `elem` ["<", ">", "<=", ">="] -> TBool
+        (TInt, TInt) | op `elem` ["<", ">", "<=", ">="] -> TBool
         (t1, t2) | t1 == t2 && op `elem` ["==", "!="] -> TBool
         _ -> error "[#ier Semantics] Error: relational operation."
 
 -- | Let expressions
 
--- typeof (ELet x y z) env = typeof z env'
---     where
---         t = typeof y env
---         env' = (x, t) : env
+typeof (ELet x y z) env = typeof z env'
+    where
+        t = typeof y env
+        env' = (x, t) : env
 
 
 -- | Function application
 
 
 
+-- | Remove to check if we check all the cases
+typeof _ _ = error "[#ier Semantics] Error: not all cases checked"
