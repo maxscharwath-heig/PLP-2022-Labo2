@@ -16,7 +16,7 @@ state 36 contains 9 shift/reduce conflicts.
 state 37 contains 9 shift/reduce conflicts.
 state 38 contains 13 shift/reduce conflicts.
 state 39 contains 13 shift/reduce conflicts.
-state 43 contains 9 shift/reduce conflicts.
+state 44 contains 9 shift/reduce conflicts.
 
 terminal varDec is unused
 terminal funDec is unused
@@ -27,7 +27,7 @@ terminal end is unused
 Grammar
 -----------------------------------------------------------------------------
 	%start_parser -> Expr                              (0)
-	Expr -> let identifier in Expr                     (1)
+	Expr -> let identifier in Expr Expr                (1)
 	Expr -> Expr '+' Expr                              (2)
 	Expr -> Expr '-' Expr                              (3)
 	Expr -> Expr '*' Expr                              (4)
@@ -101,14 +101,14 @@ State 0
 
 State 1
 
-	Expr -> . let identifier in Expr                    (rule 1)
+	Expr -> . let identifier in Expr Expr               (rule 1)
 
 	let            shift, and enter state 2
 
 
 State 2
 
-	Expr -> let . identifier in Expr                    (rule 1)
+	Expr -> let . identifier in Expr Expr               (rule 1)
 
 	identifier     shift, and enter state 25
 
@@ -150,6 +150,10 @@ State 4
 
 	Expr -> int .                                       (rule 19)
 
+	int            reduce using rule 19
+	bool           reduce using rule 19
+	identifier     reduce using rule 19
+	'('            reduce using rule 19
 	')'            reduce using rule 19
 	'<'            reduce using rule 19
 	'>'            reduce using rule 19
@@ -158,6 +162,8 @@ State 4
 	'*'            reduce using rule 19
 	'/'            reduce using rule 19
 	'%'            reduce using rule 19
+	'!'            reduce using rule 19
+	let            reduce using rule 19
 	"=="           reduce using rule 19
 	"!="           reduce using rule 19
 	"<="           reduce using rule 19
@@ -171,6 +177,10 @@ State 5
 
 	Expr -> bool .                                      (rule 20)
 
+	int            reduce using rule 20
+	bool           reduce using rule 20
+	identifier     reduce using rule 20
+	'('            reduce using rule 20
 	')'            reduce using rule 20
 	'<'            reduce using rule 20
 	'>'            reduce using rule 20
@@ -179,6 +189,8 @@ State 5
 	'*'            reduce using rule 20
 	'/'            reduce using rule 20
 	'%'            reduce using rule 20
+	'!'            reduce using rule 20
+	let            reduce using rule 20
 	"=="           reduce using rule 20
 	"!="           reduce using rule 20
 	"<="           reduce using rule 20
@@ -192,6 +204,10 @@ State 6
 
 	Expr -> identifier .                                (rule 17)
 
+	int            reduce using rule 17
+	bool           reduce using rule 17
+	identifier     reduce using rule 17
+	'('            reduce using rule 17
 	')'            reduce using rule 17
 	'<'            reduce using rule 17
 	'>'            reduce using rule 17
@@ -200,6 +216,8 @@ State 6
 	'*'            reduce using rule 17
 	'/'            reduce using rule 17
 	'%'            reduce using rule 17
+	'!'            reduce using rule 17
+	let            reduce using rule 17
 	"=="           reduce using rule 17
 	"!="           reduce using rule 17
 	"<="           reduce using rule 17
@@ -254,6 +272,10 @@ State 9
 	Expr -> Expr . "||" Expr                            (rule 14)
 	Expr -> '!' Expr .                                  (rule 15)
 
+	int            reduce using rule 15
+	bool           reduce using rule 15
+	identifier     reduce using rule 15
+	'('            reduce using rule 15
 	')'            reduce using rule 15
 	'<'            shift, and enter state 12
 			(reduce using rule 15)
@@ -276,6 +298,8 @@ State 9
 	'%'            shift, and enter state 18
 			(reduce using rule 15)
 
+	'!'            reduce using rule 15
+	let            reduce using rule 15
 	"=="           shift, and enter state 19
 			(reduce using rule 15)
 
@@ -514,14 +538,14 @@ State 24
 
 State 25
 
-	Expr -> let identifier . in Expr                    (rule 1)
+	Expr -> let identifier . in Expr Expr               (rule 1)
 
 	in             shift, and enter state 26
 
 
 State 26
 
-	Expr -> let identifier in . Expr                    (rule 1)
+	Expr -> let identifier in . Expr Expr               (rule 1)
 
 	int            shift, and enter state 4
 	bool           shift, and enter state 5
@@ -549,6 +573,10 @@ State 27
 	Expr -> Expr . "||" Expr                            (rule 14)
 	Expr -> Expr "||" Expr .                            (rule 14)
 
+	int            reduce using rule 14
+	bool           reduce using rule 14
+	identifier     reduce using rule 14
+	'('            reduce using rule 14
 	')'            reduce using rule 14
 	'<'            shift, and enter state 12
 			(reduce using rule 14)
@@ -571,6 +599,8 @@ State 27
 	'%'            shift, and enter state 18
 			(reduce using rule 14)
 
+	'!'            reduce using rule 14
+	let            reduce using rule 14
 	"=="           shift, and enter state 19
 			(reduce using rule 14)
 
@@ -609,6 +639,10 @@ State 28
 	Expr -> Expr "&&" Expr .                            (rule 13)
 	Expr -> Expr . "||" Expr                            (rule 14)
 
+	int            reduce using rule 13
+	bool           reduce using rule 13
+	identifier     reduce using rule 13
+	'('            reduce using rule 13
 	')'            reduce using rule 13
 	'<'            shift, and enter state 12
 			(reduce using rule 13)
@@ -631,6 +665,8 @@ State 28
 	'%'            shift, and enter state 18
 			(reduce using rule 13)
 
+	'!'            reduce using rule 13
+	let            reduce using rule 13
 	"=="           shift, and enter state 19
 			(reduce using rule 13)
 
@@ -669,6 +705,10 @@ State 29
 	Expr -> Expr . "&&" Expr                            (rule 13)
 	Expr -> Expr . "||" Expr                            (rule 14)
 
+	int            reduce using rule 12
+	bool           reduce using rule 12
+	identifier     reduce using rule 12
+	'('            reduce using rule 12
 	')'            reduce using rule 12
 	'<'            shift, and enter state 12
 			(reduce using rule 12)
@@ -691,6 +731,8 @@ State 29
 	'%'            shift, and enter state 18
 			(reduce using rule 12)
 
+	'!'            reduce using rule 12
+	let            reduce using rule 12
 	"=="           shift, and enter state 19
 			(reduce using rule 12)
 
@@ -729,6 +771,10 @@ State 30
 	Expr -> Expr . "&&" Expr                            (rule 13)
 	Expr -> Expr . "||" Expr                            (rule 14)
 
+	int            reduce using rule 11
+	bool           reduce using rule 11
+	identifier     reduce using rule 11
+	'('            reduce using rule 11
 	')'            reduce using rule 11
 	'<'            shift, and enter state 12
 			(reduce using rule 11)
@@ -751,6 +797,8 @@ State 30
 	'%'            shift, and enter state 18
 			(reduce using rule 11)
 
+	'!'            reduce using rule 11
+	let            reduce using rule 11
 	"=="           shift, and enter state 19
 			(reduce using rule 11)
 
@@ -789,6 +837,10 @@ State 31
 	Expr -> Expr . "&&" Expr                            (rule 13)
 	Expr -> Expr . "||" Expr                            (rule 14)
 
+	int            reduce using rule 10
+	bool           reduce using rule 10
+	identifier     reduce using rule 10
+	'('            reduce using rule 10
 	')'            reduce using rule 10
 	'<'            shift, and enter state 12
 			(reduce using rule 10)
@@ -811,6 +863,8 @@ State 31
 	'%'            shift, and enter state 18
 			(reduce using rule 10)
 
+	'!'            reduce using rule 10
+	let            reduce using rule 10
 	"=="           shift, and enter state 19
 			(reduce using rule 10)
 
@@ -849,6 +903,10 @@ State 32
 	Expr -> Expr . "&&" Expr                            (rule 13)
 	Expr -> Expr . "||" Expr                            (rule 14)
 
+	int            reduce using rule 9
+	bool           reduce using rule 9
+	identifier     reduce using rule 9
+	'('            reduce using rule 9
 	')'            reduce using rule 9
 	'<'            shift, and enter state 12
 			(reduce using rule 9)
@@ -871,6 +929,8 @@ State 32
 	'%'            shift, and enter state 18
 			(reduce using rule 9)
 
+	'!'            reduce using rule 9
+	let            reduce using rule 9
 	"=="           shift, and enter state 19
 			(reduce using rule 9)
 
@@ -909,6 +969,10 @@ State 33
 	Expr -> Expr . "&&" Expr                            (rule 13)
 	Expr -> Expr . "||" Expr                            (rule 14)
 
+	int            reduce using rule 6
+	bool           reduce using rule 6
+	identifier     reduce using rule 6
+	'('            reduce using rule 6
 	')'            reduce using rule 6
 	'<'            shift, and enter state 12
 			(reduce using rule 6)
@@ -931,6 +995,8 @@ State 33
 	'%'            shift, and enter state 18
 			(reduce using rule 6)
 
+	'!'            reduce using rule 6
+	let            reduce using rule 6
 	"=="           shift, and enter state 19
 			(reduce using rule 6)
 
@@ -969,6 +1035,10 @@ State 34
 	Expr -> Expr . "&&" Expr                            (rule 13)
 	Expr -> Expr . "||" Expr                            (rule 14)
 
+	int            reduce using rule 5
+	bool           reduce using rule 5
+	identifier     reduce using rule 5
+	'('            reduce using rule 5
 	')'            reduce using rule 5
 	'<'            shift, and enter state 12
 			(reduce using rule 5)
@@ -983,6 +1053,8 @@ State 34
 	'%'            shift, and enter state 18
 			(reduce using rule 5)
 
+	'!'            reduce using rule 5
+	let            reduce using rule 5
 	"=="           shift, and enter state 19
 			(reduce using rule 5)
 
@@ -1021,6 +1093,10 @@ State 35
 	Expr -> Expr . "&&" Expr                            (rule 13)
 	Expr -> Expr . "||" Expr                            (rule 14)
 
+	int            reduce using rule 4
+	bool           reduce using rule 4
+	identifier     reduce using rule 4
+	'('            reduce using rule 4
 	')'            reduce using rule 4
 	'<'            shift, and enter state 12
 			(reduce using rule 4)
@@ -1035,6 +1111,8 @@ State 35
 	'%'            shift, and enter state 18
 			(reduce using rule 4)
 
+	'!'            reduce using rule 4
+	let            reduce using rule 4
 	"=="           shift, and enter state 19
 			(reduce using rule 4)
 
@@ -1073,6 +1151,10 @@ State 36
 	Expr -> Expr . "&&" Expr                            (rule 13)
 	Expr -> Expr . "||" Expr                            (rule 14)
 
+	int            reduce using rule 3
+	bool           reduce using rule 3
+	identifier     reduce using rule 3
+	'('            reduce using rule 3
 	')'            reduce using rule 3
 	'<'            shift, and enter state 12
 			(reduce using rule 3)
@@ -1087,6 +1169,8 @@ State 36
 	'%'            shift, and enter state 18
 			(reduce using rule 3)
 
+	'!'            reduce using rule 3
+	let            reduce using rule 3
 	"=="           shift, and enter state 19
 			(reduce using rule 3)
 
@@ -1125,6 +1209,10 @@ State 37
 	Expr -> Expr . "&&" Expr                            (rule 13)
 	Expr -> Expr . "||" Expr                            (rule 14)
 
+	int            reduce using rule 2
+	bool           reduce using rule 2
+	identifier     reduce using rule 2
+	'('            reduce using rule 2
 	')'            reduce using rule 2
 	'<'            shift, and enter state 12
 			(reduce using rule 2)
@@ -1139,6 +1227,8 @@ State 37
 	'%'            shift, and enter state 18
 			(reduce using rule 2)
 
+	'!'            reduce using rule 2
+	let            reduce using rule 2
 	"=="           shift, and enter state 19
 			(reduce using rule 2)
 
@@ -1177,6 +1267,10 @@ State 38
 	Expr -> Expr . "&&" Expr                            (rule 13)
 	Expr -> Expr . "||" Expr                            (rule 14)
 
+	int            reduce using rule 8
+	bool           reduce using rule 8
+	identifier     reduce using rule 8
+	'('            reduce using rule 8
 	')'            reduce using rule 8
 	'<'            shift, and enter state 12
 			(reduce using rule 8)
@@ -1199,6 +1293,8 @@ State 38
 	'%'            shift, and enter state 18
 			(reduce using rule 8)
 
+	'!'            reduce using rule 8
+	let            reduce using rule 8
 	"=="           shift, and enter state 19
 			(reduce using rule 8)
 
@@ -1237,6 +1333,10 @@ State 39
 	Expr -> Expr . "&&" Expr                            (rule 13)
 	Expr -> Expr . "||" Expr                            (rule 14)
 
+	int            reduce using rule 7
+	bool           reduce using rule 7
+	identifier     reduce using rule 7
+	'('            reduce using rule 7
 	')'            reduce using rule 7
 	'<'            shift, and enter state 12
 			(reduce using rule 7)
@@ -1259,6 +1359,8 @@ State 39
 	'%'            shift, and enter state 18
 			(reduce using rule 7)
 
+	'!'            reduce using rule 7
+	let            reduce using rule 7
 	"=="           shift, and enter state 19
 			(reduce using rule 7)
 
@@ -1317,6 +1419,10 @@ State 41
 
 	Expr -> '(' Expr ')' .                              (rule 18)
 
+	int            reduce using rule 18
+	bool           reduce using rule 18
+	identifier     reduce using rule 18
+	'('            reduce using rule 18
 	')'            reduce using rule 18
 	'<'            reduce using rule 18
 	'>'            reduce using rule 18
@@ -1325,6 +1431,8 @@ State 41
 	'*'            reduce using rule 18
 	'/'            reduce using rule 18
 	'%'            reduce using rule 18
+	'!'            reduce using rule 18
+	let            reduce using rule 18
 	"=="           reduce using rule 18
 	"!="           reduce using rule 18
 	"<="           reduce using rule 18
@@ -1338,6 +1446,10 @@ State 42
 
 	Expr -> '(' '-' Expr ')' .                          (rule 16)
 
+	int            reduce using rule 16
+	bool           reduce using rule 16
+	identifier     reduce using rule 16
+	'('            reduce using rule 16
 	')'            reduce using rule 16
 	'<'            reduce using rule 16
 	'>'            reduce using rule 16
@@ -1346,6 +1458,8 @@ State 42
 	'*'            reduce using rule 16
 	'/'            reduce using rule 16
 	'%'            reduce using rule 16
+	'!'            reduce using rule 16
+	let            reduce using rule 16
 	"=="           reduce using rule 16
 	"!="           reduce using rule 16
 	"<="           reduce using rule 16
@@ -1357,7 +1471,7 @@ State 42
 
 State 43
 
-	Expr -> let identifier in Expr .                    (rule 1)
+	Expr -> let identifier in Expr . Expr               (rule 1)
 	Expr -> Expr . '+' Expr                             (rule 2)
 	Expr -> Expr . '-' Expr                             (rule 3)
 	Expr -> Expr . '*' Expr                             (rule 4)
@@ -1372,6 +1486,49 @@ State 43
 	Expr -> Expr . "&&" Expr                            (rule 13)
 	Expr -> Expr . "||" Expr                            (rule 14)
 
+	int            shift, and enter state 4
+	bool           shift, and enter state 5
+	identifier     shift, and enter state 6
+	'('            shift, and enter state 7
+	'<'            shift, and enter state 12
+	'>'            shift, and enter state 13
+	'+'            shift, and enter state 14
+	'-'            shift, and enter state 15
+	'*'            shift, and enter state 16
+	'/'            shift, and enter state 17
+	'%'            shift, and enter state 18
+	'!'            shift, and enter state 8
+	let            shift, and enter state 2
+	"=="           shift, and enter state 19
+	"!="           shift, and enter state 20
+	"<="           shift, and enter state 21
+	">="           shift, and enter state 22
+	"&&"           shift, and enter state 23
+	"||"           shift, and enter state 24
+
+	Expr           goto state 44
+
+State 44
+
+	Expr -> let identifier in Expr Expr .               (rule 1)
+	Expr -> Expr . '+' Expr                             (rule 2)
+	Expr -> Expr . '-' Expr                             (rule 3)
+	Expr -> Expr . '*' Expr                             (rule 4)
+	Expr -> Expr . '/' Expr                             (rule 5)
+	Expr -> Expr . '%' Expr                             (rule 6)
+	Expr -> Expr . '<' Expr                             (rule 7)
+	Expr -> Expr . '>' Expr                             (rule 8)
+	Expr -> Expr . "==" Expr                            (rule 9)
+	Expr -> Expr . "!=" Expr                            (rule 10)
+	Expr -> Expr . "<=" Expr                            (rule 11)
+	Expr -> Expr . ">=" Expr                            (rule 12)
+	Expr -> Expr . "&&" Expr                            (rule 13)
+	Expr -> Expr . "||" Expr                            (rule 14)
+
+	int            reduce using rule 1
+	bool           reduce using rule 1
+	identifier     reduce using rule 1
+	'('            reduce using rule 1
 	')'            reduce using rule 1
 	'<'            shift, and enter state 12
 			(reduce using rule 1)
@@ -1386,6 +1543,8 @@ State 43
 	'%'            shift, and enter state 18
 			(reduce using rule 1)
 
+	'!'            reduce using rule 1
+	let            reduce using rule 1
 	"=="           shift, and enter state 19
 			(reduce using rule 1)
 
@@ -1413,4 +1572,4 @@ Grammar Totals
 Number of rules: 21
 Number of terminals: 25
 Number of non-terminals: 2
-Number of states: 44
+Number of states: 45

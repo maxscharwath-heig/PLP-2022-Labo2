@@ -7,28 +7,28 @@ pour la vérification des types sont laissées à votre bon jugement.
 
 module Semantics (typeof) where 
  
-import Parser
+import Parser(Expr(..))
 
 
 type Name = String
 type Env = [(Name, Type)]
 
-data Type = TVar | TInt | TBool
+data Type = TVar | TInt | TBool | TFun Type Type | TErr
   deriving (Show, Eq)
 
 
 -- | Variable
 
-lookup' :: Name -> Env -> Expr
-lookup' x [] = error $ "[#ier Semantics] Error: variable " ++ x ++ " not found"
-lookup' x ((n, t) : env)
-    | x == n = t
-    | otherwise = lookup' x env
+-- lookup' :: Name -> Env -> Expr
+-- lookup' x [] = error $ "[#ier Semantics] Error: variable " ++ x ++ " not found"
+-- lookup' x ((n, t) : env)
+--     | x == n = t
+--     | otherwise = lookup' x env
 
 
-typeof (EVar x) env = lookup' x env
-typeof (EInt n) env = TInt
-typeof (EBool b) env = TBool
+-- typeof (EVar x) env = lookup' x env
+-- typeof (EInt n) env = TInt
+-- typeof (EBool b) env = TBool
 
 -- | Literal
 
@@ -50,10 +50,10 @@ typeof (ERelationalOp op e1 e2) env =
 
 -- | Let expressions
 
-typeof (ELet x y z) env = typeof z env'
-    where
-        t = typeof y env
-        env' = (x, t) : env
+-- typeof (ELet x y z) env = typeof z env'
+--     where
+--         t = typeof y env
+--         env' = (x, t) : env
 
 
 -- | Function application

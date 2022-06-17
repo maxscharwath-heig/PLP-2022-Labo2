@@ -9,15 +9,39 @@ lesquelles et d’adopter un comportement approprié lorsque cela est amené à 
 
 module Eval (eval) where
 
-import Semantics
 import Parser (Expr(..))
+
+data Value = VBool Bool | VInt Int
+
+
+type Name = String
+type Env = [(Name, Int)]
 
 -- Prend un Expr en retourne le résultat de l'évaluation
 
-eval (Int x) _ = x
--- eval (Bool x) _ = x
-eval (ArithmeticOp c x y) env 
-   | c == '+' = (eval x env) + (eval y env)
-   | c == '-' = (eval x env) - (eval y env)
-   | c == '*' = (eval x env) * (eval y env)
-   | c == '/' = div (eval x env) (eval y env)
+-- value :: a -> Env -> Value
+-- value v [] = error ("#ier " ++ v ++ " undefined variable")
+-- value v ((var,val):env)
+--       | v == var = val
+--       | otherwise = value v env
+
+
+eval :: Expr -> Env -> Value
+eval (EInt x) _ = VInt x
+eval (EBool x) _ = VBool x
+-- eval (EArithmeticOp c x y) env 
+--    | c == '+' = VInt ((eval x env) + (eval y env))
+--    | c == '-' = VInt ((eval x env) - (eval y env))
+--    | c == '*' = VInt ((eval x env) * (eval y env))
+--    -- | c == '/' = VInt (div (eval x env) (eval y env))
+
+-- eval (ERelationalOp c x y) env 
+--    | c == "<" = VBool ((eval x env) < (eval y env))
+--    | c == ">" = VBool ((eval x env) > (eval y env))
+--    | c == "<=" = VBool ((eval x env) <= (eval y env))
+--    | c == ">=" = VBool ((eval x env) >= (eval y env))
+--    | c == "==" = VBool((eval x env) == (eval y env))
+--    | c == "!=" = VBool((eval x env) /= (eval y env))
+
+--eval (EVar v) env = value v env
+

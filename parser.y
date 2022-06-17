@@ -59,8 +59,9 @@ import Lexer
 -- Exprs: { [] }
 --  | Expr Exprs {$1:$2}
 
+
 Expr : 
-      let identifier in Expr      { ELet $2 $4 }
+      let identifier in Expr Expr     { ELet $2 $4 }
       | Expr '+' Expr             { EArithmeticOp '+' $1 $3 }
       | Expr '-' Expr             { EArithmeticOp '-' $1 $3 }
       | Expr '*' Expr             { EArithmeticOp '*' $1 $3 }

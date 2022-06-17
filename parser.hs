@@ -22,7 +22,7 @@ data HappyAbsSyn t4
 	| HappyAbsSyn4 t4
 
 happyExpList :: Happy_Data_Array.Array Prelude.Int Prelude.Int
-happyExpList = Happy_Data_Array.listArray (0,140) ([624,24,0,4,4,0,8128,126,0,0,0,0,0,2496,98,624,24,0,0,32576,49656,24585,28672,6146,39936,1536,9984,384,2496,96,624,24,156,6,32807,49153,24585,28672,6146,39936,1536,9984,384,2496,96,624,24,0,8,32807,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,768,0,192,0,0,0,0,62464,8071,0,0,0,0,3840,0,0
+happyExpList = Happy_Data_Array.listArray (0,166) ([624,24,0,4,4,0,8128,126,0,0,0,0,0,2496,98,624,24,0,0,32576,49656,24585,28672,6146,39936,1536,9984,384,2496,96,624,24,156,6,32807,49153,24585,28672,6146,39936,1536,9984,384,2496,96,624,24,0,8,32807,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,768,0,192,0,0,0,0,62464,8071,0,0,0,49152,32713,126,960,0,0
 	])
 
 {-# NOINLINE happyExpListPerState #-}
@@ -466,6 +466,10 @@ action_41 _ = happyReduce_18
 
 action_42 _ = happyReduce_16
 
+action_43 (5) = happyShift action_4
+action_43 (6) = happyShift action_5
+action_43 (7) = happyShift action_6
+action_43 (10) = happyShift action_7
 action_43 (13) = happyShift action_12
 action_43 (14) = happyShift action_13
 action_43 (15) = happyShift action_14
@@ -473,22 +477,41 @@ action_43 (16) = happyShift action_15
 action_43 (17) = happyShift action_16
 action_43 (18) = happyShift action_17
 action_43 (19) = happyShift action_18
+action_43 (20) = happyShift action_8
+action_43 (21) = happyShift action_2
 action_43 (24) = happyShift action_19
 action_43 (25) = happyShift action_20
 action_43 (26) = happyShift action_21
 action_43 (27) = happyShift action_22
 action_43 (28) = happyShift action_23
 action_43 (29) = happyShift action_24
-action_43 _ = happyReduce_1
+action_43 (4) = happyGoto action_44
+action_43 _ = happyFail (happyExpListPerState 43)
 
-happyReduce_1 = happyReduce 4 4 happyReduction_1
-happyReduction_1 ((HappyAbsSyn4  happy_var_4) `HappyStk`
+action_44 (13) = happyShift action_12
+action_44 (14) = happyShift action_13
+action_44 (15) = happyShift action_14
+action_44 (16) = happyShift action_15
+action_44 (17) = happyShift action_16
+action_44 (18) = happyShift action_17
+action_44 (19) = happyShift action_18
+action_44 (24) = happyShift action_19
+action_44 (25) = happyShift action_20
+action_44 (26) = happyShift action_21
+action_44 (27) = happyShift action_22
+action_44 (28) = happyShift action_23
+action_44 (29) = happyShift action_24
+action_44 _ = happyReduce_1
+
+happyReduce_1 = happyReduce 5 4 happyReduction_1
+happyReduction_1 (_ `HappyStk`
+	(HappyAbsSyn4  happy_var_4) `HappyStk`
 	_ `HappyStk`
 	(HappyTerminal (TIdentifier happy_var_2)) `HappyStk`
 	_ `HappyStk`
 	happyRest)
 	 = HappyAbsSyn4
-		 (Let happy_var_2 happy_var_4
+		 (ELet happy_var_2 happy_var_4
 	) `HappyStk` happyRest
 
 happyReduce_2 = happySpecReduce_3  4 happyReduction_2
@@ -496,7 +519,7 @@ happyReduction_2 (HappyAbsSyn4  happy_var_3)
 	_
 	(HappyAbsSyn4  happy_var_1)
 	 =  HappyAbsSyn4
-		 (ArithmeticOp '+' happy_var_1 happy_var_3
+		 (EArithmeticOp '+' happy_var_1 happy_var_3
 	)
 happyReduction_2 _ _ _  = notHappyAtAll 
 
@@ -505,7 +528,7 @@ happyReduction_3 (HappyAbsSyn4  happy_var_3)
 	_
 	(HappyAbsSyn4  happy_var_1)
 	 =  HappyAbsSyn4
-		 (ArithmeticOp '-' happy_var_1 happy_var_3
+		 (EArithmeticOp '-' happy_var_1 happy_var_3
 	)
 happyReduction_3 _ _ _  = notHappyAtAll 
 
@@ -514,7 +537,7 @@ happyReduction_4 (HappyAbsSyn4  happy_var_3)
 	_
 	(HappyAbsSyn4  happy_var_1)
 	 =  HappyAbsSyn4
-		 (ArithmeticOp '*' happy_var_1 happy_var_3
+		 (EArithmeticOp '*' happy_var_1 happy_var_3
 	)
 happyReduction_4 _ _ _  = notHappyAtAll 
 
@@ -523,7 +546,7 @@ happyReduction_5 (HappyAbsSyn4  happy_var_3)
 	_
 	(HappyAbsSyn4  happy_var_1)
 	 =  HappyAbsSyn4
-		 (ArithmeticOp '/' happy_var_1 happy_var_3
+		 (EArithmeticOp '/' happy_var_1 happy_var_3
 	)
 happyReduction_5 _ _ _  = notHappyAtAll 
 
@@ -532,7 +555,7 @@ happyReduction_6 (HappyAbsSyn4  happy_var_3)
 	_
 	(HappyAbsSyn4  happy_var_1)
 	 =  HappyAbsSyn4
-		 (ArithmeticOp '%' happy_var_1 happy_var_3
+		 (EArithmeticOp '%' happy_var_1 happy_var_3
 	)
 happyReduction_6 _ _ _  = notHappyAtAll 
 
@@ -541,7 +564,7 @@ happyReduction_7 (HappyAbsSyn4  happy_var_3)
 	_
 	(HappyAbsSyn4  happy_var_1)
 	 =  HappyAbsSyn4
-		 (ArithmeticOp '<' happy_var_1 happy_var_3
+		 (EArithmeticOp '<' happy_var_1 happy_var_3
 	)
 happyReduction_7 _ _ _  = notHappyAtAll 
 
@@ -550,7 +573,7 @@ happyReduction_8 (HappyAbsSyn4  happy_var_3)
 	_
 	(HappyAbsSyn4  happy_var_1)
 	 =  HappyAbsSyn4
-		 (ArithmeticOp '>' happy_var_1 happy_var_3
+		 (EArithmeticOp '>' happy_var_1 happy_var_3
 	)
 happyReduction_8 _ _ _  = notHappyAtAll 
 
@@ -559,7 +582,7 @@ happyReduction_9 (HappyAbsSyn4  happy_var_3)
 	_
 	(HappyAbsSyn4  happy_var_1)
 	 =  HappyAbsSyn4
-		 (ComparisonOp "==" happy_var_1 happy_var_3
+		 (EComparisonOp "==" happy_var_1 happy_var_3
 	)
 happyReduction_9 _ _ _  = notHappyAtAll 
 
@@ -568,7 +591,7 @@ happyReduction_10 (HappyAbsSyn4  happy_var_3)
 	_
 	(HappyAbsSyn4  happy_var_1)
 	 =  HappyAbsSyn4
-		 (ComparisonOp "!=" happy_var_1 happy_var_3
+		 (EComparisonOp "!=" happy_var_1 happy_var_3
 	)
 happyReduction_10 _ _ _  = notHappyAtAll 
 
@@ -577,7 +600,7 @@ happyReduction_11 (HappyAbsSyn4  happy_var_3)
 	_
 	(HappyAbsSyn4  happy_var_1)
 	 =  HappyAbsSyn4
-		 (ComparisonOp "<=" happy_var_1 happy_var_3
+		 (EComparisonOp "<=" happy_var_1 happy_var_3
 	)
 happyReduction_11 _ _ _  = notHappyAtAll 
 
@@ -586,7 +609,7 @@ happyReduction_12 (HappyAbsSyn4  happy_var_3)
 	_
 	(HappyAbsSyn4  happy_var_1)
 	 =  HappyAbsSyn4
-		 (ComparisonOp ">=" happy_var_1 happy_var_3
+		 (EComparisonOp ">=" happy_var_1 happy_var_3
 	)
 happyReduction_12 _ _ _  = notHappyAtAll 
 
@@ -595,7 +618,7 @@ happyReduction_13 (HappyAbsSyn4  happy_var_3)
 	_
 	(HappyAbsSyn4  happy_var_1)
 	 =  HappyAbsSyn4
-		 (RelationalOp "&&" happy_var_1 happy_var_3
+		 (ERelationalOp "&&" happy_var_1 happy_var_3
 	)
 happyReduction_13 _ _ _  = notHappyAtAll 
 
@@ -604,7 +627,7 @@ happyReduction_14 (HappyAbsSyn4  happy_var_3)
 	_
 	(HappyAbsSyn4  happy_var_1)
 	 =  HappyAbsSyn4
-		 (RelationalOp "||" happy_var_1 happy_var_3
+		 (ERelationalOp "||" happy_var_1 happy_var_3
 	)
 happyReduction_14 _ _ _  = notHappyAtAll 
 
@@ -612,7 +635,7 @@ happyReduce_15 = happySpecReduce_2  4 happyReduction_15
 happyReduction_15 (HappyAbsSyn4  happy_var_2)
 	_
 	 =  HappyAbsSyn4
-		 (Negate happy_var_2
+		 (ENegate happy_var_2
 	)
 happyReduction_15 _ _  = notHappyAtAll 
 
@@ -623,13 +646,13 @@ happyReduction_16 (_ `HappyStk`
 	_ `HappyStk`
 	happyRest)
 	 = HappyAbsSyn4
-		 (Negate happy_var_3
+		 (ENegate happy_var_3
 	) `HappyStk` happyRest
 
 happyReduce_17 = happySpecReduce_1  4 happyReduction_17
 happyReduction_17 (HappyTerminal (TIdentifier happy_var_1))
 	 =  HappyAbsSyn4
-		 (Var happy_var_1
+		 (EVar happy_var_1
 	)
 happyReduction_17 _  = notHappyAtAll 
 
@@ -645,14 +668,14 @@ happyReduction_18 _ _ _  = notHappyAtAll
 happyReduce_19 = happySpecReduce_1  4 happyReduction_19
 happyReduction_19 (HappyTerminal (TInt happy_var_1))
 	 =  HappyAbsSyn4
-		 (Int happy_var_1
+		 (EInt happy_var_1
 	)
 happyReduction_19 _  = notHappyAtAll 
 
 happyReduce_20 = happySpecReduce_1  4 happyReduction_20
 happyReduction_20 (HappyTerminal (TBool happy_var_1))
 	 =  HappyAbsSyn4
-		 (Bool happy_var_1
+		 (EBool happy_var_1
 	)
 happyReduction_20 _  = notHappyAtAll 
 
@@ -725,18 +748,18 @@ happySeq = happyDontSeq
 parseError :: [Token] -> a
 parseError _ = error "Parse error"
 
-data Expr = VarDec String 
-   | FunDec Name [Expr]
-   | Int Int
-   | Bool Bool
-   | ArithmeticOp Char Expr Expr
-   | ComparisonOp String Expr Expr
-   | RelationalOp String Expr Expr
-   | Var Name
-   | Negate Expr
+data Expr = EVarDec String 
+   | EFunDec Name [Expr]
+   | EInt Int
+   | EBool Bool
+   | EArithmeticOp Char Expr Expr
+   | EComparisonOp String Expr Expr
+   | ERelationalOp String Expr Expr
+   | EVar Name
+   | ENegate Expr
    -- | Case Expr Expr
-   | In Expr
-   | Let Name Expr
+   | EIn Expr
+   | ELet Name Expr Expr
    deriving (Show, Eq)
 {-# LINE 1 "templates/GenericTemplate.hs" #-}
 -- $Id: GenericTemplate.hs,v 1.26 2005/01/14 14:47:22 simonmar Exp $

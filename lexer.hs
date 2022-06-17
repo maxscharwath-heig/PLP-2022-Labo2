@@ -2796,9 +2796,7 @@ data Token = TInt Int
             | TOf
             | TComma
             | TEnd
-            | TEq
-            | TUnOp Char
-            | TBinOp String deriving (Show, Eq)
+            | TEq String deriving (Show, Eq)
 
 lexer = alexScanTokens
 alex_action_1 = \s -> TInt (read s)
