@@ -22,13 +22,13 @@ data HappyAbsSyn t4
 	| HappyAbsSyn4 t4
 
 happyExpList :: Happy_Data_Array.Array Prelude.Int Prelude.Int
-happyExpList = Happy_Data_Array.listArray (0,166) ([560,24,0,16,560,24,61440,32263,0,0,0,0,33328,24,560,24,0,0,62464,32263,560,24,560,24,560,24,560,24,560,24,560,24,560,24,560,24,560,24,560,24,560,24,560,24,560,24,560,24,61440,32295,560,24,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,3,0,0,0,0,62464,32263,0,0,0,0,49152,3,0
+happyExpList = Happy_Data_Array.listArray (0,128) ([560,24,0,16,560,24,61440,32263,0,0,0,0,33328,24,560,24,0,0,62464,32263,560,24,560,24,560,24,560,24,560,24,560,24,560,24,560,24,560,24,560,24,560,24,560,24,560,24,560,24,61440,32295,560,24,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,62464,32263,0,0,0,0,0,0,0
 	])
 
 {-# NOINLINE happyExpListPerState #-}
 happyExpListPerState st =
     token_strs_expected
-  where token_strs = ["error","%dummy","%start_parser","Expr","int","bool","identifier","varDec","funDec","'('","')'","'='","'<'","'>'","'+'","'-'","'*'","'/'","'%'","'!'","let","in","case","of","end","\"==\"","\"!=\"","\"<=\"","\">=\"","\"&&\"","\"||\"","%eof"]
+  where token_strs = ["error","%dummy","%start_parser","Expr","int","bool","identifier","varDec","funDec","\"(\"","\")\"","\"=\"","\"<\"","\">\"","\"+\"","\"-\"","\"*\"","\"/\"","\"%\"","\"!\"","let","in","case","of","end","\"==\"","\"!=\"","\"<=\"","\">=\"","\"&&\"","\"||\"","%eof"]
         bit_start = st Prelude.* 32
         bit_end = (st Prelude.+ 1) Prelude.* 32
         read_bit = readArrayBit happyExpList
@@ -368,6 +368,10 @@ action_32 _ = happyReduce_6
 
 action_33 (13) = happyShift action_11
 action_33 (14) = happyShift action_12
+action_33 (15) = happyShift action_13
+action_33 (16) = happyShift action_14
+action_33 (17) = happyShift action_15
+action_33 (18) = happyShift action_16
 action_33 (19) = happyShift action_17
 action_33 (26) = happyShift action_18
 action_33 (27) = happyShift action_19
@@ -379,6 +383,10 @@ action_33 _ = happyReduce_5
 
 action_34 (13) = happyShift action_11
 action_34 (14) = happyShift action_12
+action_34 (15) = happyShift action_13
+action_34 (16) = happyShift action_14
+action_34 (17) = happyShift action_15
+action_34 (18) = happyShift action_16
 action_34 (19) = happyShift action_17
 action_34 (26) = happyShift action_18
 action_34 (27) = happyShift action_19
@@ -390,6 +398,8 @@ action_34 _ = happyReduce_4
 
 action_35 (13) = happyShift action_11
 action_35 (14) = happyShift action_12
+action_35 (15) = happyShift action_13
+action_35 (16) = happyShift action_14
 action_35 (17) = happyShift action_15
 action_35 (18) = happyShift action_16
 action_35 (19) = happyShift action_17
@@ -403,6 +413,8 @@ action_35 _ = happyReduce_3
 
 action_36 (13) = happyShift action_11
 action_36 (14) = happyShift action_12
+action_36 (15) = happyShift action_13
+action_36 (16) = happyShift action_14
 action_36 (17) = happyShift action_15
 action_36 (18) = happyShift action_16
 action_36 (19) = happyShift action_17

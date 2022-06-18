@@ -10,18 +10,18 @@ state 29 contains 13 shift/reduce conflicts.
 state 30 contains 13 shift/reduce conflicts.
 state 31 contains 13 shift/reduce conflicts.
 state 32 contains 13 shift/reduce conflicts.
-state 33 contains 9 shift/reduce conflicts.
-state 34 contains 9 shift/reduce conflicts.
-state 35 contains 9 shift/reduce conflicts.
-state 36 contains 9 shift/reduce conflicts.
+state 33 contains 13 shift/reduce conflicts.
+state 34 contains 13 shift/reduce conflicts.
+state 35 contains 13 shift/reduce conflicts.
+state 36 contains 13 shift/reduce conflicts.
 state 37 contains 13 shift/reduce conflicts.
 state 38 contains 13 shift/reduce conflicts.
-state 42 contains 9 shift/reduce conflicts.
+state 42 contains 13 shift/reduce conflicts.
 
 terminal identifier is unused
 terminal varDec is unused
 terminal funDec is unused
-terminal '=' is unused
+terminal "=" is unused
 terminal case is unused
 terminal of is unused
 terminal end is unused
@@ -31,22 +31,22 @@ Grammar
 -----------------------------------------------------------------------------
 	%start_parser -> Expr                              (0)
 	Expr -> let Expr in Expr                           (1)
-	Expr -> Expr '+' Expr                              (2)
-	Expr -> Expr '-' Expr                              (3)
-	Expr -> Expr '*' Expr                              (4)
-	Expr -> Expr '/' Expr                              (5)
-	Expr -> Expr '%' Expr                              (6)
-	Expr -> Expr '<' Expr                              (7)
-	Expr -> Expr '>' Expr                              (8)
+	Expr -> Expr "+" Expr                              (2)
+	Expr -> Expr "-" Expr                              (3)
+	Expr -> Expr "*" Expr                              (4)
+	Expr -> Expr "/" Expr                              (5)
+	Expr -> Expr "%" Expr                              (6)
+	Expr -> Expr "<" Expr                              (7)
+	Expr -> Expr ">" Expr                              (8)
 	Expr -> Expr "==" Expr                             (9)
 	Expr -> Expr "!=" Expr                             (10)
 	Expr -> Expr "<=" Expr                             (11)
 	Expr -> Expr ">=" Expr                             (12)
 	Expr -> Expr "&&" Expr                             (13)
 	Expr -> Expr "||" Expr                             (14)
-	Expr -> '!' Expr                                   (15)
-	Expr -> '(' '-' Expr ')'                           (16)
-	Expr -> '(' Expr ')'                               (17)
+	Expr -> "!" Expr                                   (15)
+	Expr -> "(" "-" Expr ")"                           (16)
+	Expr -> "(" Expr ")"                               (17)
 	Expr -> int                                        (18)
 	Expr -> bool                                       (19)
 
@@ -58,17 +58,17 @@ Terminals
 	identifier     { TIdentifier $$ }
 	varDec         { TVarDec }
 	funDec         { TFunDec }
-	'('            { TSym '(' }
-	')'            { TSym ')' }
-	'='            { TSym '=' }
-	'<'            { TSym '<' }
-	'>'            { TSym '>' }
-	'+'            { TSym '+' }
-	'-'            { TSym '-' }
-	'*'            { TSym '*' }
-	'/'            { TSym '/' }
-	'%'            { TSym '%' }
-	'!'            { TSym '!' }
+	"("            { TSym '(' }
+	")"            { TSym ')' }
+	"="            { TSym '=' }
+	"<"            { TSym '<' }
+	">"            { TSym '>' }
+	"+"            { TSym '+' }
+	"-"            { TSym '-' }
+	"*"            { TSym '*' }
+	"/"            { TSym '/' }
+	"%"            { TSym '%' }
+	"!"            { TSym '!' }
 	let            { TLet }
 	in             { TIn }
 	case           { TCase }
@@ -96,8 +96,8 @@ State 0
 
 	int            shift, and enter state 4
 	bool           shift, and enter state 5
-	'('            shift, and enter state 6
-	'!'            shift, and enter state 7
+	"("            shift, and enter state 6
+	"!"            shift, and enter state 7
 	let            shift, and enter state 2
 
 	Expr           goto state 3
@@ -115,8 +115,8 @@ State 2
 
 	int            shift, and enter state 4
 	bool           shift, and enter state 5
-	'('            shift, and enter state 6
-	'!'            shift, and enter state 7
+	"("            shift, and enter state 6
+	"!"            shift, and enter state 7
 	let            shift, and enter state 2
 
 	Expr           goto state 24
@@ -124,13 +124,13 @@ State 2
 State 3
 
 	%start_parser -> Expr .                             (rule 0)
-	Expr -> Expr . '+' Expr                             (rule 2)
-	Expr -> Expr . '-' Expr                             (rule 3)
-	Expr -> Expr . '*' Expr                             (rule 4)
-	Expr -> Expr . '/' Expr                             (rule 5)
-	Expr -> Expr . '%' Expr                             (rule 6)
-	Expr -> Expr . '<' Expr                             (rule 7)
-	Expr -> Expr . '>' Expr                             (rule 8)
+	Expr -> Expr . "+" Expr                             (rule 2)
+	Expr -> Expr . "-" Expr                             (rule 3)
+	Expr -> Expr . "*" Expr                             (rule 4)
+	Expr -> Expr . "/" Expr                             (rule 5)
+	Expr -> Expr . "%" Expr                             (rule 6)
+	Expr -> Expr . "<" Expr                             (rule 7)
+	Expr -> Expr . ">" Expr                             (rule 8)
 	Expr -> Expr . "==" Expr                            (rule 9)
 	Expr -> Expr . "!=" Expr                            (rule 10)
 	Expr -> Expr . "<=" Expr                            (rule 11)
@@ -138,13 +138,13 @@ State 3
 	Expr -> Expr . "&&" Expr                            (rule 13)
 	Expr -> Expr . "||" Expr                            (rule 14)
 
-	'<'            shift, and enter state 11
-	'>'            shift, and enter state 12
-	'+'            shift, and enter state 13
-	'-'            shift, and enter state 14
-	'*'            shift, and enter state 15
-	'/'            shift, and enter state 16
-	'%'            shift, and enter state 17
+	"<"            shift, and enter state 11
+	">"            shift, and enter state 12
+	"+"            shift, and enter state 13
+	"-"            shift, and enter state 14
+	"*"            shift, and enter state 15
+	"/"            shift, and enter state 16
+	"%"            shift, and enter state 17
 	"=="           shift, and enter state 18
 	"!="           shift, and enter state 19
 	"<="           shift, and enter state 20
@@ -158,14 +158,14 @@ State 4
 
 	Expr -> int .                                       (rule 18)
 
-	')'            reduce using rule 18
-	'<'            reduce using rule 18
-	'>'            reduce using rule 18
-	'+'            reduce using rule 18
-	'-'            reduce using rule 18
-	'*'            reduce using rule 18
-	'/'            reduce using rule 18
-	'%'            reduce using rule 18
+	")"            reduce using rule 18
+	"<"            reduce using rule 18
+	">"            reduce using rule 18
+	"+"            reduce using rule 18
+	"-"            reduce using rule 18
+	"*"            reduce using rule 18
+	"/"            reduce using rule 18
+	"%"            reduce using rule 18
 	in             reduce using rule 18
 	"=="           reduce using rule 18
 	"!="           reduce using rule 18
@@ -180,14 +180,14 @@ State 5
 
 	Expr -> bool .                                      (rule 19)
 
-	')'            reduce using rule 19
-	'<'            reduce using rule 19
-	'>'            reduce using rule 19
-	'+'            reduce using rule 19
-	'-'            reduce using rule 19
-	'*'            reduce using rule 19
-	'/'            reduce using rule 19
-	'%'            reduce using rule 19
+	")"            reduce using rule 19
+	"<"            reduce using rule 19
+	">"            reduce using rule 19
+	"+"            reduce using rule 19
+	"-"            reduce using rule 19
+	"*"            reduce using rule 19
+	"/"            reduce using rule 19
+	"%"            reduce using rule 19
 	in             reduce using rule 19
 	"=="           reduce using rule 19
 	"!="           reduce using rule 19
@@ -200,67 +200,67 @@ State 5
 
 State 6
 
-	Expr -> '(' . '-' Expr ')'                          (rule 16)
-	Expr -> '(' . Expr ')'                              (rule 17)
+	Expr -> "(" . "-" Expr ")"                          (rule 16)
+	Expr -> "(" . Expr ")"                              (rule 17)
 
 	int            shift, and enter state 4
 	bool           shift, and enter state 5
-	'('            shift, and enter state 6
-	'-'            shift, and enter state 10
-	'!'            shift, and enter state 7
+	"("            shift, and enter state 6
+	"-"            shift, and enter state 10
+	"!"            shift, and enter state 7
 	let            shift, and enter state 2
 
 	Expr           goto state 9
 
 State 7
 
-	Expr -> '!' . Expr                                  (rule 15)
+	Expr -> "!" . Expr                                  (rule 15)
 
 	int            shift, and enter state 4
 	bool           shift, and enter state 5
-	'('            shift, and enter state 6
-	'!'            shift, and enter state 7
+	"("            shift, and enter state 6
+	"!"            shift, and enter state 7
 	let            shift, and enter state 2
 
 	Expr           goto state 8
 
 State 8
 
-	Expr -> Expr . '+' Expr                             (rule 2)
-	Expr -> Expr . '-' Expr                             (rule 3)
-	Expr -> Expr . '*' Expr                             (rule 4)
-	Expr -> Expr . '/' Expr                             (rule 5)
-	Expr -> Expr . '%' Expr                             (rule 6)
-	Expr -> Expr . '<' Expr                             (rule 7)
-	Expr -> Expr . '>' Expr                             (rule 8)
+	Expr -> Expr . "+" Expr                             (rule 2)
+	Expr -> Expr . "-" Expr                             (rule 3)
+	Expr -> Expr . "*" Expr                             (rule 4)
+	Expr -> Expr . "/" Expr                             (rule 5)
+	Expr -> Expr . "%" Expr                             (rule 6)
+	Expr -> Expr . "<" Expr                             (rule 7)
+	Expr -> Expr . ">" Expr                             (rule 8)
 	Expr -> Expr . "==" Expr                            (rule 9)
 	Expr -> Expr . "!=" Expr                            (rule 10)
 	Expr -> Expr . "<=" Expr                            (rule 11)
 	Expr -> Expr . ">=" Expr                            (rule 12)
 	Expr -> Expr . "&&" Expr                            (rule 13)
 	Expr -> Expr . "||" Expr                            (rule 14)
-	Expr -> '!' Expr .                                  (rule 15)
+	Expr -> "!" Expr .                                  (rule 15)
 
-	')'            reduce using rule 15
-	'<'            shift, and enter state 11
+	")"            reduce using rule 15
+	"<"            shift, and enter state 11
 			(reduce using rule 15)
 
-	'>'            shift, and enter state 12
+	">"            shift, and enter state 12
 			(reduce using rule 15)
 
-	'+'            shift, and enter state 13
+	"+"            shift, and enter state 13
 			(reduce using rule 15)
 
-	'-'            shift, and enter state 14
+	"-"            shift, and enter state 14
 			(reduce using rule 15)
 
-	'*'            shift, and enter state 15
+	"*"            shift, and enter state 15
 			(reduce using rule 15)
 
-	'/'            shift, and enter state 16
+	"/"            shift, and enter state 16
 			(reduce using rule 15)
 
-	'%'            shift, and enter state 17
+	"%"            shift, and enter state 17
 			(reduce using rule 15)
 
 	in             reduce using rule 15
@@ -287,29 +287,29 @@ State 8
 
 State 9
 
-	Expr -> Expr . '+' Expr                             (rule 2)
-	Expr -> Expr . '-' Expr                             (rule 3)
-	Expr -> Expr . '*' Expr                             (rule 4)
-	Expr -> Expr . '/' Expr                             (rule 5)
-	Expr -> Expr . '%' Expr                             (rule 6)
-	Expr -> Expr . '<' Expr                             (rule 7)
-	Expr -> Expr . '>' Expr                             (rule 8)
+	Expr -> Expr . "+" Expr                             (rule 2)
+	Expr -> Expr . "-" Expr                             (rule 3)
+	Expr -> Expr . "*" Expr                             (rule 4)
+	Expr -> Expr . "/" Expr                             (rule 5)
+	Expr -> Expr . "%" Expr                             (rule 6)
+	Expr -> Expr . "<" Expr                             (rule 7)
+	Expr -> Expr . ">" Expr                             (rule 8)
 	Expr -> Expr . "==" Expr                            (rule 9)
 	Expr -> Expr . "!=" Expr                            (rule 10)
 	Expr -> Expr . "<=" Expr                            (rule 11)
 	Expr -> Expr . ">=" Expr                            (rule 12)
 	Expr -> Expr . "&&" Expr                            (rule 13)
 	Expr -> Expr . "||" Expr                            (rule 14)
-	Expr -> '(' Expr . ')'                              (rule 17)
+	Expr -> "(" Expr . ")"                              (rule 17)
 
-	')'            shift, and enter state 40
-	'<'            shift, and enter state 11
-	'>'            shift, and enter state 12
-	'+'            shift, and enter state 13
-	'-'            shift, and enter state 14
-	'*'            shift, and enter state 15
-	'/'            shift, and enter state 16
-	'%'            shift, and enter state 17
+	")"            shift, and enter state 40
+	"<"            shift, and enter state 11
+	">"            shift, and enter state 12
+	"+"            shift, and enter state 13
+	"-"            shift, and enter state 14
+	"*"            shift, and enter state 15
+	"/"            shift, and enter state 16
+	"%"            shift, and enter state 17
 	"=="           shift, and enter state 18
 	"!="           shift, and enter state 19
 	"<="           shift, and enter state 20
@@ -320,96 +320,96 @@ State 9
 
 State 10
 
-	Expr -> '(' '-' . Expr ')'                          (rule 16)
+	Expr -> "(" "-" . Expr ")"                          (rule 16)
 
 	int            shift, and enter state 4
 	bool           shift, and enter state 5
-	'('            shift, and enter state 6
-	'!'            shift, and enter state 7
+	"("            shift, and enter state 6
+	"!"            shift, and enter state 7
 	let            shift, and enter state 2
 
 	Expr           goto state 39
 
 State 11
 
-	Expr -> Expr '<' . Expr                             (rule 7)
+	Expr -> Expr "<" . Expr                             (rule 7)
 
 	int            shift, and enter state 4
 	bool           shift, and enter state 5
-	'('            shift, and enter state 6
-	'!'            shift, and enter state 7
+	"("            shift, and enter state 6
+	"!"            shift, and enter state 7
 	let            shift, and enter state 2
 
 	Expr           goto state 38
 
 State 12
 
-	Expr -> Expr '>' . Expr                             (rule 8)
+	Expr -> Expr ">" . Expr                             (rule 8)
 
 	int            shift, and enter state 4
 	bool           shift, and enter state 5
-	'('            shift, and enter state 6
-	'!'            shift, and enter state 7
+	"("            shift, and enter state 6
+	"!"            shift, and enter state 7
 	let            shift, and enter state 2
 
 	Expr           goto state 37
 
 State 13
 
-	Expr -> Expr '+' . Expr                             (rule 2)
+	Expr -> Expr "+" . Expr                             (rule 2)
 
 	int            shift, and enter state 4
 	bool           shift, and enter state 5
-	'('            shift, and enter state 6
-	'!'            shift, and enter state 7
+	"("            shift, and enter state 6
+	"!"            shift, and enter state 7
 	let            shift, and enter state 2
 
 	Expr           goto state 36
 
 State 14
 
-	Expr -> Expr '-' . Expr                             (rule 3)
+	Expr -> Expr "-" . Expr                             (rule 3)
 
 	int            shift, and enter state 4
 	bool           shift, and enter state 5
-	'('            shift, and enter state 6
-	'!'            shift, and enter state 7
+	"("            shift, and enter state 6
+	"!"            shift, and enter state 7
 	let            shift, and enter state 2
 
 	Expr           goto state 35
 
 State 15
 
-	Expr -> Expr '*' . Expr                             (rule 4)
+	Expr -> Expr "*" . Expr                             (rule 4)
 
 	int            shift, and enter state 4
 	bool           shift, and enter state 5
-	'('            shift, and enter state 6
-	'!'            shift, and enter state 7
+	"("            shift, and enter state 6
+	"!"            shift, and enter state 7
 	let            shift, and enter state 2
 
 	Expr           goto state 34
 
 State 16
 
-	Expr -> Expr '/' . Expr                             (rule 5)
+	Expr -> Expr "/" . Expr                             (rule 5)
 
 	int            shift, and enter state 4
 	bool           shift, and enter state 5
-	'('            shift, and enter state 6
-	'!'            shift, and enter state 7
+	"("            shift, and enter state 6
+	"!"            shift, and enter state 7
 	let            shift, and enter state 2
 
 	Expr           goto state 33
 
 State 17
 
-	Expr -> Expr '%' . Expr                             (rule 6)
+	Expr -> Expr "%" . Expr                             (rule 6)
 
 	int            shift, and enter state 4
 	bool           shift, and enter state 5
-	'('            shift, and enter state 6
-	'!'            shift, and enter state 7
+	"("            shift, and enter state 6
+	"!"            shift, and enter state 7
 	let            shift, and enter state 2
 
 	Expr           goto state 32
@@ -420,8 +420,8 @@ State 18
 
 	int            shift, and enter state 4
 	bool           shift, and enter state 5
-	'('            shift, and enter state 6
-	'!'            shift, and enter state 7
+	"("            shift, and enter state 6
+	"!"            shift, and enter state 7
 	let            shift, and enter state 2
 
 	Expr           goto state 31
@@ -432,8 +432,8 @@ State 19
 
 	int            shift, and enter state 4
 	bool           shift, and enter state 5
-	'('            shift, and enter state 6
-	'!'            shift, and enter state 7
+	"("            shift, and enter state 6
+	"!"            shift, and enter state 7
 	let            shift, and enter state 2
 
 	Expr           goto state 30
@@ -444,8 +444,8 @@ State 20
 
 	int            shift, and enter state 4
 	bool           shift, and enter state 5
-	'('            shift, and enter state 6
-	'!'            shift, and enter state 7
+	"("            shift, and enter state 6
+	"!"            shift, and enter state 7
 	let            shift, and enter state 2
 
 	Expr           goto state 29
@@ -456,8 +456,8 @@ State 21
 
 	int            shift, and enter state 4
 	bool           shift, and enter state 5
-	'('            shift, and enter state 6
-	'!'            shift, and enter state 7
+	"("            shift, and enter state 6
+	"!"            shift, and enter state 7
 	let            shift, and enter state 2
 
 	Expr           goto state 28
@@ -468,8 +468,8 @@ State 22
 
 	int            shift, and enter state 4
 	bool           shift, and enter state 5
-	'('            shift, and enter state 6
-	'!'            shift, and enter state 7
+	"("            shift, and enter state 6
+	"!"            shift, and enter state 7
 	let            shift, and enter state 2
 
 	Expr           goto state 27
@@ -480,8 +480,8 @@ State 23
 
 	int            shift, and enter state 4
 	bool           shift, and enter state 5
-	'('            shift, and enter state 6
-	'!'            shift, and enter state 7
+	"("            shift, and enter state 6
+	"!"            shift, and enter state 7
 	let            shift, and enter state 2
 
 	Expr           goto state 26
@@ -489,13 +489,13 @@ State 23
 State 24
 
 	Expr -> let Expr . in Expr                          (rule 1)
-	Expr -> Expr . '+' Expr                             (rule 2)
-	Expr -> Expr . '-' Expr                             (rule 3)
-	Expr -> Expr . '*' Expr                             (rule 4)
-	Expr -> Expr . '/' Expr                             (rule 5)
-	Expr -> Expr . '%' Expr                             (rule 6)
-	Expr -> Expr . '<' Expr                             (rule 7)
-	Expr -> Expr . '>' Expr                             (rule 8)
+	Expr -> Expr . "+" Expr                             (rule 2)
+	Expr -> Expr . "-" Expr                             (rule 3)
+	Expr -> Expr . "*" Expr                             (rule 4)
+	Expr -> Expr . "/" Expr                             (rule 5)
+	Expr -> Expr . "%" Expr                             (rule 6)
+	Expr -> Expr . "<" Expr                             (rule 7)
+	Expr -> Expr . ">" Expr                             (rule 8)
 	Expr -> Expr . "==" Expr                            (rule 9)
 	Expr -> Expr . "!=" Expr                            (rule 10)
 	Expr -> Expr . "<=" Expr                            (rule 11)
@@ -503,13 +503,13 @@ State 24
 	Expr -> Expr . "&&" Expr                            (rule 13)
 	Expr -> Expr . "||" Expr                            (rule 14)
 
-	'<'            shift, and enter state 11
-	'>'            shift, and enter state 12
-	'+'            shift, and enter state 13
-	'-'            shift, and enter state 14
-	'*'            shift, and enter state 15
-	'/'            shift, and enter state 16
-	'%'            shift, and enter state 17
+	"<"            shift, and enter state 11
+	">"            shift, and enter state 12
+	"+"            shift, and enter state 13
+	"-"            shift, and enter state 14
+	"*"            shift, and enter state 15
+	"/"            shift, and enter state 16
+	"%"            shift, and enter state 17
 	in             shift, and enter state 25
 	"=="           shift, and enter state 18
 	"!="           shift, and enter state 19
@@ -525,21 +525,21 @@ State 25
 
 	int            shift, and enter state 4
 	bool           shift, and enter state 5
-	'('            shift, and enter state 6
-	'!'            shift, and enter state 7
+	"("            shift, and enter state 6
+	"!"            shift, and enter state 7
 	let            shift, and enter state 2
 
 	Expr           goto state 42
 
 State 26
 
-	Expr -> Expr . '+' Expr                             (rule 2)
-	Expr -> Expr . '-' Expr                             (rule 3)
-	Expr -> Expr . '*' Expr                             (rule 4)
-	Expr -> Expr . '/' Expr                             (rule 5)
-	Expr -> Expr . '%' Expr                             (rule 6)
-	Expr -> Expr . '<' Expr                             (rule 7)
-	Expr -> Expr . '>' Expr                             (rule 8)
+	Expr -> Expr . "+" Expr                             (rule 2)
+	Expr -> Expr . "-" Expr                             (rule 3)
+	Expr -> Expr . "*" Expr                             (rule 4)
+	Expr -> Expr . "/" Expr                             (rule 5)
+	Expr -> Expr . "%" Expr                             (rule 6)
+	Expr -> Expr . "<" Expr                             (rule 7)
+	Expr -> Expr . ">" Expr                             (rule 8)
 	Expr -> Expr . "==" Expr                            (rule 9)
 	Expr -> Expr . "!=" Expr                            (rule 10)
 	Expr -> Expr . "<=" Expr                            (rule 11)
@@ -548,26 +548,26 @@ State 26
 	Expr -> Expr . "||" Expr                            (rule 14)
 	Expr -> Expr "||" Expr .                            (rule 14)
 
-	')'            reduce using rule 14
-	'<'            shift, and enter state 11
+	")"            reduce using rule 14
+	"<"            shift, and enter state 11
 			(reduce using rule 14)
 
-	'>'            shift, and enter state 12
+	">"            shift, and enter state 12
 			(reduce using rule 14)
 
-	'+'            shift, and enter state 13
+	"+"            shift, and enter state 13
 			(reduce using rule 14)
 
-	'-'            shift, and enter state 14
+	"-"            shift, and enter state 14
 			(reduce using rule 14)
 
-	'*'            shift, and enter state 15
+	"*"            shift, and enter state 15
 			(reduce using rule 14)
 
-	'/'            shift, and enter state 16
+	"/"            shift, and enter state 16
 			(reduce using rule 14)
 
-	'%'            shift, and enter state 17
+	"%"            shift, and enter state 17
 			(reduce using rule 14)
 
 	in             reduce using rule 14
@@ -594,13 +594,13 @@ State 26
 
 State 27
 
-	Expr -> Expr . '+' Expr                             (rule 2)
-	Expr -> Expr . '-' Expr                             (rule 3)
-	Expr -> Expr . '*' Expr                             (rule 4)
-	Expr -> Expr . '/' Expr                             (rule 5)
-	Expr -> Expr . '%' Expr                             (rule 6)
-	Expr -> Expr . '<' Expr                             (rule 7)
-	Expr -> Expr . '>' Expr                             (rule 8)
+	Expr -> Expr . "+" Expr                             (rule 2)
+	Expr -> Expr . "-" Expr                             (rule 3)
+	Expr -> Expr . "*" Expr                             (rule 4)
+	Expr -> Expr . "/" Expr                             (rule 5)
+	Expr -> Expr . "%" Expr                             (rule 6)
+	Expr -> Expr . "<" Expr                             (rule 7)
+	Expr -> Expr . ">" Expr                             (rule 8)
 	Expr -> Expr . "==" Expr                            (rule 9)
 	Expr -> Expr . "!=" Expr                            (rule 10)
 	Expr -> Expr . "<=" Expr                            (rule 11)
@@ -609,26 +609,26 @@ State 27
 	Expr -> Expr "&&" Expr .                            (rule 13)
 	Expr -> Expr . "||" Expr                            (rule 14)
 
-	')'            reduce using rule 13
-	'<'            shift, and enter state 11
+	")"            reduce using rule 13
+	"<"            shift, and enter state 11
 			(reduce using rule 13)
 
-	'>'            shift, and enter state 12
+	">"            shift, and enter state 12
 			(reduce using rule 13)
 
-	'+'            shift, and enter state 13
+	"+"            shift, and enter state 13
 			(reduce using rule 13)
 
-	'-'            shift, and enter state 14
+	"-"            shift, and enter state 14
 			(reduce using rule 13)
 
-	'*'            shift, and enter state 15
+	"*"            shift, and enter state 15
 			(reduce using rule 13)
 
-	'/'            shift, and enter state 16
+	"/"            shift, and enter state 16
 			(reduce using rule 13)
 
-	'%'            shift, and enter state 17
+	"%"            shift, and enter state 17
 			(reduce using rule 13)
 
 	in             reduce using rule 13
@@ -655,13 +655,13 @@ State 27
 
 State 28
 
-	Expr -> Expr . '+' Expr                             (rule 2)
-	Expr -> Expr . '-' Expr                             (rule 3)
-	Expr -> Expr . '*' Expr                             (rule 4)
-	Expr -> Expr . '/' Expr                             (rule 5)
-	Expr -> Expr . '%' Expr                             (rule 6)
-	Expr -> Expr . '<' Expr                             (rule 7)
-	Expr -> Expr . '>' Expr                             (rule 8)
+	Expr -> Expr . "+" Expr                             (rule 2)
+	Expr -> Expr . "-" Expr                             (rule 3)
+	Expr -> Expr . "*" Expr                             (rule 4)
+	Expr -> Expr . "/" Expr                             (rule 5)
+	Expr -> Expr . "%" Expr                             (rule 6)
+	Expr -> Expr . "<" Expr                             (rule 7)
+	Expr -> Expr . ">" Expr                             (rule 8)
 	Expr -> Expr . "==" Expr                            (rule 9)
 	Expr -> Expr . "!=" Expr                            (rule 10)
 	Expr -> Expr . "<=" Expr                            (rule 11)
@@ -670,26 +670,26 @@ State 28
 	Expr -> Expr . "&&" Expr                            (rule 13)
 	Expr -> Expr . "||" Expr                            (rule 14)
 
-	')'            reduce using rule 12
-	'<'            shift, and enter state 11
+	")"            reduce using rule 12
+	"<"            shift, and enter state 11
 			(reduce using rule 12)
 
-	'>'            shift, and enter state 12
+	">"            shift, and enter state 12
 			(reduce using rule 12)
 
-	'+'            shift, and enter state 13
+	"+"            shift, and enter state 13
 			(reduce using rule 12)
 
-	'-'            shift, and enter state 14
+	"-"            shift, and enter state 14
 			(reduce using rule 12)
 
-	'*'            shift, and enter state 15
+	"*"            shift, and enter state 15
 			(reduce using rule 12)
 
-	'/'            shift, and enter state 16
+	"/"            shift, and enter state 16
 			(reduce using rule 12)
 
-	'%'            shift, and enter state 17
+	"%"            shift, and enter state 17
 			(reduce using rule 12)
 
 	in             reduce using rule 12
@@ -716,13 +716,13 @@ State 28
 
 State 29
 
-	Expr -> Expr . '+' Expr                             (rule 2)
-	Expr -> Expr . '-' Expr                             (rule 3)
-	Expr -> Expr . '*' Expr                             (rule 4)
-	Expr -> Expr . '/' Expr                             (rule 5)
-	Expr -> Expr . '%' Expr                             (rule 6)
-	Expr -> Expr . '<' Expr                             (rule 7)
-	Expr -> Expr . '>' Expr                             (rule 8)
+	Expr -> Expr . "+" Expr                             (rule 2)
+	Expr -> Expr . "-" Expr                             (rule 3)
+	Expr -> Expr . "*" Expr                             (rule 4)
+	Expr -> Expr . "/" Expr                             (rule 5)
+	Expr -> Expr . "%" Expr                             (rule 6)
+	Expr -> Expr . "<" Expr                             (rule 7)
+	Expr -> Expr . ">" Expr                             (rule 8)
 	Expr -> Expr . "==" Expr                            (rule 9)
 	Expr -> Expr . "!=" Expr                            (rule 10)
 	Expr -> Expr . "<=" Expr                            (rule 11)
@@ -731,26 +731,26 @@ State 29
 	Expr -> Expr . "&&" Expr                            (rule 13)
 	Expr -> Expr . "||" Expr                            (rule 14)
 
-	')'            reduce using rule 11
-	'<'            shift, and enter state 11
+	")"            reduce using rule 11
+	"<"            shift, and enter state 11
 			(reduce using rule 11)
 
-	'>'            shift, and enter state 12
+	">"            shift, and enter state 12
 			(reduce using rule 11)
 
-	'+'            shift, and enter state 13
+	"+"            shift, and enter state 13
 			(reduce using rule 11)
 
-	'-'            shift, and enter state 14
+	"-"            shift, and enter state 14
 			(reduce using rule 11)
 
-	'*'            shift, and enter state 15
+	"*"            shift, and enter state 15
 			(reduce using rule 11)
 
-	'/'            shift, and enter state 16
+	"/"            shift, and enter state 16
 			(reduce using rule 11)
 
-	'%'            shift, and enter state 17
+	"%"            shift, and enter state 17
 			(reduce using rule 11)
 
 	in             reduce using rule 11
@@ -777,13 +777,13 @@ State 29
 
 State 30
 
-	Expr -> Expr . '+' Expr                             (rule 2)
-	Expr -> Expr . '-' Expr                             (rule 3)
-	Expr -> Expr . '*' Expr                             (rule 4)
-	Expr -> Expr . '/' Expr                             (rule 5)
-	Expr -> Expr . '%' Expr                             (rule 6)
-	Expr -> Expr . '<' Expr                             (rule 7)
-	Expr -> Expr . '>' Expr                             (rule 8)
+	Expr -> Expr . "+" Expr                             (rule 2)
+	Expr -> Expr . "-" Expr                             (rule 3)
+	Expr -> Expr . "*" Expr                             (rule 4)
+	Expr -> Expr . "/" Expr                             (rule 5)
+	Expr -> Expr . "%" Expr                             (rule 6)
+	Expr -> Expr . "<" Expr                             (rule 7)
+	Expr -> Expr . ">" Expr                             (rule 8)
 	Expr -> Expr . "==" Expr                            (rule 9)
 	Expr -> Expr . "!=" Expr                            (rule 10)
 	Expr -> Expr "!=" Expr .                            (rule 10)
@@ -792,26 +792,26 @@ State 30
 	Expr -> Expr . "&&" Expr                            (rule 13)
 	Expr -> Expr . "||" Expr                            (rule 14)
 
-	')'            reduce using rule 10
-	'<'            shift, and enter state 11
+	")"            reduce using rule 10
+	"<"            shift, and enter state 11
 			(reduce using rule 10)
 
-	'>'            shift, and enter state 12
+	">"            shift, and enter state 12
 			(reduce using rule 10)
 
-	'+'            shift, and enter state 13
+	"+"            shift, and enter state 13
 			(reduce using rule 10)
 
-	'-'            shift, and enter state 14
+	"-"            shift, and enter state 14
 			(reduce using rule 10)
 
-	'*'            shift, and enter state 15
+	"*"            shift, and enter state 15
 			(reduce using rule 10)
 
-	'/'            shift, and enter state 16
+	"/"            shift, and enter state 16
 			(reduce using rule 10)
 
-	'%'            shift, and enter state 17
+	"%"            shift, and enter state 17
 			(reduce using rule 10)
 
 	in             reduce using rule 10
@@ -838,13 +838,13 @@ State 30
 
 State 31
 
-	Expr -> Expr . '+' Expr                             (rule 2)
-	Expr -> Expr . '-' Expr                             (rule 3)
-	Expr -> Expr . '*' Expr                             (rule 4)
-	Expr -> Expr . '/' Expr                             (rule 5)
-	Expr -> Expr . '%' Expr                             (rule 6)
-	Expr -> Expr . '<' Expr                             (rule 7)
-	Expr -> Expr . '>' Expr                             (rule 8)
+	Expr -> Expr . "+" Expr                             (rule 2)
+	Expr -> Expr . "-" Expr                             (rule 3)
+	Expr -> Expr . "*" Expr                             (rule 4)
+	Expr -> Expr . "/" Expr                             (rule 5)
+	Expr -> Expr . "%" Expr                             (rule 6)
+	Expr -> Expr . "<" Expr                             (rule 7)
+	Expr -> Expr . ">" Expr                             (rule 8)
 	Expr -> Expr . "==" Expr                            (rule 9)
 	Expr -> Expr "==" Expr .                            (rule 9)
 	Expr -> Expr . "!=" Expr                            (rule 10)
@@ -853,26 +853,26 @@ State 31
 	Expr -> Expr . "&&" Expr                            (rule 13)
 	Expr -> Expr . "||" Expr                            (rule 14)
 
-	')'            reduce using rule 9
-	'<'            shift, and enter state 11
+	")"            reduce using rule 9
+	"<"            shift, and enter state 11
 			(reduce using rule 9)
 
-	'>'            shift, and enter state 12
+	">"            shift, and enter state 12
 			(reduce using rule 9)
 
-	'+'            shift, and enter state 13
+	"+"            shift, and enter state 13
 			(reduce using rule 9)
 
-	'-'            shift, and enter state 14
+	"-"            shift, and enter state 14
 			(reduce using rule 9)
 
-	'*'            shift, and enter state 15
+	"*"            shift, and enter state 15
 			(reduce using rule 9)
 
-	'/'            shift, and enter state 16
+	"/"            shift, and enter state 16
 			(reduce using rule 9)
 
-	'%'            shift, and enter state 17
+	"%"            shift, and enter state 17
 			(reduce using rule 9)
 
 	in             reduce using rule 9
@@ -899,14 +899,14 @@ State 31
 
 State 32
 
-	Expr -> Expr . '+' Expr                             (rule 2)
-	Expr -> Expr . '-' Expr                             (rule 3)
-	Expr -> Expr . '*' Expr                             (rule 4)
-	Expr -> Expr . '/' Expr                             (rule 5)
-	Expr -> Expr . '%' Expr                             (rule 6)
-	Expr -> Expr '%' Expr .                             (rule 6)
-	Expr -> Expr . '<' Expr                             (rule 7)
-	Expr -> Expr . '>' Expr                             (rule 8)
+	Expr -> Expr . "+" Expr                             (rule 2)
+	Expr -> Expr . "-" Expr                             (rule 3)
+	Expr -> Expr . "*" Expr                             (rule 4)
+	Expr -> Expr . "/" Expr                             (rule 5)
+	Expr -> Expr . "%" Expr                             (rule 6)
+	Expr -> Expr "%" Expr .                             (rule 6)
+	Expr -> Expr . "<" Expr                             (rule 7)
+	Expr -> Expr . ">" Expr                             (rule 8)
 	Expr -> Expr . "==" Expr                            (rule 9)
 	Expr -> Expr . "!=" Expr                            (rule 10)
 	Expr -> Expr . "<=" Expr                            (rule 11)
@@ -914,26 +914,26 @@ State 32
 	Expr -> Expr . "&&" Expr                            (rule 13)
 	Expr -> Expr . "||" Expr                            (rule 14)
 
-	')'            reduce using rule 6
-	'<'            shift, and enter state 11
+	")"            reduce using rule 6
+	"<"            shift, and enter state 11
 			(reduce using rule 6)
 
-	'>'            shift, and enter state 12
+	">"            shift, and enter state 12
 			(reduce using rule 6)
 
-	'+'            shift, and enter state 13
+	"+"            shift, and enter state 13
 			(reduce using rule 6)
 
-	'-'            shift, and enter state 14
+	"-"            shift, and enter state 14
 			(reduce using rule 6)
 
-	'*'            shift, and enter state 15
+	"*"            shift, and enter state 15
 			(reduce using rule 6)
 
-	'/'            shift, and enter state 16
+	"/"            shift, and enter state 16
 			(reduce using rule 6)
 
-	'%'            shift, and enter state 17
+	"%"            shift, and enter state 17
 			(reduce using rule 6)
 
 	in             reduce using rule 6
@@ -960,14 +960,14 @@ State 32
 
 State 33
 
-	Expr -> Expr . '+' Expr                             (rule 2)
-	Expr -> Expr . '-' Expr                             (rule 3)
-	Expr -> Expr . '*' Expr                             (rule 4)
-	Expr -> Expr . '/' Expr                             (rule 5)
-	Expr -> Expr '/' Expr .                             (rule 5)
-	Expr -> Expr . '%' Expr                             (rule 6)
-	Expr -> Expr . '<' Expr                             (rule 7)
-	Expr -> Expr . '>' Expr                             (rule 8)
+	Expr -> Expr . "+" Expr                             (rule 2)
+	Expr -> Expr . "-" Expr                             (rule 3)
+	Expr -> Expr . "*" Expr                             (rule 4)
+	Expr -> Expr . "/" Expr                             (rule 5)
+	Expr -> Expr "/" Expr .                             (rule 5)
+	Expr -> Expr . "%" Expr                             (rule 6)
+	Expr -> Expr . "<" Expr                             (rule 7)
+	Expr -> Expr . ">" Expr                             (rule 8)
 	Expr -> Expr . "==" Expr                            (rule 9)
 	Expr -> Expr . "!=" Expr                            (rule 10)
 	Expr -> Expr . "<=" Expr                            (rule 11)
@@ -975,18 +975,26 @@ State 33
 	Expr -> Expr . "&&" Expr                            (rule 13)
 	Expr -> Expr . "||" Expr                            (rule 14)
 
-	')'            reduce using rule 5
-	'<'            shift, and enter state 11
+	")"            reduce using rule 5
+	"<"            shift, and enter state 11
 			(reduce using rule 5)
 
-	'>'            shift, and enter state 12
+	">"            shift, and enter state 12
 			(reduce using rule 5)
 
-	'+'            reduce using rule 5
-	'-'            reduce using rule 5
-	'*'            reduce using rule 5
-	'/'            reduce using rule 5
-	'%'            shift, and enter state 17
+	"+"            shift, and enter state 13
+			(reduce using rule 5)
+
+	"-"            shift, and enter state 14
+			(reduce using rule 5)
+
+	"*"            shift, and enter state 15
+			(reduce using rule 5)
+
+	"/"            shift, and enter state 16
+			(reduce using rule 5)
+
+	"%"            shift, and enter state 17
 			(reduce using rule 5)
 
 	in             reduce using rule 5
@@ -1013,14 +1021,14 @@ State 33
 
 State 34
 
-	Expr -> Expr . '+' Expr                             (rule 2)
-	Expr -> Expr . '-' Expr                             (rule 3)
-	Expr -> Expr . '*' Expr                             (rule 4)
-	Expr -> Expr '*' Expr .                             (rule 4)
-	Expr -> Expr . '/' Expr                             (rule 5)
-	Expr -> Expr . '%' Expr                             (rule 6)
-	Expr -> Expr . '<' Expr                             (rule 7)
-	Expr -> Expr . '>' Expr                             (rule 8)
+	Expr -> Expr . "+" Expr                             (rule 2)
+	Expr -> Expr . "-" Expr                             (rule 3)
+	Expr -> Expr . "*" Expr                             (rule 4)
+	Expr -> Expr "*" Expr .                             (rule 4)
+	Expr -> Expr . "/" Expr                             (rule 5)
+	Expr -> Expr . "%" Expr                             (rule 6)
+	Expr -> Expr . "<" Expr                             (rule 7)
+	Expr -> Expr . ">" Expr                             (rule 8)
 	Expr -> Expr . "==" Expr                            (rule 9)
 	Expr -> Expr . "!=" Expr                            (rule 10)
 	Expr -> Expr . "<=" Expr                            (rule 11)
@@ -1028,18 +1036,26 @@ State 34
 	Expr -> Expr . "&&" Expr                            (rule 13)
 	Expr -> Expr . "||" Expr                            (rule 14)
 
-	')'            reduce using rule 4
-	'<'            shift, and enter state 11
+	")"            reduce using rule 4
+	"<"            shift, and enter state 11
 			(reduce using rule 4)
 
-	'>'            shift, and enter state 12
+	">"            shift, and enter state 12
 			(reduce using rule 4)
 
-	'+'            reduce using rule 4
-	'-'            reduce using rule 4
-	'*'            reduce using rule 4
-	'/'            reduce using rule 4
-	'%'            shift, and enter state 17
+	"+"            shift, and enter state 13
+			(reduce using rule 4)
+
+	"-"            shift, and enter state 14
+			(reduce using rule 4)
+
+	"*"            shift, and enter state 15
+			(reduce using rule 4)
+
+	"/"            shift, and enter state 16
+			(reduce using rule 4)
+
+	"%"            shift, and enter state 17
 			(reduce using rule 4)
 
 	in             reduce using rule 4
@@ -1066,14 +1082,14 @@ State 34
 
 State 35
 
-	Expr -> Expr . '+' Expr                             (rule 2)
-	Expr -> Expr . '-' Expr                             (rule 3)
-	Expr -> Expr '-' Expr .                             (rule 3)
-	Expr -> Expr . '*' Expr                             (rule 4)
-	Expr -> Expr . '/' Expr                             (rule 5)
-	Expr -> Expr . '%' Expr                             (rule 6)
-	Expr -> Expr . '<' Expr                             (rule 7)
-	Expr -> Expr . '>' Expr                             (rule 8)
+	Expr -> Expr . "+" Expr                             (rule 2)
+	Expr -> Expr . "-" Expr                             (rule 3)
+	Expr -> Expr "-" Expr .                             (rule 3)
+	Expr -> Expr . "*" Expr                             (rule 4)
+	Expr -> Expr . "/" Expr                             (rule 5)
+	Expr -> Expr . "%" Expr                             (rule 6)
+	Expr -> Expr . "<" Expr                             (rule 7)
+	Expr -> Expr . ">" Expr                             (rule 8)
 	Expr -> Expr . "==" Expr                            (rule 9)
 	Expr -> Expr . "!=" Expr                            (rule 10)
 	Expr -> Expr . "<=" Expr                            (rule 11)
@@ -1081,18 +1097,26 @@ State 35
 	Expr -> Expr . "&&" Expr                            (rule 13)
 	Expr -> Expr . "||" Expr                            (rule 14)
 
-	')'            reduce using rule 3
-	'<'            shift, and enter state 11
+	")"            reduce using rule 3
+	"<"            shift, and enter state 11
 			(reduce using rule 3)
 
-	'>'            shift, and enter state 12
+	">"            shift, and enter state 12
 			(reduce using rule 3)
 
-	'+'            reduce using rule 3
-	'-'            reduce using rule 3
-	'*'            shift, and enter state 15
-	'/'            shift, and enter state 16
-	'%'            shift, and enter state 17
+	"+"            shift, and enter state 13
+			(reduce using rule 3)
+
+	"-"            shift, and enter state 14
+			(reduce using rule 3)
+
+	"*"            shift, and enter state 15
+			(reduce using rule 3)
+
+	"/"            shift, and enter state 16
+			(reduce using rule 3)
+
+	"%"            shift, and enter state 17
 			(reduce using rule 3)
 
 	in             reduce using rule 3
@@ -1119,14 +1143,14 @@ State 35
 
 State 36
 
-	Expr -> Expr . '+' Expr                             (rule 2)
-	Expr -> Expr '+' Expr .                             (rule 2)
-	Expr -> Expr . '-' Expr                             (rule 3)
-	Expr -> Expr . '*' Expr                             (rule 4)
-	Expr -> Expr . '/' Expr                             (rule 5)
-	Expr -> Expr . '%' Expr                             (rule 6)
-	Expr -> Expr . '<' Expr                             (rule 7)
-	Expr -> Expr . '>' Expr                             (rule 8)
+	Expr -> Expr . "+" Expr                             (rule 2)
+	Expr -> Expr "+" Expr .                             (rule 2)
+	Expr -> Expr . "-" Expr                             (rule 3)
+	Expr -> Expr . "*" Expr                             (rule 4)
+	Expr -> Expr . "/" Expr                             (rule 5)
+	Expr -> Expr . "%" Expr                             (rule 6)
+	Expr -> Expr . "<" Expr                             (rule 7)
+	Expr -> Expr . ">" Expr                             (rule 8)
 	Expr -> Expr . "==" Expr                            (rule 9)
 	Expr -> Expr . "!=" Expr                            (rule 10)
 	Expr -> Expr . "<=" Expr                            (rule 11)
@@ -1134,18 +1158,26 @@ State 36
 	Expr -> Expr . "&&" Expr                            (rule 13)
 	Expr -> Expr . "||" Expr                            (rule 14)
 
-	')'            reduce using rule 2
-	'<'            shift, and enter state 11
+	")"            reduce using rule 2
+	"<"            shift, and enter state 11
 			(reduce using rule 2)
 
-	'>'            shift, and enter state 12
+	">"            shift, and enter state 12
 			(reduce using rule 2)
 
-	'+'            reduce using rule 2
-	'-'            reduce using rule 2
-	'*'            shift, and enter state 15
-	'/'            shift, and enter state 16
-	'%'            shift, and enter state 17
+	"+"            shift, and enter state 13
+			(reduce using rule 2)
+
+	"-"            shift, and enter state 14
+			(reduce using rule 2)
+
+	"*"            shift, and enter state 15
+			(reduce using rule 2)
+
+	"/"            shift, and enter state 16
+			(reduce using rule 2)
+
+	"%"            shift, and enter state 17
 			(reduce using rule 2)
 
 	in             reduce using rule 2
@@ -1172,14 +1204,14 @@ State 36
 
 State 37
 
-	Expr -> Expr . '+' Expr                             (rule 2)
-	Expr -> Expr . '-' Expr                             (rule 3)
-	Expr -> Expr . '*' Expr                             (rule 4)
-	Expr -> Expr . '/' Expr                             (rule 5)
-	Expr -> Expr . '%' Expr                             (rule 6)
-	Expr -> Expr . '<' Expr                             (rule 7)
-	Expr -> Expr . '>' Expr                             (rule 8)
-	Expr -> Expr '>' Expr .                             (rule 8)
+	Expr -> Expr . "+" Expr                             (rule 2)
+	Expr -> Expr . "-" Expr                             (rule 3)
+	Expr -> Expr . "*" Expr                             (rule 4)
+	Expr -> Expr . "/" Expr                             (rule 5)
+	Expr -> Expr . "%" Expr                             (rule 6)
+	Expr -> Expr . "<" Expr                             (rule 7)
+	Expr -> Expr . ">" Expr                             (rule 8)
+	Expr -> Expr ">" Expr .                             (rule 8)
 	Expr -> Expr . "==" Expr                            (rule 9)
 	Expr -> Expr . "!=" Expr                            (rule 10)
 	Expr -> Expr . "<=" Expr                            (rule 11)
@@ -1187,26 +1219,26 @@ State 37
 	Expr -> Expr . "&&" Expr                            (rule 13)
 	Expr -> Expr . "||" Expr                            (rule 14)
 
-	')'            reduce using rule 8
-	'<'            shift, and enter state 11
+	")"            reduce using rule 8
+	"<"            shift, and enter state 11
 			(reduce using rule 8)
 
-	'>'            shift, and enter state 12
+	">"            shift, and enter state 12
 			(reduce using rule 8)
 
-	'+'            shift, and enter state 13
+	"+"            shift, and enter state 13
 			(reduce using rule 8)
 
-	'-'            shift, and enter state 14
+	"-"            shift, and enter state 14
 			(reduce using rule 8)
 
-	'*'            shift, and enter state 15
+	"*"            shift, and enter state 15
 			(reduce using rule 8)
 
-	'/'            shift, and enter state 16
+	"/"            shift, and enter state 16
 			(reduce using rule 8)
 
-	'%'            shift, and enter state 17
+	"%"            shift, and enter state 17
 			(reduce using rule 8)
 
 	in             reduce using rule 8
@@ -1233,14 +1265,14 @@ State 37
 
 State 38
 
-	Expr -> Expr . '+' Expr                             (rule 2)
-	Expr -> Expr . '-' Expr                             (rule 3)
-	Expr -> Expr . '*' Expr                             (rule 4)
-	Expr -> Expr . '/' Expr                             (rule 5)
-	Expr -> Expr . '%' Expr                             (rule 6)
-	Expr -> Expr . '<' Expr                             (rule 7)
-	Expr -> Expr '<' Expr .                             (rule 7)
-	Expr -> Expr . '>' Expr                             (rule 8)
+	Expr -> Expr . "+" Expr                             (rule 2)
+	Expr -> Expr . "-" Expr                             (rule 3)
+	Expr -> Expr . "*" Expr                             (rule 4)
+	Expr -> Expr . "/" Expr                             (rule 5)
+	Expr -> Expr . "%" Expr                             (rule 6)
+	Expr -> Expr . "<" Expr                             (rule 7)
+	Expr -> Expr "<" Expr .                             (rule 7)
+	Expr -> Expr . ">" Expr                             (rule 8)
 	Expr -> Expr . "==" Expr                            (rule 9)
 	Expr -> Expr . "!=" Expr                            (rule 10)
 	Expr -> Expr . "<=" Expr                            (rule 11)
@@ -1248,26 +1280,26 @@ State 38
 	Expr -> Expr . "&&" Expr                            (rule 13)
 	Expr -> Expr . "||" Expr                            (rule 14)
 
-	')'            reduce using rule 7
-	'<'            shift, and enter state 11
+	")"            reduce using rule 7
+	"<"            shift, and enter state 11
 			(reduce using rule 7)
 
-	'>'            shift, and enter state 12
+	">"            shift, and enter state 12
 			(reduce using rule 7)
 
-	'+'            shift, and enter state 13
+	"+"            shift, and enter state 13
 			(reduce using rule 7)
 
-	'-'            shift, and enter state 14
+	"-"            shift, and enter state 14
 			(reduce using rule 7)
 
-	'*'            shift, and enter state 15
+	"*"            shift, and enter state 15
 			(reduce using rule 7)
 
-	'/'            shift, and enter state 16
+	"/"            shift, and enter state 16
 			(reduce using rule 7)
 
-	'%'            shift, and enter state 17
+	"%"            shift, and enter state 17
 			(reduce using rule 7)
 
 	in             reduce using rule 7
@@ -1294,29 +1326,29 @@ State 38
 
 State 39
 
-	Expr -> Expr . '+' Expr                             (rule 2)
-	Expr -> Expr . '-' Expr                             (rule 3)
-	Expr -> Expr . '*' Expr                             (rule 4)
-	Expr -> Expr . '/' Expr                             (rule 5)
-	Expr -> Expr . '%' Expr                             (rule 6)
-	Expr -> Expr . '<' Expr                             (rule 7)
-	Expr -> Expr . '>' Expr                             (rule 8)
+	Expr -> Expr . "+" Expr                             (rule 2)
+	Expr -> Expr . "-" Expr                             (rule 3)
+	Expr -> Expr . "*" Expr                             (rule 4)
+	Expr -> Expr . "/" Expr                             (rule 5)
+	Expr -> Expr . "%" Expr                             (rule 6)
+	Expr -> Expr . "<" Expr                             (rule 7)
+	Expr -> Expr . ">" Expr                             (rule 8)
 	Expr -> Expr . "==" Expr                            (rule 9)
 	Expr -> Expr . "!=" Expr                            (rule 10)
 	Expr -> Expr . "<=" Expr                            (rule 11)
 	Expr -> Expr . ">=" Expr                            (rule 12)
 	Expr -> Expr . "&&" Expr                            (rule 13)
 	Expr -> Expr . "||" Expr                            (rule 14)
-	Expr -> '(' '-' Expr . ')'                          (rule 16)
+	Expr -> "(" "-" Expr . ")"                          (rule 16)
 
-	')'            shift, and enter state 41
-	'<'            shift, and enter state 11
-	'>'            shift, and enter state 12
-	'+'            shift, and enter state 13
-	'-'            shift, and enter state 14
-	'*'            shift, and enter state 15
-	'/'            shift, and enter state 16
-	'%'            shift, and enter state 17
+	")"            shift, and enter state 41
+	"<"            shift, and enter state 11
+	">"            shift, and enter state 12
+	"+"            shift, and enter state 13
+	"-"            shift, and enter state 14
+	"*"            shift, and enter state 15
+	"/"            shift, and enter state 16
+	"%"            shift, and enter state 17
 	"=="           shift, and enter state 18
 	"!="           shift, and enter state 19
 	"<="           shift, and enter state 20
@@ -1327,16 +1359,16 @@ State 39
 
 State 40
 
-	Expr -> '(' Expr ')' .                              (rule 17)
+	Expr -> "(" Expr ")" .                              (rule 17)
 
-	')'            reduce using rule 17
-	'<'            reduce using rule 17
-	'>'            reduce using rule 17
-	'+'            reduce using rule 17
-	'-'            reduce using rule 17
-	'*'            reduce using rule 17
-	'/'            reduce using rule 17
-	'%'            reduce using rule 17
+	")"            reduce using rule 17
+	"<"            reduce using rule 17
+	">"            reduce using rule 17
+	"+"            reduce using rule 17
+	"-"            reduce using rule 17
+	"*"            reduce using rule 17
+	"/"            reduce using rule 17
+	"%"            reduce using rule 17
 	in             reduce using rule 17
 	"=="           reduce using rule 17
 	"!="           reduce using rule 17
@@ -1349,16 +1381,16 @@ State 40
 
 State 41
 
-	Expr -> '(' '-' Expr ')' .                          (rule 16)
+	Expr -> "(" "-" Expr ")" .                          (rule 16)
 
-	')'            reduce using rule 16
-	'<'            reduce using rule 16
-	'>'            reduce using rule 16
-	'+'            reduce using rule 16
-	'-'            reduce using rule 16
-	'*'            reduce using rule 16
-	'/'            reduce using rule 16
-	'%'            reduce using rule 16
+	")"            reduce using rule 16
+	"<"            reduce using rule 16
+	">"            reduce using rule 16
+	"+"            reduce using rule 16
+	"-"            reduce using rule 16
+	"*"            reduce using rule 16
+	"/"            reduce using rule 16
+	"%"            reduce using rule 16
 	in             reduce using rule 16
 	"=="           reduce using rule 16
 	"!="           reduce using rule 16
@@ -1372,13 +1404,13 @@ State 41
 State 42
 
 	Expr -> let Expr in Expr .                          (rule 1)
-	Expr -> Expr . '+' Expr                             (rule 2)
-	Expr -> Expr . '-' Expr                             (rule 3)
-	Expr -> Expr . '*' Expr                             (rule 4)
-	Expr -> Expr . '/' Expr                             (rule 5)
-	Expr -> Expr . '%' Expr                             (rule 6)
-	Expr -> Expr . '<' Expr                             (rule 7)
-	Expr -> Expr . '>' Expr                             (rule 8)
+	Expr -> Expr . "+" Expr                             (rule 2)
+	Expr -> Expr . "-" Expr                             (rule 3)
+	Expr -> Expr . "*" Expr                             (rule 4)
+	Expr -> Expr . "/" Expr                             (rule 5)
+	Expr -> Expr . "%" Expr                             (rule 6)
+	Expr -> Expr . "<" Expr                             (rule 7)
+	Expr -> Expr . ">" Expr                             (rule 8)
 	Expr -> Expr . "==" Expr                            (rule 9)
 	Expr -> Expr . "!=" Expr                            (rule 10)
 	Expr -> Expr . "<=" Expr                            (rule 11)
@@ -1386,18 +1418,26 @@ State 42
 	Expr -> Expr . "&&" Expr                            (rule 13)
 	Expr -> Expr . "||" Expr                            (rule 14)
 
-	')'            reduce using rule 1
-	'<'            shift, and enter state 11
+	")"            reduce using rule 1
+	"<"            shift, and enter state 11
 			(reduce using rule 1)
 
-	'>'            shift, and enter state 12
+	">"            shift, and enter state 12
 			(reduce using rule 1)
 
-	'+'            shift, and enter state 13
-	'-'            shift, and enter state 14
-	'*'            shift, and enter state 15
-	'/'            shift, and enter state 16
-	'%'            shift, and enter state 17
+	"+"            shift, and enter state 13
+			(reduce using rule 1)
+
+	"-"            shift, and enter state 14
+			(reduce using rule 1)
+
+	"*"            shift, and enter state 15
+			(reduce using rule 1)
+
+	"/"            shift, and enter state 16
+			(reduce using rule 1)
+
+	"%"            shift, and enter state 17
 			(reduce using rule 1)
 
 	in             reduce using rule 1

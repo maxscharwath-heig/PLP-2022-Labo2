@@ -42,8 +42,6 @@ eval (ENegate x) _
    | x == EBool False = VBool True
    | otherwise = VBool False
 
--- eval (EArithmeticOp '+' x y) env = eval x env
-
 eval (EArithmeticOp c x y) env =
    case (c, eval x env, eval y env) of
       ("+", VInt x, VInt y) -> VInt (x + y)
@@ -52,8 +50,7 @@ eval (EArithmeticOp c x y) env =
       ("/", VInt x, VInt y) -> VInt (x `div` y)
       ("%", VInt x, VInt y) -> VInt (x `mod` y)
 
-
-eval (ERelationalOp c x y) env =
+eval (EComparisonOp c x y) env =
    case (c, eval x env, eval y env) of
       ("<", VInt x, VInt y) -> VBool (x < y)
       (">", VInt x, VInt y) -> VBool (x > y)
@@ -63,6 +60,12 @@ eval (ERelationalOp c x y) env =
       ("!=", VInt x, VInt y) -> VBool (x /= y)
       ("==", VBool x, VBool y) -> VBool (x == y)
       ("!=", VBool x, VBool y) -> VBool (x /= y)
+
+
+eval (ERelationalOp c x y) env =
+   case (c, eval x env, eval y env) of
+      ("&&", VBool x, VBool y) -> VBool (x && y)
+      ("||", VBool x, VBool y) -> VBool (x || y)
 
 eval (EVar v) env = value v env
 

@@ -23,17 +23,17 @@ import Lexer
    identifier  { TIdentifier $$ }
    varDec      { TVarDec }
    funDec      { TFunDec }
-   '('         { TSym '('   }
-   ')'         { TSym ')'   }
-   '='         { TSym '='   }
-   '<'         { TSym '<'   }
-   '>'         { TSym '>'   }
-   '+'         { TSym '+'   }
-   '-'         { TSym '-'   }
-   '*'         { TSym '*'   }
-   '/'         { TSym '/'   }
-   '%'         { TSym '%'   }
-   '!'         { TSym '!'   }
+   "("         { TSym '('   }
+   ")"         { TSym ')'   }
+   "="         { TSym '='   }
+   "<"         { TSym '<'   }
+   ">"         { TSym '>'   }
+   "+"         { TSym '+'   }
+   "-"         { TSym '-'   }
+   "*"         { TSym '*'   }
+   "/"         { TSym '/'   }
+   "%"         { TSym '%'   }
+   "!"         { TSym '!'   }
    let         { TLet       }
    in          { TIn        }
    case        { TCase      }
@@ -62,24 +62,24 @@ import Lexer
 
 Expr : 
       let Expr in Expr            { ELet $2 $4 }
-      | Expr '+' Expr             { EArithmeticOp "+" $1 $3 }
-      | Expr '-' Expr             { EArithmeticOp "-" $1 $3 }
-      | Expr '*' Expr             { EArithmeticOp "*" $1 $3 }
-      | Expr '/' Expr             { EArithmeticOp "/" $1 $3 }
-      | Expr '%' Expr             { EArithmeticOp "%" $1 $3 }
-      | Expr '<' Expr             { EArithmeticOp "<" $1 $3 }
-      | Expr '>' Expr             { EArithmeticOp ">" $1 $3 }
+      | Expr "+" Expr             { EArithmeticOp "+" $1 $3 }
+      | Expr "-" Expr             { EArithmeticOp "-" $1 $3 }
+      | Expr "*" Expr             { EArithmeticOp "*" $1 $3 }
+      | Expr "/" Expr             { EArithmeticOp "/" $1 $3 }
+      | Expr "%" Expr             { EArithmeticOp "%" $1 $3 }
+      | Expr "<" Expr             { EArithmeticOp "<" $1 $3 }
+      | Expr ">" Expr             { EArithmeticOp ">" $1 $3 }
       | Expr "==" Expr            { EComparisonOp "==" $1 $3 }
       | Expr "!=" Expr            { EComparisonOp "!=" $1 $3 }
       | Expr "<=" Expr            { EComparisonOp "<=" $1 $3 }
       | Expr ">=" Expr            { EComparisonOp ">=" $1 $3 }
       | Expr "&&" Expr            { ERelationalOp "&&" $1 $3 }
       | Expr "||" Expr            { ERelationalOp "||" $1 $3 }
-      | '!' Expr                  { ENegate $2 }
-      | '(' '-' Expr ')'          { ENegate $3 }
+      | "!" Expr                  { ENegate $2 }
+      | "(" "-" Expr ")"          { ENegate $3 }
       -- | identifier                { EVar $1 }
       -- | funDec identifier Expr    { EFunDec $1 $2 }
-      | '(' Expr ')'              { $2 }
+      | "(" Expr ")"              { $2 }
       | int                       { EInt $1 }
       | bool                      { EBool $1 }
       --| case Expr of Expr end
