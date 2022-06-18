@@ -42,7 +42,9 @@ loop = do
     putStr "#ier> "
     hFlush stdout
     line <- getLine
-    case line of
+    --parse line
+    let (cmd, expr) = parseLine line
+    case cmd of
         ":q" -> return ()
         ":r" -> do
             putStrLn "Resetting environment"
@@ -51,7 +53,7 @@ loop = do
             putStrLn ":q to quit, :r to reset, :h to help"
             loop
         ":t" -> do
-            putStrLn ":t <expr> to show type of expression"
+            putStrLn $ "Type of " ++ expr ++ " is " ++ show (typeof (parser $ lexer expr) [])
             loop
         ":e" -> do
             putStrLn ":e to show environment"
@@ -69,6 +71,14 @@ loop = do
             hFlush stdout
             print (show res)
             loop
+
+-- parse string by splitting on spaces
+parseLine :: String -> (String, String)
+parseLine line = (arg1, arg2)
+    where
+        args = words line
+        arg1 = head args
+        arg2 = unwords $ tail args
 -- repl funcs = 
 --     do
 --         putStr "#ier>"
