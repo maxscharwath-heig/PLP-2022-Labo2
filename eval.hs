@@ -49,6 +49,7 @@ eval (EArithmeticOp c x y) env =
       ("*", VInt x, VInt y) -> VInt (x * y)
       ("/", VInt x, VInt y) -> VInt (x `div` y)
       ("%", VInt x, VInt y) -> VInt (x `mod` y)
+      _ -> error "[#ier Eval] ArithmeticOp: bad types"
 
 eval (EComparisonOp c x y) env =
    case (c, eval x env, eval y env) of
@@ -60,13 +61,17 @@ eval (EComparisonOp c x y) env =
       ("!=", VInt x, VInt y) -> VBool (x /= y)
       ("==", VBool x, VBool y) -> VBool (x == y)
       ("!=", VBool x, VBool y) -> VBool (x /= y)
+      _ -> error "[#ier Eval] ComparisonOp: bad types"
 
 
 eval (ERelationalOp c x y) env =
    case (c, eval x env, eval y env) of
       ("&&", VBool x, VBool y) -> VBool (x && y)
       ("||", VBool x, VBool y) -> VBool (x || y)
+      _ -> error "[#ier Eval] RelationalOp: bad types"
 
 eval (EVar v) env = value v env
 
 eval (ELet v x y) env = eval y ((v, eval x env):env)
+
+eval _ _ = error "[#ier Eval] : invalid expression"
