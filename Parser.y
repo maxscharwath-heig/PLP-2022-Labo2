@@ -7,7 +7,7 @@
    @author Nicolas Crausaz
    @author Maxime Scharwath
 -}
-module Parser (Expr(..)) where
+module Parser (Expr(..), parser) where
 import Lexer
 }
 

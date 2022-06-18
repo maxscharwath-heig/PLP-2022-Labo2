@@ -74,6 +74,6 @@ eval (EVar v) env = value v env
 
 eval (ELet v x y) env = eval y ((v, eval x env):env)
 
-eval (EFunDec v x) env = VFun v x
+-- eval (EFunDec _ v x) env = VFun v x
 
 eval _ _ = error "[#ier Eval] : invalid expression"

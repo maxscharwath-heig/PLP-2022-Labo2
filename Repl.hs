@@ -64,8 +64,10 @@ loop = do
             loop
         _ -> do
             print "Lexing..."
+            let env = []
+            let res =  eval (parser $ lexer line) env
             hFlush stdout
-            print (lexer line)
+            print (show res)
             loop
 -- repl funcs = 
 --     do

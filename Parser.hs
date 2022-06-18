@@ -7,7 +7,7 @@
    @author Nicolas Crausaz
    @author Maxime Scharwath
 -}
-module Parser (Expr(..)) where
+module Parser (Expr(..), parser) where
 import Lexer
 import qualified Data.Array as Happy_Data_Array
 import qualified Data.Bits as Bits
