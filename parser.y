@@ -21,8 +21,8 @@ import Lexer
    int         { TInt $$ }
    bool        { TBool $$ }
    identifier  { TIdentifier $$ }
-   varDec      { TVarDec }
-   funDec      { TFunDec }
+   varDecSym      { TVarDec }
+   funDecSym      { TFunDec }
    "("         { TSym '('   }
    ")"         { TSym ')'   }
    "="         { TSym '='   }
@@ -59,6 +59,9 @@ import Lexer
 -- Exprs: { [] }
 --  | Expr Exprs {$1:$2}
 
+-- Exprs :
+--    Expr                   { [$1] }
+--    | Expr Exprs           { $1: $2 }
 
 Expr :
       let identifier "=" Expr in Expr            { ELet $2 $4 $6 }
@@ -78,6 +81,8 @@ Expr :
       | "!" Expr                  { ENegate $2 }
       | "(" "-" Expr ")"          { ENegate $3 }
       | identifier                { EVar $1 }
+      | varDecSym identifier "=" Expr { EVarDec $2 $4 }
+      | funDecSym identifier Expr "=" Expr { EFunDec $2 $3 $5 }
       | "(" Expr ")"              { $2 }
       | int                       { EInt $1 }
       | bool                      { EBool $1 }
@@ -86,14 +91,15 @@ Expr :
 parseError :: [Token] -> a
 parseError _ = error "Parse error"
 
-data Expr = EVarDec String 
-   | EFunDec Name [Expr]
+data Expr =
+   EFunDec Name Expr Expr
    | EInt Int
    | EBool Bool
    | EArithmeticOp String Expr Expr
    | EComparisonOp String Expr Expr
    | ERelationalOp String Expr Expr
    | EVar Name
+   | EVarDec Name Expr
    | ENegate Expr
    | Case Expr Expr
    | EIn Expr

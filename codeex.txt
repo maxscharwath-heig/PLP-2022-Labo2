@@ -3,9 +3,7 @@ Exemple de code:
 nom du language: Hashier #ier (\a\chier)
 
 ## Fonctions
-#f functionName arg1 arg2 #>
-   // ...
-#
+#f functionName arg1 arg2 = 1
 
 
 ## Variables

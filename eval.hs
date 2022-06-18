@@ -70,4 +70,3 @@ eval (ERelationalOp c x y) env =
 eval (EVar v) env = value v env
 
 eval (ELet v x y) env = eval y ((v, eval x env):env)
-
