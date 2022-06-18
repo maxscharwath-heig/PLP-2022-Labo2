@@ -5,8 +5,8 @@ d’une expression. De plus, votre fonction devra effectuer toutes les vérifica
 pour la vérification des types sont laissées à votre bon jugement.
 -}
 
-module Semantics (typeof) where 
- 
+module Semantics (typeof) where
+
 import Parser(Expr(..))
 
 
@@ -57,7 +57,12 @@ typeof (ELet x y z) env = typeof z env'
         env' = (x, t) : env
 
 
--- | Function application
+-- | Function
+
+typeof (EFunDec x y z) env = 
+    case typeof z env of
+        t | t == typeof y env -> TFun t (typeof y env)
+        _ -> error "[#ier Semantics] Error: function return type."
 
 
 

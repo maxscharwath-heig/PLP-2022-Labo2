@@ -23,9 +23,12 @@ les erreurs que vous seriez amenés à générer dans les différents composants
 
 module Main where
 
+import Semantics
+
     --main loop
     main :: IO ()
     main = do
+        putStrLn typeof
         putStrLn "Welcome to the REPL"
         loop
 
