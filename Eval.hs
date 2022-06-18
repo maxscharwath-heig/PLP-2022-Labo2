@@ -15,14 +15,6 @@ import GHC.Integer (Integer)
 data Value = VBool Bool | VInt Int
    deriving (Show)
 
-
--- instance Num Value where
---    (VInt x) + (VInt y) = VInt (x + y)
---    (VInt x) * (VInt y) = VInt (x * y)
---    (VInt x) - (VInt y) = VInt (x - y)
-   
-
-
 type Name = String
 type Env = [(Name, Value)]
 
@@ -35,24 +27,24 @@ value v ((var,val):env)
       | otherwise = value v env
 
 
-eval :: Expr -> Env -> Value
-eval (EInt x) _ = VInt x
-eval (EBool x) _ = VBool x
-eval (ENegate x) _
-   | x == EBool False = VBool True
-   | otherwise = VBool False
+eval :: Expr -> Env -> (Value, Env)
+eval (EInt x) env = (VInt x, env)
+eval (EBool x) env = (VBool x, env)
+eval (ENegate x) env
+   | x == EBool False = (VBool True, env)
+   | otherwise = (VBool False, env)
 
 eval (EArithmeticOp c x y) env =
-   case (c, eval x env, eval y env) of
+   (case (c, fst $ eval x env, fst $ eval y env) of
       ("+", VInt x, VInt y) -> VInt (x + y)
       ("-", VInt x, VInt y) -> VInt (x - y)
       ("*", VInt x, VInt y) -> VInt (x * y)
       ("/", VInt x, VInt y) -> VInt (x `div` y)
       ("%", VInt x, VInt y) -> VInt (x `mod` y)
-      _ -> error "[#ier Eval] ArithmeticOp: bad types"
+      _ -> error "[#ier Eval] ArithmeticOp: bad types", env)
 
 eval (EComparisonOp c x y) env =
-   case (c, eval x env, eval y env) of
+   (case (c, fst $ eval x env, fst $ eval y env) of
       ("<", VInt x, VInt y) -> VBool (x < y)
       (">", VInt x, VInt y) -> VBool (x > y)
       ("<=", VInt x, VInt y) -> VBool (x <= y)
@@ -61,19 +53,19 @@ eval (EComparisonOp c x y) env =
       ("!=", VInt x, VInt y) -> VBool (x /= y)
       ("==", VBool x, VBool y) -> VBool (x == y)
       ("!=", VBool x, VBool y) -> VBool (x /= y)
-      _ -> error "[#ier Eval] ComparisonOp: bad types"
+      _ -> error "[#ier Eval] ComparisonOp: bad types", env)
 
 
 eval (ERelationalOp c x y) env =
-   case (c, eval x env, eval y env) of
+   (case (c, fst $ eval x env, fst $ eval y env) of
       ("&&", VBool x, VBool y) -> VBool (x && y)
       ("||", VBool x, VBool y) -> VBool (x || y)
-      _ -> error "[#ier Eval] RelationalOp: bad types"
+      _ -> error "[#ier Eval] RelationalOp: bad types", env)
 
-eval (EVar v) env = value v env
+eval (EVarDec v e) env = (fst $ eval e env, (v, fst $ eval e env):env)
 
-eval (ELet v x y) env = eval y ((v, eval x env):env)
+eval (EVar v) env = (value v env, env)
 
--- eval (EFunDec _ v x) env = VFun v x
+eval (ELet v x y) env = (fst $ eval y env, (v, fst $ eval x env):env)
 
-eval _ _ = error "[#ier Eval] : invalid expression"
+eval a _ = error ("[#ier Eval] : missing case for " ++ show a)

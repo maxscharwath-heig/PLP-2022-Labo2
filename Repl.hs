@@ -27,18 +27,19 @@ import System.IO
 
 import Lexer
 import Parser
-import Semantics
 import Eval
+import Semantics
+import Distribution.Simple.GHC (GhcEnvironmentFileEntry)
+import Distribution.Compat.CharParsing (CharParsing(text))
 
 --main loop
 main :: IO ()
 main = do
     putStrLn "Welcome to the REPL\n"
-    loop
+    loop []
 
     --loop
-loop :: IO ()
-loop = do
+loop env = do
     putStr "#ier> "
     hFlush stdout
     line <- getLine
@@ -48,29 +49,25 @@ loop = do
         ":q" -> return ()
         ":r" -> do
             putStrLn "Resetting environment"
-            loop
+            loop []
         ":h" -> do
             putStrLn ":q to quit, :r to reset, :h to help"
-            loop
+            loop env
         ":t" -> do
             putStrLn $ "Type of " ++ expr ++ " is " ++ show (typeof (parser $ lexer expr) [])
-            loop
+            loop env
         ":e" -> do
-            putStrLn ":e to show environment"
-            loop
+            putStrLn $ "Environment is " ++ show env
+            loop env
         ":{" -> do
-            putStrLn ":} to disable multi-line mode"
-            loop
-        ":}" -> do
-            putStrLn "End of multi-line mode"
-            loop
+            putStrLn "Entering multi-line mode, :} to exit"
+            multiline env []
         _ -> do
             print "Lexing..."
-            let env = []
-            let res =  eval (parser $ lexer line) env
+            let (res, env') =  eval (parser $ lexer line) env
             hFlush stdout
             print (show res)
-            loop
+            loop env'
 
 -- parse string by splitting on spaces
 parseLine :: String -> (String, String)
@@ -79,6 +76,22 @@ parseLine line = (arg1, arg2)
         args = words line
         arg1 = head args
         arg2 = unwords $ tail args
+
+multiline env lines = do
+    hFlush stdout
+    line <- getLine
+    let (cmd, expr) = parseLine line
+    case cmd of
+        ":}" -> do
+            putStrLn "Executing..."
+            let text = unlines lines
+            putStrLn text
+            let (res, env') =  eval (parser $ lexer text) env
+            print (show res)
+            loop env'
+        _ -> do
+            multiline env (lines ++ [line])
+
 -- repl funcs = 
 --     do
 --         putStr "#ier>"
