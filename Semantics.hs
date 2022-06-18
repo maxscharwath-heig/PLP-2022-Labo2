@@ -13,7 +13,7 @@ import Parser(Expr(..))
 type Name = String
 type Env = [(Name, Type)]
 
-data Type = TVar | TInt | TBool | TFun Type Type
+data Type = TVar | TInt | TBool | TFun Type Type | TTuple Type Type
   deriving (Show, Eq)
 
 
@@ -59,10 +59,10 @@ typeof (ELet x y z) env = typeof z env'
 
 -- | Function
 
-typeof (EFunDec x y z) env = 
-    case typeof z env of
-        t | t == typeof y env -> TFun t (typeof y env)
-        _ -> error "[#ier Semantics] Error: function return type."
+
+-- | Tuples
+
+typeof (ETuple e1 e2) env = TTuple (typeof e1 env) (typeof e2 env)
 
 
 

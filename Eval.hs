@@ -12,7 +12,7 @@ module Eval (eval) where
 import Parser (Expr(..))
 import GHC.Integer (Integer)
 
-data Value = VBool Bool | VInt Int
+data Value = VBool Bool | VInt Int | VTuple Value Value
    deriving (Show)
 
 type Name = String
@@ -67,5 +67,7 @@ eval (EVarDec v e) env = (fst $ eval e env, (v, fst $ eval e env):env)
 eval (EVar v) env = (value v env, env)
 
 eval (ELet v x y) env = (fst $ eval y env, (v, fst $ eval x env):env)
+
+eval (ETuple x y) env = (VTuple (fst $ eval x env) (fst $ eval y env), env)
 
 eval a _ = error ("[#ier Eval] : missing case for " ++ show a)

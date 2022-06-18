@@ -38,7 +38,7 @@ import Lexer
    in          { TIn        }
    case        { TCase      }
    of          { TOf        }
-   -- ','         { TSym ','   }
+   ","         { TSym ','   }
    end         { TEnd       }
    "=="        { TDSym "==" }
    "!="        { TDSym "!=" }
@@ -78,6 +78,7 @@ Expr :
       | Expr ">=" Expr            { EComparisonOp ">=" $1 $3 }
       | Expr "&&" Expr            { ERelationalOp "&&" $1 $3 }
       | Expr "||" Expr            { ERelationalOp "||" $1 $3 }
+      | "(" Expr "," Expr ")"     { ETuple $2 $4 }
       | "!" Expr                  { ENegate $2 }
       | "(" "-" Expr ")"          { ENegate $3 }
       | identifier                { EVar $1 }
@@ -108,5 +109,6 @@ data Expr =
    | Case Expr Expr
    | EIn Expr
    | ELet Name Expr Expr
+   | ETuple Expr Expr
    deriving (Show, Eq)
 }
