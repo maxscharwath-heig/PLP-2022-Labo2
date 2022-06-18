@@ -23,6 +23,39 @@ les erreurs que vous seriez amenés à générer dans les différents composants
 
 module Main where
 
+    --main loop
+    main :: IO ()
+    main = do
+        putStrLn "Welcome to the REPL"
+        loop
+
+    --loop
+    loop :: IO ()
+    loop = do
+        putStr "> "
+        line <- getLine
+        case line of
+            ":q" -> return ()
+            ":r" -> do
+                putStrLn "Resetting environment"
+                loop
+            ":h" -> do
+                putStrLn ":q to quit, :r to reset, :h to help"
+                loop
+            ":t" -> do
+                putStrLn ":t <expr> to show type of expression"
+                loop
+            ":e" -> do
+                putStrLn ":e to show environment"
+                loop
+            ":{" -> do
+                putStrLn ":} to disable multi-line mode"
+                loop
+            ":}" -> do
+                putStrLn "End of multi-line mode"
+                loop
+            _ -> do
+                loop
 -- repl funcs = 
 --     do
 --         putStr "#ier>"
