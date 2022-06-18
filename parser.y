@@ -60,8 +60,8 @@ import Lexer
 --  | Expr Exprs {$1:$2}
 
 
-Expr : 
-      let Expr in Expr            { ELet $2 $4 }
+Expr :
+      let identifier "=" Expr in Expr            { ELet $2 $4 $6 }
       | Expr "+" Expr             { EArithmeticOp "+" $1 $3 }
       | Expr "-" Expr             { EArithmeticOp "-" $1 $3 }
       | Expr "*" Expr             { EArithmeticOp "*" $1 $3 }
@@ -77,12 +77,10 @@ Expr :
       | Expr "||" Expr            { ERelationalOp "||" $1 $3 }
       | "!" Expr                  { ENegate $2 }
       | "(" "-" Expr ")"          { ENegate $3 }
-      -- | identifier                { EVar $1 }
-      -- | funDec identifier Expr    { EFunDec $1 $2 }
+      | identifier                { EVar $1 }
       | "(" Expr ")"              { $2 }
       | int                       { EInt $1 }
       | bool                      { EBool $1 }
-      --| case Expr of Expr end
 
 {
 parseError :: [Token] -> a
@@ -99,6 +97,6 @@ data Expr = EVarDec String
    | ENegate Expr
    | Case Expr Expr
    | EIn Expr
-   | ELet Expr Expr
+   | ELet Name Expr Expr
    deriving (Show, Eq)
 }
