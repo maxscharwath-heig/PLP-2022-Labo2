@@ -1,6 +1,6 @@
 {-# OPTIONS_GHC -fno-warn-unused-binds -fno-warn-missing-signatures #-}
 {-# LANGUAGE CPP #-}
-{-# LINE 1 "lexer.x" #-}
+{-# LINE 1 "Lexer.x" #-}
 {-
    PLP - Devoir 2
 
@@ -2778,7 +2778,7 @@ alex_actions = array (0 :: Int, 21)
   , (0,alex_action_8)
   ]
 
-{-# LINE 33 "lexer.x" #-}
+{-# LINE 33 "Lexer.x" #-}
 type Name = String
 
 data Token = TInt Int

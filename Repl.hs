@@ -25,6 +25,11 @@ module Main where
 
 import System.IO
 
+import Lexer
+import Parser
+import Semantics
+import Eval
+
 --main loop
 main :: IO ()
 main = do
@@ -58,6 +63,9 @@ loop = do
             putStrLn "End of multi-line mode"
             loop
         _ -> do
+            print "Lexing..."
+            hFlush stdout
+            print (lexer line)
             loop
 -- repl funcs = 
 --     do

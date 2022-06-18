@@ -91,13 +91,15 @@ Expr :
 parseError :: [Token] -> a
 parseError _ = error "Parse error"
 
+type Op = String
+
 data Expr =
    EFunDec Name Expr Expr
    | EInt Int
    | EBool Bool
-   | EArithmeticOp String Expr Expr
-   | EComparisonOp String Expr Expr
-   | ERelationalOp String Expr Expr
+   | EArithmeticOp Op Expr Expr
+   | EComparisonOp Op Expr Expr
+   | ERelationalOp Op Expr Expr
    | EVar Name
    | EVarDec Name Expr
    | ENegate Expr
