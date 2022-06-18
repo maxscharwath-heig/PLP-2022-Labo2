@@ -36,8 +36,8 @@ import Lexer
    '!'         { TSym '!'   }
    let         { TLet       }
    in          { TIn        }
-   -- case        { TCase      }
-   -- of          { TOf        }
+   case        { TCase      }
+   of          { TOf        }
    -- ','         { TSym ','   }
    end         { TEnd       }
    "=="        { TDSym "==" }
@@ -61,14 +61,14 @@ import Lexer
 
 
 Expr : 
-      let identifier in Expr Expr     { ELet $2 $4 }
-      | Expr '+' Expr             { EArithmeticOp '+' $1 $3 }
-      | Expr '-' Expr             { EArithmeticOp '-' $1 $3 }
-      | Expr '*' Expr             { EArithmeticOp '*' $1 $3 }
-      | Expr '/' Expr             { EArithmeticOp '/' $1 $3 }
-      | Expr '%' Expr             { EArithmeticOp '%' $1 $3 }
-      | Expr '<' Expr             { EArithmeticOp '<' $1 $3 }
-      | Expr '>' Expr             { EArithmeticOp '>' $1 $3 }
+      let Expr in Expr            { ELet $2 $4 }
+      | Expr '+' Expr             { EArithmeticOp "+" $1 $3 }
+      | Expr '-' Expr             { EArithmeticOp "-" $1 $3 }
+      | Expr '*' Expr             { EArithmeticOp "*" $1 $3 }
+      | Expr '/' Expr             { EArithmeticOp "/" $1 $3 }
+      | Expr '%' Expr             { EArithmeticOp "%" $1 $3 }
+      | Expr '<' Expr             { EArithmeticOp "<" $1 $3 }
+      | Expr '>' Expr             { EArithmeticOp ">" $1 $3 }
       | Expr "==" Expr            { EComparisonOp "==" $1 $3 }
       | Expr "!=" Expr            { EComparisonOp "!=" $1 $3 }
       | Expr "<=" Expr            { EComparisonOp "<=" $1 $3 }
@@ -77,13 +77,12 @@ Expr :
       | Expr "||" Expr            { ERelationalOp "||" $1 $3 }
       | '!' Expr                  { ENegate $2 }
       | '(' '-' Expr ')'          { ENegate $3 }
-      | identifier                { EVar $1 }
-      -- | funDec identifier Exprs   { FunDec $1 $2 }
+      -- | identifier                { EVar $1 }
+      -- | funDec identifier Expr    { EFunDec $1 $2 }
       | '(' Expr ')'              { $2 }
       | int                       { EInt $1 }
       | bool                      { EBool $1 }
       --| case Expr of Expr end
-      -- | Expr  Expr
 
 {
 parseError :: [Token] -> a
@@ -93,13 +92,13 @@ data Expr = EVarDec String
    | EFunDec Name [Expr]
    | EInt Int
    | EBool Bool
-   | EArithmeticOp Char Expr Expr
+   | EArithmeticOp String Expr Expr
    | EComparisonOp String Expr Expr
    | ERelationalOp String Expr Expr
    | EVar Name
    | ENegate Expr
-   -- | Case Expr Expr
+   | Case Expr Expr
    | EIn Expr
-   | ELet Name Expr Expr
+   | ELet Expr Expr
    deriving (Show, Eq)
 }

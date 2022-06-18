@@ -13,7 +13,7 @@ import Parser(Expr(..))
 type Name = String
 type Env = [(Name, Type)]
 
-data Type = TVar | TInt | TBool | TFun Type Type | TErr
+data Type = TVar | TInt | TBool | TFun Type Type
   deriving (Show, Eq)
 
 
