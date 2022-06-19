@@ -50,7 +50,8 @@ loop env = do
                 putStrLn ":h to show this help"
                 loop env
             ":t" -> do
-                putStrLn $ "Type of " ++ expr ++ " is " ++ show (typeof (parser $ lexer expr) [])
+                let env' = convertEnv env
+                putStrLn $ "Type of " ++ expr ++ " is " ++ show (typeof (parser $ lexer expr) env')
                 loop env
             ":e" -> do
                 putStrLn $ "Environment is " ++ show env
