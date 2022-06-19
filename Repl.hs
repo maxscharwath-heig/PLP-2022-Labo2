@@ -59,7 +59,7 @@ loop env = do
                 putStrLn "Entering multi-line mode, :} to exit"
                 multiline env []
             _ -> do
-                let (res, env') = eval (parser $ lexer line) env
+                let (res, env') = evalAndSemantic (parser $ lexer line) env
                 hFlush stdout
                 safePrint res
                 loop env'
@@ -81,15 +81,22 @@ multiline env lines = do
             putStrLn "Executing..."
             let text = unlines lines
             putStrLn text
-            let (res, env') = eval (parser $ lexer text) env
+            let (res, env') = evalAndSemantic (parser $ lexer text) env
             safePrint res
             loop env'
         _ -> do
             multiline env (lines ++ [line])
 
 
+evalAndSemantic :: Expr -> Env -> (Value, Env)
+evalAndSemantic expr env =
+    let
+        t = typeof expr (convertEnv env)
+        e = eval expr env
+    in
+        e
 safePrint :: Value -> IO ()
-safePrint xs = catch (putStrLn $ show xs) handler
+safePrint xs = catch (print xs) handler
     where
         handler :: ErrorCall -> IO ()
-        handler e = putStrLn $ show e
+        handler e = print (show e)
