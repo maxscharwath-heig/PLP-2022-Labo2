@@ -12,9 +12,14 @@ module Eval (eval, convertEnv, Value(..)) where
 import Parser (Expr(..))
 import Semantics (Type(..))
 
-
 data Value = VBool Bool | VInt Int | VTuple [Value] | VFun Name [Name] Expr | VVoid
-   deriving (Show, Eq)
+   deriving (Eq)
+
+instance Show Value where
+   show (VBool b) = show b
+   show (VInt i) = show i
+   show (VTuple v) = "(" ++ show v ++ ")"
+   show _ = ""
 
 type Name = String
 type Env = [(Name, Value)]

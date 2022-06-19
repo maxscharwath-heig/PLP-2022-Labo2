@@ -14,8 +14,6 @@ import Lexer
 import Parser
 import Eval
 import Semantics
-import Distribution.Simple.GHC (GhcEnvironmentFileEntry)
-import Distribution.Compat.CharParsing (CharParsing(text), Parsing (try))
 
 --main loop
 main :: IO ()
@@ -63,7 +61,7 @@ loop env = do
 
                 let (res, env') = eval (parser $ lexer line) env
                 hFlush stdout
-                print res
+                putStrLn $ show res
                 loop env'
 
 -- parse string by splitting on spaces
@@ -83,8 +81,8 @@ multiline env lines = do
             putStrLn "Executing..."
             let text = unlines lines
             putStrLn text
-            let (res, env') =  eval (parser $ lexer text) env
-            print (show res)
+            let (res, env') = eval (parser $ lexer text) env
+            putStrLn $ show res
             loop env'
         _ -> do
             multiline env (lines ++ [line])

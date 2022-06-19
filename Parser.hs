@@ -924,7 +924,7 @@ happyReduction_8 (HappyAbsSyn4  happy_var_3)
 	_
 	(HappyAbsSyn4  happy_var_1)
 	 =  HappyAbsSyn4
-		 (EComparisonOp "==" happy_var_1 happy_var_3
+		 (EComparisonOp ">" happy_var_1 happy_var_3
 	)
 happyReduction_8 _ _ _  = notHappyAtAll 
 
