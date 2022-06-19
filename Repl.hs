@@ -36,9 +36,6 @@ loop env = do
     if null line then loop env else do
 
     case cmd of
-        " " -> do 
-            
-            loop []
         ":q" -> return ()
         ":r" -> do
             putStrLn "Resetting environment"
