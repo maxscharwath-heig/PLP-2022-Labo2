@@ -25,7 +25,7 @@ value -> ( bool | int | tuple )
 # Identifiants et déclarations
 alphaNumName -> char { char | int }
 identifier -> ( varIdent | funIdent )
-varIdent -> "#v" alphaNumName "=" value
+varIdent -> "#v" alphaNumName "#>" value
 funIdent -> "#f" alphaNumName [{ identifier }] "#>" expr "#"
 
 

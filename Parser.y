@@ -79,8 +79,8 @@ Expr :
       | "!" Expr                  { ENegate $2 }
       | identifier                { EVar $1 }
       | identifier "(" Exprs ")"  { EFunCall $1 $3 }
-      | funDecSym identifier identifiers "=" Expr { EFunDec $2 $3 $5 }
-      | varDecSym identifier in Expr { EVarDec $2 $4 }
+      | funDecSym identifier identifiers in Expr end { EFunDec $2 $3 $5 } -- #f n a,b,c #> a + b + c #
+      | varDecSym identifier in Expr { EVarDec $2 $4 } -- #v n a #> a
       | int                       { EInt $1 }
       | bool                      { EBool $1 }
       | case Expr of Expr in Expr end in Expr end end { ECase $2 $4 $6 $9 }

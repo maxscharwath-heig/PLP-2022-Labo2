@@ -18,8 +18,7 @@ state 44 contains 13 shift/reduce conflicts.
 state 45 contains 13 shift/reduce conflicts.
 state 46 contains 13 shift/reduce conflicts.
 state 60 contains 13 shift/reduce conflicts.
-state 64 contains 13 shift/reduce conflicts.
-state 68 contains 13 shift/reduce conflicts.
+state 69 contains 13 shift/reduce conflicts.
 
 -----------------------------------------------------------------------------
 Grammar
@@ -44,7 +43,7 @@ Grammar
 	Expr -> "!" Expr                                   (17)
 	Expr -> identifier                                 (18)
 	Expr -> identifier "(" Exprs ")"                   (19)
-	Expr -> funDecSym identifier identifiers "=" Expr   (20)
+	Expr -> funDecSym identifier identifiers in Expr end   (20)
 	Expr -> varDecSym identifier in Expr               (21)
 	Expr -> int                                        (22)
 	Expr -> bool                                       (23)
@@ -244,7 +243,7 @@ State 7
 
 State 8
 
-	Expr -> funDecSym . identifier identifiers "=" Expr    (rule 20)
+	Expr -> funDecSym . identifier identifiers in Expr end    (rule 20)
 
 	identifier     shift, and enter state 16
 
@@ -443,7 +442,7 @@ State 15
 
 State 16
 
-	Expr -> funDecSym identifier . identifiers "=" Expr    (rule 20)
+	Expr -> funDecSym identifier . identifiers in Expr end    (rule 20)
 
 	identifier     shift, and enter state 51
 
@@ -1596,9 +1595,9 @@ State 49
 
 State 50
 
-	Expr -> funDecSym identifier identifiers . "=" Expr    (rule 20)
+	Expr -> funDecSym identifier identifiers . in Expr end    (rule 20)
 
-	"="            shift, and enter state 59
+	in             shift, and enter state 59
 
 
 State 51
@@ -1606,7 +1605,7 @@ State 51
 	identifiers -> identifier .                         (rule 27)
 	identifiers -> identifier . "," identifiers         (rule 28)
 
-	"="            reduce using rule 27
+	in             reduce using rule 27
 	","            shift, and enter state 58
 
 
@@ -1743,7 +1742,7 @@ State 58
 
 State 59
 
-	Expr -> funDecSym identifier identifiers "=" . Expr    (rule 20)
+	Expr -> funDecSym identifier identifiers in . Expr end    (rule 20)
 
 	int            shift, and enter state 4
 	bool           shift, and enter state 5
@@ -1893,7 +1892,7 @@ State 63
 	let            shift, and enter state 2
 	case           shift, and enter state 11
 
-	Expr           goto state 68
+	Expr           goto state 69
 
 State 64
 
@@ -1910,60 +1909,29 @@ State 64
 	Expr -> Expr . ">=" Expr                            (rule 12)
 	Expr -> Expr . "&&" Expr                            (rule 13)
 	Expr -> Expr . "||" Expr                            (rule 14)
-	Expr -> funDecSym identifier identifiers "=" Expr .    (rule 20)
+	Expr -> funDecSym identifier identifiers in Expr . end    (rule 20)
 
-	")"            reduce using rule 20
 	"<"            shift, and enter state 19
-			(reduce using rule 20)
-
 	">"            shift, and enter state 20
-			(reduce using rule 20)
-
 	"+"            shift, and enter state 21
-			(reduce using rule 20)
-
 	"-"            shift, and enter state 22
-			(reduce using rule 20)
-
 	"*"            shift, and enter state 23
-			(reduce using rule 20)
-
 	"/"            shift, and enter state 24
-			(reduce using rule 20)
-
 	"%"            shift, and enter state 25
-			(reduce using rule 20)
-
-	in             reduce using rule 20
-	of             reduce using rule 20
-	","            reduce using rule 20
-	end            reduce using rule 20
+	end            shift, and enter state 68
 	"=="           shift, and enter state 26
-			(reduce using rule 20)
-
 	"!="           shift, and enter state 27
-			(reduce using rule 20)
-
 	"<="           shift, and enter state 28
-			(reduce using rule 20)
-
 	">="           shift, and enter state 29
-			(reduce using rule 20)
-
 	"&&"           shift, and enter state 30
-			(reduce using rule 20)
-
 	"||"           shift, and enter state 31
-			(reduce using rule 20)
-
-	%eof           reduce using rule 20
 
 
 State 65
 
 	identifiers -> identifier "," identifiers .         (rule 28)
 
-	"="            reduce using rule 28
+	in             reduce using rule 28
 
 
 State 66
@@ -2006,7 +1974,7 @@ State 67
 	"*"            shift, and enter state 23
 	"/"            shift, and enter state 24
 	"%"            shift, and enter state 25
-	end            shift, and enter state 69
+	end            shift, and enter state 70
 	"=="           shift, and enter state 26
 	"!="           shift, and enter state 27
 	"<="           shift, and enter state 28
@@ -2016,6 +1984,31 @@ State 67
 
 
 State 68
+
+	Expr -> funDecSym identifier identifiers in Expr end .    (rule 20)
+
+	")"            reduce using rule 20
+	"<"            reduce using rule 20
+	">"            reduce using rule 20
+	"+"            reduce using rule 20
+	"-"            reduce using rule 20
+	"*"            reduce using rule 20
+	"/"            reduce using rule 20
+	"%"            reduce using rule 20
+	in             reduce using rule 20
+	of             reduce using rule 20
+	","            reduce using rule 20
+	end            reduce using rule 20
+	"=="           reduce using rule 20
+	"!="           reduce using rule 20
+	"<="           reduce using rule 20
+	">="           reduce using rule 20
+	"&&"           reduce using rule 20
+	"||"           reduce using rule 20
+	%eof           reduce using rule 20
+
+
+State 69
 
 	Expr -> let identifier "=" Expr in Expr .           (rule 1)
 	Expr -> Expr . "+" Expr                             (rule 2)
@@ -2079,14 +2072,14 @@ State 68
 	%eof           reduce using rule 1
 
 
-State 69
+State 70
 
 	Expr -> case Expr of Expr in Expr end . in Expr end end    (rule 24)
 
-	in             shift, and enter state 70
+	in             shift, and enter state 71
 
 
-State 70
+State 71
 
 	Expr -> case Expr of Expr in Expr end in . Expr end end    (rule 24)
 
@@ -2100,9 +2093,9 @@ State 70
 	let            shift, and enter state 2
 	case           shift, and enter state 11
 
-	Expr           goto state 71
+	Expr           goto state 72
 
-State 71
+State 72
 
 	Expr -> Expr . "+" Expr                             (rule 2)
 	Expr -> Expr . "-" Expr                             (rule 3)
@@ -2126,7 +2119,7 @@ State 71
 	"*"            shift, and enter state 23
 	"/"            shift, and enter state 24
 	"%"            shift, and enter state 25
-	end            shift, and enter state 72
+	end            shift, and enter state 73
 	"=="           shift, and enter state 26
 	"!="           shift, and enter state 27
 	"<="           shift, and enter state 28
@@ -2135,14 +2128,14 @@ State 71
 	"||"           shift, and enter state 31
 
 
-State 72
+State 73
 
 	Expr -> case Expr of Expr in Expr end in Expr end . end    (rule 24)
 
-	end            shift, and enter state 73
+	end            shift, and enter state 74
 
 
-State 73
+State 74
 
 	Expr -> case Expr of Expr in Expr end in Expr end end .    (rule 24)
 
@@ -2173,4 +2166,4 @@ Grammar Totals
 Number of rules: 29
 Number of terminals: 28
 Number of non-terminals: 4
-Number of states: 74
+Number of states: 75
