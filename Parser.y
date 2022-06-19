@@ -81,16 +81,20 @@ Expr :  Expr "+" Expr             { EArithmeticOp "+" $1 $3 }
       | varDec                    { $1 }
       | int                       { EInt $1 }
       | bool                      { EBool $1 }
--- | #case a
+-- | #c a
 --    #o b #> c #
 --    #o d #> e # (only one for now)
 --    #> f #
       | case Expr caseOfs in Expr end end { ECase $2 $3 $5 }
-      | let varDecs in Expr end { ELet $2 $4 }
+      | let MultiExprs in Expr end { ELet $2 $4 }
 
 Exprs :
-   Expr                   { [$1] }
+   Expr                       { [$1] }
    | Expr "," Exprs           { $1:$3 }
+
+MultiExprs :
+   Expr                       { [$1] }
+   | Expr MultiExprs          { $1:$2 }
 
 identifiers :
       identifier             { [$1] }

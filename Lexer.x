@@ -29,7 +29,7 @@ tokens :-
    "#v"                                      { \s -> TVarDec           }
    "#f"                                      { \s -> TFunDec           }
    "#>"                                      { \s -> TIn               }
-   "#case"                                   { \s -> TCase             }
+   "#c"                                      { \s -> TCase             }
    "#o"                                      { \s -> TOf               }
    "#"                                       { \s -> TEnd              }
    ("==" | "!=" | ">=" | "<=" | "&&" | "||") { \s -> TDSym (take 2 s)  }
