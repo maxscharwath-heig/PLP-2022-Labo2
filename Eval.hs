@@ -8,15 +8,27 @@ lesquelles et d’adopter un comportement approprié lorsque cela est amené à 
 -}
 {-# OPTIONS_GHC -Wno-overlapping-patterns #-}
 
-module Eval (eval) where
+module Eval (eval, convertEnv) where
 
 import Parser (Expr(..))
+import Semantics (Type(..))
+
 
 data Value = VBool Bool | VInt Int | VTuple [Value] | VFun Name [Name] Expr | VVoid
    deriving (Show, Eq)
 
 type Name = String
 type Env = [(Name, Value)]
+
+convertEnv :: Env -> [(Name, Type)]
+convertEnv = map (\(n, v) -> (n, convertValue v))
+
+convertValue :: Value -> Type
+convertValue (VBool _) = TBool
+convertValue (VInt _) = TInt
+convertValue (VTuple x) = TTuple (map convertValue x)
+convertValue VFun {} = TFun
+convertValue VVoid = TVoid
 
 -- Prend un Expr en retourne le résultat de l'évaluation
 
@@ -81,8 +93,7 @@ eval (ETuple x) env =
 -- | Negation
 eval (ENegate x) env =
    (case fst $ eval x env of
-      VInt 1 -> VBool False
-      VInt 0 -> VBool True
+      VInt x -> VInt (-x)
       VBool x -> VBool (not x)
       _ -> error "[#ier Eval] Negate: bad types", env)
 
