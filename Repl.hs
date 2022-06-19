@@ -1,26 +1,11 @@
 {-
-Écrivez un programme Haskell, repl.hs, qui implémente une boucle de lecture-évaluationimpression (REPL). Cette boucle doit permettre d’interpréter votre langage de programmation
-fonctionnelle. Pour ce faire, vous devez combiner les différentes fonctions d’analyse implémentées précédemment. Une entrée utilisateur donnée doit valider toutes les phases d’analyse avant
-de pouvoir évaluer le terme qui en découle. Votre boucle de lecture-évaluation-impression doit
-maintenir un environnement global, mis à jour lors de chaque nouvelle définition à la manière
-de l’interpréteur Haskell :
-P r el u d e > x = 5
-P r el u d e > x
-P r el u d e > f y = y + 1
-P r el u d e > f x
-Votre programme doit également implémenter un interpréteur de commandes qui s’exécute
-à chaque tour de boucle, pour autant que l’utilisateur souhaite poursuivre l’interprétation, et qui
-supporte les commandes suivantes
-:{ activer l’édition multi-ligne ( :} pour la désactiver)
-:r réinitialiser l’état de l’interpréteur
-:t <expr> afficher le type d’une expression
-:e afficher l’environnement
-:h afficher l’aide
-:q quitter le programme
-Votre interpréteur de commande devra reporter de manière conviviale à l’utilisateur toutes
-les erreurs que vous seriez amenés à générer dans les différents composants de votre interpréteur.
--}
+   PLP - Devoir 2
 
+   2.7 REPL
+
+   @author Nicolas Crausaz
+   @author Maxime Scharwath
+-}
 module Main where
 
 import System.IO
@@ -47,35 +32,38 @@ loop env = do
     line <- getLine
     --parse line
     let (cmd, expr) = parseLine line
-    case cmd of
-        ":q" -> return ()
-        ":r" -> do
-            putStrLn "Resetting environment"
-            loop []
-        ":h" -> do
-            putStrLn ":q to quit"
-            putStrLn ":r to reset"
-            putStrLn ":t <expr> to show type"
-            putStrLn ":e to show environment"
-            putStrLn ":{ to enable multi-line editing"
-            putStrLn ":} to disable multi-line editing and evaluate"
-            putStrLn ":h to show this help"
-            loop env
-        ":t" -> do
-            putStrLn $ "Type of " ++ expr ++ " is " ++ show (typeof (parser $ lexer expr) [])
-            loop env
-        ":e" -> do
-            putStrLn $ "Environment is " ++ show env
-            loop env
-        ":{" -> do
-            putStrLn "Entering multi-line mode, :} to exit"
-            multiline env []
-        _ -> do
-            print "Lexing..."
-            let (res, env') =  eval (parser $ lexer line) env
-            hFlush stdout
-            print (show res)
-            loop env'
+
+    if null line then loop env else do
+
+        case cmd of
+            ":q" -> return ()
+            ":r" -> do
+                putStrLn "Resetting environment"
+                loop []
+            ":h" -> do
+                putStrLn ":q to quit"
+                putStrLn ":r to reset"
+                putStrLn ":t <expr> to show type"
+                putStrLn ":e to show environment"
+                putStrLn ":{ to enable multi-line editing"
+                putStrLn ":} to disable multi-line editing and evaluate"
+                putStrLn ":h to show this help"
+                loop env
+            ":t" -> do
+                putStrLn $ "Type of " ++ expr ++ " is " ++ show (typeof (parser $ lexer expr) [])
+                loop env
+            ":e" -> do
+                putStrLn $ "Environment is " ++ show env
+                loop env
+            ":{" -> do
+                putStrLn "Entering multi-line mode, :} to exit"
+                multiline env []
+            _ -> do
+
+                let (res, env') = eval (parser $ lexer line) env
+                hFlush stdout
+                printValue res
+                loop env'
 
 -- parse string by splitting on spaces
 parseLine :: String -> (String, String)
@@ -99,3 +87,7 @@ multiline env lines = do
             loop env'
         _ -> do
             multiline env (lines ++ [line])
+
+
+printValue (VInt i) = print $ show i
+printValue (VBool b) = print $ show b

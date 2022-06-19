@@ -5,7 +5,7 @@ d’une expression. De plus, votre fonction devra effectuer toutes les vérifica
 pour la vérification des types sont laissées à votre bon jugement.
 -}
 
-module Semantics (typeof) where
+module Semantics (typeof, Type(..)) where
 
 import Parser(Expr(..))
 
@@ -13,7 +13,7 @@ import Parser(Expr(..))
 type Name = String
 type Env = [(Name, Type)]
 
-data Type = TVar | TInt | TBool | TFun Type Type | TTuple [Type]
+data Type = TVar | TInt | TBool | TFun | TTuple [Type] | TVoid
   deriving (Show, Eq)
 
 
@@ -30,6 +30,8 @@ typeof :: Expr -> Env -> Type
 typeof (EVar x) env = lookup' x env
 typeof (EInt n) env = TInt
 typeof (EBool b) env = TBool
+
+typeof (EVarDec _ _) env = TVoid
 
 -- | Literal
 
@@ -58,6 +60,12 @@ typeof (ELet x y z) env = typeof z env'
 
 
 -- | Function
+
+typeof EFunDec {} env = TVoid
+typeof (EFunCall x y) env =
+    case lookup' x env of
+        TFun -> TFun
+        _ -> error "[#ier Semantics] Error: function call."
 
 
 -- | Tuples
