@@ -83,6 +83,10 @@ Expr :
       | varDecSym identifier in Expr { EVarDec $2 $4 } -- #v n a #> a
       | int                       { EInt $1 }
       | bool                      { EBool $1 }
+-- | #case a
+--    #o b #> c #
+--    #o d #> e # (only one for now)
+--    #> f #
       | case Expr of Expr in Expr end in Expr end end { ECase $2 $4 $6 $9 }
 
 Exprs :
