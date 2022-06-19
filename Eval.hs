@@ -131,4 +131,4 @@ eval (ECase e caseofsExp defaultExp) env =
 eval a _ = error ("[#ier Eval] : missing case for " ++ show a)
 
 evalDec :: [Expr] -> Env -> Env
-evalDec xs env = foldl (\ env x -> snd $ eval x env) env xs
+evalDec xs env = foldr (\ x env -> snd $ eval x env) env xs
