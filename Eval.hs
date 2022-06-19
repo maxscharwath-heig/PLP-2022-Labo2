@@ -7,7 +7,7 @@
    @author Maxime Scharwath
 -}
 {-# OPTIONS_GHC -Wno-overlapping-patterns #-}
-module Eval (eval, convertEnv, Value(..)) where
+module Eval (eval, convertEnv, Value(..), Env) where
 
 import Parser (Expr(..))
 import Semantics (Type(..))
@@ -72,7 +72,7 @@ eval (EComparisonOp c x y) env =
       ("!=", VBool x, VBool y) -> VBool (x /= y)
       _ -> error "[#ier Eval] ComparisonOp: bad types", env)
 
--- | Evaulation de RelationOp
+-- | Evaluation de RelationOp
 eval (ERelationalOp c x y) env =
    (case (c, fst $ eval x env, fst $ eval y env) of
       ("&&", VBool x, VBool y) -> VBool (x && y)
@@ -82,7 +82,7 @@ eval (ERelationalOp c x y) env =
 -- | Declaration de variable
 eval (EVarDec v e) env = (VVoid, (v, fst $ eval e env):env)
 
--- | Evaluation de varibale
+-- | Evaluation de variable
 eval (EVar v) env = (value v env, env)
 
 -- | Let

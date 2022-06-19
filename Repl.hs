@@ -9,13 +9,13 @@
 module Main where
 
 import System.IO
+import Control.Exception
 
 import Lexer
 import Parser
 import Eval
 import Semantics
 
---main loop
 main :: IO ()
 main = do
     putStrLn "Welcome to the #ier REPL"
@@ -24,6 +24,7 @@ main = do
     loop []
 
     --loop
+loop :: Env -> IO ()
 loop env = do
     putStr "#ier> "
     hFlush stdout
@@ -58,10 +59,9 @@ loop env = do
                 putStrLn "Entering multi-line mode, :} to exit"
                 multiline env []
             _ -> do
-
                 let (res, env') = eval (parser $ lexer line) env
                 hFlush stdout
-                putStrLn $ show res
+                safePrint res
                 loop env'
 
 -- parse string by splitting on spaces
@@ -82,7 +82,14 @@ multiline env lines = do
             let text = unlines lines
             putStrLn text
             let (res, env') = eval (parser $ lexer text) env
-            putStrLn $ show res
+            safePrint res
             loop env'
         _ -> do
             multiline env (lines ++ [line])
+
+
+safePrint :: Value -> IO ()
+safePrint xs = catch (putStrLn $ show xs) handler
+    where
+        handler :: ErrorCall -> IO ()
+        handler e = putStrLn $ show e

@@ -104,12 +104,12 @@ name
 #l 
    #v a #> 1 
    #v b #> 2 
-#> a + b
+#> a + b #
 
 
 ## Case of
 
-#case var 
+#c var 
     #o 1 #> 
         2 
     #
