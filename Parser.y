@@ -64,8 +64,8 @@ Expr :  Expr "+" Expr             { EArithmeticOp "+" $1 $3 }
       | Expr "*" Expr             { EArithmeticOp "*" $1 $3 }
       | Expr "/" Expr             { EArithmeticOp "/" $1 $3 }
       | Expr "%" Expr             { EArithmeticOp "%" $1 $3 }
-      | Expr "<" Expr             { EArithmeticOp "<" $1 $3 }
-      | Expr ">" Expr             { EArithmeticOp ">" $1 $3 }
+      | Expr "<" Expr             { EComparisonOp "<" $1 $3 }
+      | Expr ">" Expr             { EComparisonOp ">" $1 $3 }
       | Expr "==" Expr            { EComparisonOp "==" $1 $3 }
       | Expr "!=" Expr            { EComparisonOp "!=" $1 $3 }
       | Expr "<=" Expr            { EComparisonOp "<=" $1 $3 }

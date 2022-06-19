@@ -906,7 +906,7 @@ happyReduction_6 (HappyAbsSyn4  happy_var_3)
 	_
 	(HappyAbsSyn4  happy_var_1)
 	 =  HappyAbsSyn4
-		 (EArithmeticOp "<" happy_var_1 happy_var_3
+		 (EComparisonOp "<" happy_var_1 happy_var_3
 	)
 happyReduction_6 _ _ _  = notHappyAtAll 
 
@@ -915,7 +915,7 @@ happyReduction_7 (HappyAbsSyn4  happy_var_3)
 	_
 	(HappyAbsSyn4  happy_var_1)
 	 =  HappyAbsSyn4
-		 (EArithmeticOp ">" happy_var_1 happy_var_3
+		 (EComparisonOp ">" happy_var_1 happy_var_3
 	)
 happyReduction_7 _ _ _  = notHappyAtAll 
 

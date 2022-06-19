@@ -33,7 +33,7 @@ tokens :-
    "#o"                                      { \s -> TOf               }
    "#"                                       { \s -> TEnd              }
    ("==" | "!=" | ">=" | "<=" | "&&" | "||") { \s -> TDSym (take 2 s)  }
-   [\+\*\%\!\-\(\)\,\=\<\>]                  { \s -> TSym (head s)     }
+   [\+\*\%\!\-\/\(\)\,\=\<\>]                  { \s -> TSym (head s)     }
    $alphaNum+                                { \s -> TIdentifier s     }
 
 {
