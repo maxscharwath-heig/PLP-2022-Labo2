@@ -86,7 +86,10 @@ eval (EVarDec v e) env = (VVoid, (v, fst $ eval e env):env)
 eval (EVar v) env = (value v env, env)
 
 -- | Let
-eval (ELet v x y) env = (fst $ eval y env, (v, fst $ eval x env):env)
+
+eval (ELet x y) env = let
+   env' = evalDec x env
+   in (fst $ eval y env', env)
 
 -- | Tuple (min 2 elements)
 eval (ETuple x) env =
@@ -114,10 +117,18 @@ eval (EFunCall v x) env =
          in fst $ eval e env'
       _ -> error "[#ier Eval] FunCall: bad types", env)
 
--- | Evaluation d'un case TODO y a qu'un seul cas d'evaluation d'un case
-eval (ECase expression value1 body1 def ) env
-   | fst (eval expression env) == fst (eval value1 env) = (fst $ eval body1 env, env)
-   | otherwise = eval def env
+-- | Evaluation d'un case
+eval (ECase e caseofsExp defaultExp) env =
+      let
+         v = fst $ eval e env
+         caseofs = filter (\(x,_) -> x == v) (map (\(ECaseOf x y) -> (fst $ eval x env, y)) caseofsExp)
+      in case caseofs of
+         [] -> eval defaultExp env
+         (x,y):_ -> eval y env
+
 
 
 eval a _ = error ("[#ier Eval] : missing case for " ++ show a)
+
+evalDec :: [Expr] -> Env -> Env
+evalDec xs env = foldl (\ env x -> snd $ eval x env) env xs

@@ -53,11 +53,7 @@ typeof (ERelationalOp op e1 e2) env =
 
 -- | Let expressions
 
-typeof (ELet x y z) env = typeof z env'
-    where
-        t = typeof y env
-        env' = (x, t) : env
-
+typeof (ELet _ e) env = typeof e env
 
 -- | Function
 
