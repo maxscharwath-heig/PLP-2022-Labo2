@@ -80,7 +80,6 @@ Expr :
       | Expr "||" Expr            { ERelationalOp "||" $1 $3 }
       | "(" Expr "," Expr ")"     { ETuple $2 $4 }
       | "!" Expr                  { ENegate $2 }
-      | "(" "-" Expr ")"          { ENegate $3 }
       | identifier                { EVar $1 }
       | identifier "(" Expr ")"  { EFunCall $1 $3 }
       | varDecSym identifier "=" Expr { EVarDec $2 $4 }
@@ -88,6 +87,7 @@ Expr :
       | "(" Expr ")"              { $2 }
       | int                       { EInt $1 }
       | bool                      { EBool $1 }
+      | case Expr of Expr in Expr end in Expr end end { ECase $2 $4 $6 $9 }
 
 {
 parseError :: [Token] -> a
@@ -106,7 +106,7 @@ data Expr =
    | EVar Name
    | EVarDec Name Expr
    | ENegate Expr
-   | Case Expr Expr
+   | ECase Expr Expr Expr Expr
    | EIn Expr
    | ELet Name Expr Expr
    | ETuple Expr Expr

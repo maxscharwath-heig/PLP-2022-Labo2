@@ -6,6 +6,7 @@ soient bien définis. Les seules erreurs susceptibles de se produire lors d’un
 des erreurs d’exécution dues à des erreurs de programmation de l’utilisateur. À vous d’identifier
 lesquelles et d’adopter un comportement approprié lorsque cela est amené à se produire.
 -}
+{-# OPTIONS_GHC -Wno-overlapping-patterns #-}
 
 module Eval (eval) where
 
@@ -13,7 +14,7 @@ import Parser (Expr(..))
 import GHC.Integer (Integer)
 
 data Value = VBool Bool | VInt Int | VTuple Value Value
-   deriving (Show)
+   deriving (Show, Eq)
 
 type Name = String
 type Env = [(Name, Value)]
@@ -69,5 +70,17 @@ eval (EVar v) env = (value v env, env)
 eval (ELet v x y) env = (fst $ eval y env, (v, fst $ eval x env):env)
 
 eval (ETuple x y) env = (VTuple (fst $ eval x env) (fst $ eval y env), env)
+
+eval (ENegate x) env =
+   (case fst $ eval x env of
+      VInt x -> VInt (-x)
+      VBool x -> VBool (not x)
+      _ -> error "[#ier Eval] Negate: bad types", env)
+
+
+eval (ECase expression value1 body1 def ) env
+   | fst (eval expression env) == fst (eval value1 env) = (fst $ eval body1 env, env)
+   | otherwise = eval def env
+
 
 eval a _ = error ("[#ier Eval] : missing case for " ++ show a)

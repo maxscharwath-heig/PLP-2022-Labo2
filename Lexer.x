@@ -17,17 +17,23 @@ $alphaNum = [A-Za-z0-9]
 
 tokens :-
    $white+                                   ;
-   $digit+                                   { \s -> TInt (read s)     }
+   "-"*$digit+                               { \s -> TInt (read s)     }
+   "+"$digit+                                { \s -> TInt (read (tail s)) }
    true                                      { \s -> TBool True        }
    false                                     { \s -> TBool False       }
+   True                                      { \s -> TBool True        }
+   False                                     { \s -> TBool False       }
+   TRUE                                      { \s -> TBool True        }
+   FALSE                                     { \s -> TBool False       }
    "#l"                                      { \s -> TLet              }
    "#v"                                      { \s -> TVarDec           }
    "#f"                                      { \s -> TFunDec           }
    "#>"                                      { \s -> TIn               }
    "#case"                                   { \s -> TCase             }
    "#o"                                      { \s -> TOf               }
-   ("==" | "!=" | ">=" | "<=" | "&&" | "||") { \s -> TDSym (take 2 s) }
-   [\+\*\%\!\-\(\)\,\=\#\<\>]                { \s -> TSym (head s)    }
+   "#"                                       { \s -> TEnd              }
+   ("==" | "!=" | ">=" | "<=" | "&&" | "||") { \s -> TDSym (take 2 s)  }
+   [\+\*\%\!\-\(\)\,\=\<\>]                  { \s -> TSym (head s)     }
    $alphaNum+                                { \s -> TIdentifier s     }
 
 {
