@@ -59,9 +59,7 @@ import Lexer
 -- Exprs: { [] }
 --  | Expr Exprs {$1:$2}
 
-Expr :
-      let identifier "=" Expr in Expr            { ELet $2 $4 $6 }
-      | Expr "+" Expr             { EArithmeticOp "+" $1 $3 }
+Expr :  Expr "+" Expr             { EArithmeticOp "+" $1 $3 }
       | Expr "-" Expr             { EArithmeticOp "-" $1 $3 }
       | Expr "*" Expr             { EArithmeticOp "*" $1 $3 }
       | Expr "/" Expr             { EArithmeticOp "/" $1 $3 }
@@ -80,14 +78,15 @@ Expr :
       | identifier                { EVar $1 }
       | identifier "(" Exprs ")"  { EFunCall $1 $3 }
       | funDecSym identifier identifiers in Expr end { EFunDec $2 $3 $5 } -- #f n a,b,c #> a + b + c #
-      | varDecSym identifier in Expr { EVarDec $2 $4 } -- #v n a #> a
+      | varDec                    { $1 }
       | int                       { EInt $1 }
       | bool                      { EBool $1 }
 -- | #case a
 --    #o b #> c #
 --    #o d #> e # (only one for now)
 --    #> f #
-      | case Expr of Expr in Expr end in Expr end end { ECase $2 $4 $6 $9 }
+      | case Expr caseOfs in Expr end end { ECase $2 $3 $5 }
+      | let varDecs in Expr end { ELet $2 $4 }
 
 Exprs :
    Expr                   { [$1] }
@@ -96,6 +95,20 @@ Exprs :
 identifiers :
       identifier             { [$1] }
       | identifier "," identifiers { $1:$3 }
+
+caseOf :
+      of Expr in Expr end    { ECaseOf $2 $4 }
+
+caseOfs :
+      caseOf                  { [$1] }
+      | caseOf caseOfs     { $1:$2 }
+
+varDec :
+   varDecSym identifier in Expr { EVarDec $2 $4 } -- #v n a #> a
+
+varDecs :
+   varDec                    { [$1] }
+   | varDec varDecs       { $1:$2 }
 
 {
 parseError :: [Token] -> a
@@ -114,9 +127,9 @@ data Expr =
    | EVar Name
    | EVarDec Name Expr
    | ENegate Expr
-   | ECase Expr Expr Expr Expr
-   | EIn Expr
-   | ELet Name Expr Expr
+   | ECase Expr [Expr] Expr
+   | ECaseOf Expr Expr
+   | ELet [Expr] Expr
    | ETuple [Expr]
    deriving (Show, Eq)
 }
