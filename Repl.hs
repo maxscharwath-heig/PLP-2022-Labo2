@@ -35,7 +35,9 @@ import Distribution.Compat.CharParsing (CharParsing(text))
 --main loop
 main :: IO ()
 main = do
-    putStrLn "Welcome to the REPL\n"
+    putStrLn "Welcome to the #ier REPL"
+    putStrLn "by Nicolas Crausaz and Maxime Scharwath"
+    putStrLn "Type :h for help"
     loop []
 
     --loop
@@ -51,7 +53,13 @@ loop env = do
             putStrLn "Resetting environment"
             loop []
         ":h" -> do
-            putStrLn ":q to quit, :r to reset, :h to help"
+            putStrLn ":q to quit"
+            putStrLn ":r to reset"
+            putStrLn ":t <expr> to show type"
+            putStrLn ":e to show environment"
+            putStrLn ":{ to enable multi-line editing"
+            putStrLn ":} to disable multi-line editing and evaluate"
+            putStrLn ":h to show this help"
             loop env
         ":t" -> do
             putStrLn $ "Type of " ++ expr ++ " is " ++ show (typeof (parser $ lexer expr) [])
@@ -91,15 +99,3 @@ multiline env lines = do
             loop env'
         _ -> do
             multiline env (lines ++ [line])
-
--- repl funcs = 
---     do
---         putStr "#ier>"
---         line <- getLine
---         let tokens = lexer line
---         putStrLn $ show tokens
---         let ast = parser tokens
---         putStrLn $ show ast
---         let (toPrint, funcsIncreased) = readProg ast ([],funcs)
---         putStrLn toPrint
---         repl funcsIncreased

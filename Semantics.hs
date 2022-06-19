@@ -58,6 +58,10 @@ typeof (ELet x y z) env = typeof z env'
 
 
 -- | Function
+typeof (EFunCall x y ) env =
+    case typeof y env of
+        TFun t1 t2 -> t2
+        _ -> error "[#ier Semantics] Error: function call."
 
 
 -- | Tuples
