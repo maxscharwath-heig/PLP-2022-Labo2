@@ -1,14 +1,13 @@
 {-
-Écrivez un module Haskell, eval.hs, qui expose une fonction permettant d’évaluer des termes
-de votre langage fonctionnel. Cette fonction doit partir du principe que tout terme devant être
-évalué est correctement typé à ce stade. Elle devra toutefois veiller à ce que les symboles évalués
-soient bien définis. Les seules erreurs susceptibles de se produire lors d’une évaluation sont donc
-des erreurs d’exécution dues à des erreurs de programmation de l’utilisateur. À vous d’identifier
-lesquelles et d’adopter un comportement approprié lorsque cela est amené à se produire.
+   PLP - Devoir 2
+
+   2.6 Interpréteur
+
+   @author Nicolas Crausaz
+   @author Maxime Scharwath
 -}
 {-# OPTIONS_GHC -Wno-overlapping-patterns #-}
-
-module Eval (eval) where
+module Eval (eval, Value(..)) where
 
 import Parser (Expr(..))
 
@@ -18,15 +17,14 @@ data Value = VBool Bool | VInt Int | VTuple [Value] | VFun Name [Name] Expr | VV
 type Name = String
 type Env = [(Name, Value)]
 
--- Prend un Expr en retourne le résultat de l'évaluation
-
+-- | Evaluation de variables
 value :: Name -> Env -> Value
 value v [] = error ("#ier " ++ v ++ " undefined variable")
 value v ((var,val):env)
       | v == var = val
       | otherwise = value v env
 
-
+-- | Evaluation de littéraux
 eval :: Expr -> Env -> (Value, Env)
 eval (EInt x) env = (VInt x, env)
 eval (EBool x) env = (VBool x, env)
@@ -81,8 +79,8 @@ eval (ETuple x) env =
 -- | Negation
 eval (ENegate x) env =
    (case fst $ eval x env of
-      VInt 1 -> VBool False
       VInt 0 -> VBool True
+      VInt _ -> VBool False
       VBool x -> VBool (not x)
       _ -> error "[#ier Eval] Negate: bad types", env)
 
