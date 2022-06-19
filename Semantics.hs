@@ -1,14 +1,15 @@
 {-
-Écrivez un module Haskell, semantics.hs, qui expose une fonction permettant de calculer
-le type d’un terme de votre langage fonctionnel, autrement dit, le type d’une définition ainsi que
-d’une expression. De plus, votre fonction devra effectuer toutes les vérifications de type nécessaires à l’exactitude sémantique d’un terme. Les règles de typage que vous devrez implémenter
-pour la vérification des types sont laissées à votre bon jugement.
+   PLP - Devoir 2
+
+   2.5 Analyse sémantique
+
+   @author Nicolas Crausaz
+   @author Maxime Scharwath
 -}
 
 module Semantics (typeof, Type(..)) where
 
 import Parser(Expr(..))
-
 
 type Name = String
 type Env = [(Name, Type)]
@@ -25,15 +26,13 @@ lookup' x ((n, t) : env)
     | x == n = t
     | otherwise = lookup' x env
 
-
+-- | Literal
 typeof :: Expr -> Env -> Type
 typeof (EVar x) env = lookup' x env
 typeof (EInt n) env = TInt
 typeof (EBool b) env = TBool
 
 typeof (EVarDec _ _) env = TVoid
-
--- | Literal
 
 -- | Arithmetical expressions
 
