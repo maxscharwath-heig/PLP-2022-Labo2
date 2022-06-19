@@ -8,22 +8,26 @@
 -}
 module Main where
 
-import System.IO
-import Control.Exception
+import System.IO ( hFlush, stdout )
+import Control.Exception ( catch, ErrorCall )
 
-import Lexer
-import Parser
-import Eval
-import Semantics
+import Lexer ( lexer )
+import Parser ( Expr, parser )
+import Eval ( Env, Value, convertEnv, eval )
+import Semantics ( typeof )
 
 main :: IO ()
 main = do
-    putStrLn "Welcome to the #ier REPL"
+    putStrLn "\n ██╗ ██╗ ██╗███████╗██████╗\n\
+            \████████╗██║██╔════╝██╔══██╗\n\
+            \╚██╔═██╔╝██║█████╗  ██████╔╝\n\
+            \████████╗██║██╔══╝  ██╔══██╗\n\
+            \╚██╔═██╔╝██║███████╗██║  ██║\n\
+            \ ╚═╝ ╚═╝ ╚═╝╚══════╝╚═╝  ╚═╝ v1.0-alpha"
     putStrLn "by Nicolas Crausaz and Maxime Scharwath"
     putStrLn "Type :h for help"
     loop []
 
-    --loop
 loop :: Env -> IO ()
 loop env = do
     putStr "#ier> "
@@ -64,7 +68,6 @@ loop env = do
                 safePrint res
                 loop env'
 
--- parse string by splitting on spaces
 parseLine :: String -> (String, String)
 parseLine line = (arg1, arg2)
     where
@@ -72,6 +75,7 @@ parseLine line = (arg1, arg2)
         arg1 = head args
         arg2 = unwords $ tail args
 
+multiline :: Env -> [String] -> IO ()
 multiline env lines = do
     hFlush stdout
     line <- getLine
@@ -95,6 +99,7 @@ evalAndSemantic expr env =
         e = eval expr env
     in
         e
+        
 safePrint :: Value -> IO ()
 safePrint xs = catch (print xs) handler
     where

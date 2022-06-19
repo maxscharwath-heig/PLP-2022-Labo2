@@ -18,7 +18,7 @@ data Type = TVar | TInt | TBool | TFun | TTuple [Type] | TVoid
   deriving (Show, Eq)
 
 
--- | Variable
+-- | Variables
 
 lookup' :: Name -> Env -> Type
 lookup' x [] = error $ "[#ier Semantics] Error: variable " ++ x ++ " not found"
@@ -26,7 +26,9 @@ lookup' x ((n, t) : env)
     | x == n = t
     | otherwise = lookup' x env
 
--- | Literal
+
+-- | Literals
+
 typeof :: Expr -> Env -> Type
 typeof (EVar x) env = lookup' x env
 typeof (EInt n) env = TInt
@@ -66,7 +68,6 @@ typeof (EFunCall x y) env =
 -- | Tuples
 
 typeof (ETuple es) env = TTuple ( map (`typeof` env) es)
-
 
 
 -- | Remove to check if we check all the cases

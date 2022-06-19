@@ -6,7 +6,6 @@
    @author Nicolas Crausaz
    @author Maxime Scharwath
 -}
-{-# OPTIONS_GHC -Wno-overlapping-patterns #-}
 module Eval (eval, convertEnv, Value(..), Env) where
 
 import Parser (Expr(..))
@@ -45,9 +44,6 @@ value v ((var,val):env)
 eval :: Expr -> Env -> (Value, Env)
 eval (EInt x) env = (VInt x, env)
 eval (EBool x) env = (VBool x, env)
-eval (ENegate x) env
-   | x == EBool False = (VBool True, env)
-   | otherwise = (VBool False, env)
 
 -- | Evaluation de l'arithmetique
 eval (EArithmeticOp c x y) env =
