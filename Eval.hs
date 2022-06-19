@@ -12,20 +12,8 @@ module Eval (eval) where
 
 import Parser (Expr(..))
 
-data Value = VBool Bool | VInt Int | VTuple Value Value | VFun Name Name Expr
-
-instance Eq Value where
-  (==) (VBool b1) (VBool b2) = b1 == b2
-  (==) (VInt i1) (VInt i2) = i1 == i2
-  (==) (VTuple v1 v2) (VTuple v3 v4) = v1 == v3 && v2 == v4
-  (==) (VFun n1 n2 e1) (VFun n3 n4 e2) = n1 == n3 && n2 == n4 && e1 == e2
-  (==) _ _ = False
-
-instance Show Value where
-  show (VBool b) = show b
-  show (VInt i) = show i
-  show (VTuple v1 v2) = "(" ++ show v1 ++ "," ++ show v2 ++ ")"
-  show (VFun n1 n2 e) = "fun " ++ n1 ++ " " ++ n2 ++ " " ++ show e
+data Value = VBool Bool | VInt Int | VTuple [Value] | VFun Name [Name] Expr
+   deriving (Show, Eq)
 
 type Name = String
 type Env = [(Name, Value)]
@@ -85,8 +73,10 @@ eval (EVar v) env = (value v env, env)
 -- | Let
 eval (ELet v x y) env = (fst $ eval y env, (v, fst $ eval x env):env)
 
--- | Tuple
-eval (ETuple x y) env = (VTuple (fst $ eval x env) (fst $ eval y env), env)
+-- | Tuple (min 2 elements)
+eval (ETuple x) env =
+   if length x < 2 then error "[#ier Eval] Tuple: bad types"
+   else (VTuple (map (fst . (`eval` env)) x), env)
 
 -- | Negation
 eval (ENegate x) env =
@@ -105,7 +95,7 @@ eval (EFunDec v p e) env = let
 eval (EFunCall v x) env =
    (case value v env of
       VFun v p e -> let
-         env' = (p, fst $ eval x env):env
+         env' = zipWith (\ x y -> (x, fst $ eval y env)) p x
          in fst $ eval e env'
       _ -> error "[#ier Eval] FunCall: bad types", env)
 
