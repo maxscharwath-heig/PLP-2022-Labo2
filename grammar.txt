@@ -132,3 +132,27 @@ name
 ## Fonctions - application
 
 name (1, 2)
+
+## Exemples de programme
+
+#v hachier #>
+    (#c 
+        #l
+            #v z #> 5
+            #v y #> #l
+                        #v a #> 1 + 2
+                        #f b x #> x * x #
+                    #> b(5 + a) #
+        #> y * z #
+        #o 5 #> 6 #
+        #o 6 #> 7 #
+        #> 8 #
+    #, 5 > 2, 4 + 2, !(5 >= 4) )
+
+
+La valeur de hachier est: ([8,True,6,False])
+
+
+(#c #l #v z #> 5 #v y #> #l #v a #> 1 + 2 #f b x #> x * x # #> b(5 + a) # #> y * z # #o 5 #> 6 # #o 6 #> 7 # #> 8 # #, 5 > 2, 4 + 2, (!(5 >= 4), 44 / 2) ) 
+
+Résultat: ([8,True,6,([False,22])])
