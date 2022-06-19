@@ -1,7 +1,24 @@
+                           iiii                                          
+     ######    ######      i::::i                                         
+     #::::#    #::::#       iiii                                          
+     #::::#    #::::#                                                     
+######::::######::::######iiiiiii     eeeeeeeeeeee    rrrrr   rrrrrrrrr   
+#::::::::::::::::::::::::#i:::::i   ee::::::::::::ee  r::::rrr:::::::::r  
+######::::######::::###### i::::i  e::::::eeeee:::::eer:::::::::::::::::r 
+     #::::#    #::::#      i::::i e::::::e     e:::::err::::::rrrrr::::::r
+     #::::#    #::::#      i::::i e:::::::eeeee::::::e r:::::r     r:::::r
+######::::######::::###### i::::i e:::::::::::::::::e  r:::::r     rrrrrrr
+#::::::::::::::::::::::::# i::::i e::::::eeeeeeeeeee   r:::::r            
+######::::######::::###### i::::i e:::::::e            r:::::r            
+     #::::#    #::::#     i::::::ie::::::::e           r:::::r            
+     #::::#    #::::#     i::::::i e::::::::eeeeeeee   r:::::r            
+     ######    ######     i::::::i  ee:::::::::::::e   r:::::r            
+                          iiiiiiii    eeeeeeeeeeeeee   rrrrrrr 
 ##
 ## PLP - Devoir 2
 ## Grammaire EBNF de notre language
 ## Nicolas Crausaz & Maxime Scharwath
+## Language "Hachier / #ier"
 ##
 
 # Expressions définies dans le language
@@ -35,10 +52,10 @@ funApp -> alphaNumName "(" [{ expr }] ")"
 
 
 # Let-in
-letIn -> "#l" { identifier } "#>" expr
+letIn -> "#l" { identifier } "#>" expr "#"
 
 # Case of
-caseOf -> "#case" expr { caseBranch } "#"
+caseOf -> "#c" expr { caseBranch } "#"
 caseBranch -> "#o" ( varOccur | value ) "#>" expr "#"
 
 
@@ -135,6 +152,14 @@ name (1, 2)
 
 ## Exemples de programme
 
+ ██╗ ██╗ ██╗███████╗██████╗ 
+████████╗██║██╔════╝██╔══██╗
+╚██╔═██╔╝██║█████╗  ██████╔╝
+████████╗██║██╔══╝  ██╔══██╗
+╚██╔═██╔╝██║███████╗██║  ██║
+ ╚═╝ ╚═╝ ╚═╝╚══════╝╚═╝  ╚═╝
+
+
 #v hachier #>
     (#c 
         #l
@@ -156,3 +181,8 @@ La valeur de hachier est: ([8,True,6,False])
 (#c #l #v z #> 5 #v y #> #l #v a #> 1 + 2 #f b x #> x * x # #> b(5 + a) # #> y * z # #o 5 #> 6 # #o 6 #> 7 # #> 8 # #, 5 > 2, 4 + 2, (!(5 >= 4), 44 / 2) ) 
 
 Résultat: ([8,True,6,([False,22])])
+
+
+## Points à améliorer
+
+Dans un Let In, les variables ne sont accessibles uniquement dans le in et pas dans le Let.
