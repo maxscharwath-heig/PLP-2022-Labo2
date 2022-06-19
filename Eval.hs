@@ -12,7 +12,7 @@ module Eval (eval) where
 
 import Parser (Expr(..))
 
-data Value = VBool Bool | VInt Int | VTuple [Value] | VFun Name [Name] Expr
+data Value = VBool Bool | VInt Int | VTuple [Value] | VFun Name [Name] Expr | VVoid
    deriving (Show, Eq)
 
 type Name = String
@@ -65,7 +65,7 @@ eval (ERelationalOp c x y) env =
       _ -> error "[#ier Eval] RelationalOp: bad types", env)
 
 -- | Declaration de variable
-eval (EVarDec v e) env = (fst $ eval e env, (v, fst $ eval e env):env)
+eval (EVarDec v e) env = (VVoid, (v, fst $ eval e env):env)
 
 -- | Evaluation de varibale
 eval (EVar v) env = (value v env, env)
@@ -89,7 +89,7 @@ eval (ENegate x) env =
 -- | Declaration de fonction
 eval (EFunDec v p e) env = let
    f = VFun v p e
-   in (f, (v,f):env)
+   in (VVoid, (v,f):env)
 
 -- | Appel de fonction ( avec un environnement amplifié )
 eval (EFunCall v x) env =
