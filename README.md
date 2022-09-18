@@ -10,3 +10,188 @@ fonctionnalités suivantes :
 - Expressions let-in avec plusieurs définitions
 - Ex-pressions case-of sans gardes avec motifs universel, variable, littéraux
 - Opérations unaires, binaire
+```
+
+                           iiii                                          
+     ######    ######      i::::i                                         
+     #::::#    #::::#       iiii                                          
+     #::::#    #::::#                                                     
+######::::######::::######iiiiiii     eeeeeeeeeeee    rrrrr   rrrrrrrrr   
+#::::::::::::::::::::::::#i:::::i   ee::::::::::::ee  r::::rrr:::::::::r  
+######::::######::::###### i::::i  e::::::eeeee:::::eer:::::::::::::::::r 
+     #::::#    #::::#      i::::i e::::::e     e:::::err::::::rrrrr::::::r
+     #::::#    #::::#      i::::i e:::::::eeeee::::::e r:::::r     r:::::r
+######::::######::::###### i::::i e:::::::::::::::::e  r:::::r     rrrrrrr
+#::::::::::::::::::::::::# i::::i e::::::eeeeeeeeeee   r:::::r            
+######::::######::::###### i::::i e:::::::e            r:::::r            
+     #::::#    #::::#     i::::::ie::::::::e           r:::::r            
+     #::::#    #::::#     i::::::i e::::::::eeeeeeee   r:::::r            
+     ######    ######     i::::::i  ee:::::::::::::e   r:::::r            
+                          iiiiiiii    eeeeeeeeeeeeee   rrrrrrr 
+```
+# PLP - Devoir 2
+## Grammaire EBNF de notre language
+
+Nicolas Crausaz & Maxime Scharwath
+
+Language "Hachier / #ier"
+
+### Expressions définies dans le language
+```
+expr -> value
+      | identifier
+      | varOccur
+      | funApp
+      | letIn
+      | caseOf
+      | unaryExpr
+      | binaryExpr
+```
+### Types primitifs
+- ``char -> ( [a-z] | [A-Z] )``
+- ``bool -> ( True | False )``
+- ``num -> [0-9]``
+- ``int -> { num }``
+- ``tuple -> "(" value "," value ")"``
+- ``value -> ( bool | int | tuple )``
+
+### Identifiants et déclarations
+- ``alphaNumName -> char { char | int }``
+- ``identifier -> ( varIdent | funIdent )``
+- ``varIdent -> "#v" alphaNumName "#>" value``
+- ``funIdent -> "#f" alphaNumName [{ identifier }] "#>" expr "#"``
+
+### Occurences et Applications
+- ``varOccur -> alphaNumName``
+- ``funApp -> alphaNumName "(" [{ expr }] ")"``
+
+### Let-in
+- ``letIn -> "#l" { identifier } "#>" expr "#"``
+
+### Case of
+- ``caseOf -> "#c" expr { caseBranch } "#"``
+- ``caseBranch -> "#o" ( varOccur | value ) "#>" expr "#"``
+
+
+### Opérateurs
+
+- ``unary -> ( "-" | "!" )``
+- ``arithmetic -> ( "+" | "-" | "*" | "/" | "%" )``
+- ``comparison -> ( "==" | "!=" | "<" | ">" | "<=" | ">=" )``
+- ``binary -> ( arithmetic | comparison )``
+
+- ``unaryExpr -> unary expr``
+- ``binaryExpr -> expr binary expr``
+
+
+## Exemple d'utilisation
+
+Ce language s'appelle #ier (se prononce `hachier`).
+
+
+### Entiers
+- ``1``
+- ``15``
+
+### Booléens
+- ``True``
+- ``false``
+- ``FALSE``
+
+### Tuples
+
+- ``(1, false)``
+- ``(1, 2, 3)``
+- ``(TRUE, (FALSE, TRUE, 23))``
+- ``(TRUE, (false, (true, (false, false))))``
+
+### Opérateurs
+- ``1 + 1``
+- ``1 + -1``
+- ``3 * 4``
+- ``5 * 1``
+- ``5 / 1``
+- ``9 % 2``
+- ``4 < 9``
+- ``1 > 20``
+- ``5 >= 2``
+- ``1 != 1``
+- ``1 == 1``
+- ``true && false``
+- ``FALSE || TRUE``
+
+### Variables - déclaration
+- ``#v name #> 10``
+
+### Variables - occurence
+- name``
+
+### Let in
+```
+#l 
+   #v a #> 1 
+   #v b #> 2 
+#> a + b #
+````
+
+## Case of
+```
+#c var 
+    #o 1 #> 
+        2 
+    #
+    #o 3 #> 
+        1 
+    #
+    #o 5 #> 
+        10 
+    # 
+    #> 
+        -6 
+    # 
+#
+```
+
+### Fonctions - définition
+
+``#f name p1, p2 #> p1 + p2 #``
+
+
+### Fonctions - application
+
+``name (1, 2)``
+
+## Exemples de programme
+```
+ ██╗ ██╗ ██╗███████╗██████╗ 
+████████╗██║██╔════╝██╔══██╗
+╚██╔═██╔╝██║█████╗  ██████╔╝
+████████╗██║██╔══╝  ██╔══██╗
+╚██╔═██╔╝██║███████╗██║  ██║
+ ╚═╝ ╚═╝ ╚═╝╚══════╝╚═╝  ╚═╝
+
+#v hachier #>
+    (#c 
+        #l
+            #v z #> 5
+            #v y #> #l
+                        #v a #> 1 + 2
+                        #f b x #> x * x #
+                    #> b(5 + a) #
+        #> y * z #
+        #o 5 #> 6 #
+        #o 6 #> 7 #
+        #> 8 #
+    #, 5 > 2, 4 + 2, !(5 >= 4) )
+```
+La valeur de hachier est: ``([8,True,6,False])``
+
+
+``(#c #l #v z #> 5 #v y #> #l #v a #> 1 + 2 #f b x #> x * x # #> b(5 + a) # #> y * z # #o 5 #> 6 # #o 6 #> 7 # #> 8 # #, 5 > 2, 4 + 2, (!(5 >= 4), 44 / 2) )``
+
+Résultat: ``([8,True,6,([False,22])])``
+
+
+## Points à améliorer
+
+Dans un Let In, les variables ne sont accessibles uniquement dans le in et pas dans le Let.
